@@ -4,8 +4,10 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
-  width: 60vw;
-  height: 80vh;
+  width: 45vw; // Updated to match smaller initial size
+  height: 50vh; // Updated to match smaller initial size
+  max-height: 95vh; // Prevent overflow beyond 95vh
+  overflow: hidden; // Hide any overflow content
   
   .chatbot-image {
     width: 100%;
@@ -16,14 +18,14 @@
 
   // Mobile responsive styles
   @media (max-width: 768px) {
-    top: 50vh; // Move higher on mobile
-    width: 80vw; // Larger initial width on mobile
-    height: 60vh; // Smaller initial height on mobile
+    top: 50vh;
+    width: 60vw; // Updated to match smaller initial size
+    height: 40vh; // Updated to match smaller initial size
   }
 
   @media (max-width: 480px) {
-    top: 45vh; // Even higher on small mobile
-    width: 90vw; // Almost full width on small mobile
-    height: 50vh; // Smaller height for small screens
+    top: 45vh;
+    width: 70vw; // Updated to match smaller initial size
+    height: 35vh; // Updated to match smaller initial size
   }
 }
