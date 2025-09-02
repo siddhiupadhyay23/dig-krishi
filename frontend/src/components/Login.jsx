@@ -75,7 +75,20 @@ const Login = ({ onBackToHome, onNavigateToSignUp, onLoginSuccess }) => {
     <div className="login-container">
       {/* Back Button */}
       <button className="login-back-btn" onClick={onBackToHome}>
-        ←
+        <svg 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          className="back-arrow-icon"
+        >
+          <path 
+            strokeLinecap="round" 
+            strokeLinejoin="round" 
+            strokeWidth={2} 
+            d="M19 12H5m0 0l7 7m-7-7l7-7" 
+          />
+        </svg>
+        <span className="back-text">Back</span>
       </button>
 
       {/* Main Content */}
