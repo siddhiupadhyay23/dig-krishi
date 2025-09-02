@@ -10,7 +10,7 @@ const HeroSection = () => {
     <>
       <div className="hero-section">
         <Navbar />
-        <h1 className="hero-title">A Farmer AI Assistant</h1>
+        <h1 className="hero-title">A Farmer AI <span className="italic-text">assistant</span></h1>
         <div className="hero-svg">
           <img src={headSvg} alt="Head" className="head-svg" />
         </div>

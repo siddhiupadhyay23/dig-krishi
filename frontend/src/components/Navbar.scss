@@ -28,31 +28,46 @@
       align-items: center;
 
       .auth-btn {
-        padding: 0.5rem 1.25rem;
+        padding: 0.6rem 1.5rem;
         border: none;
-        border-radius: 6px;
-        font-size: 0.9rem;
-        font-weight: 500;
+        border-radius: 12px;
+        font-size: 0.95rem;
+        font-weight: 600;
         cursor: pointer;
+        letter-spacing: 0.025em;
         transition: all 0.3s ease;
         
-        &.sign-up-btn {
-          background-color: transparent;
-          color: #15220d;
-          border: 2px solid #2d5016;
+        &.sign-in-btn {
+          background: var(--color-white);
+          color: var(--color-black);
+          border: 2px solid var(--color-black);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
           
           &:hover {
-            background-color: #10180b;
-            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+          }
+          
+          &:active {
+            transform: scale(0.98);
+            transition: all 0.1s ease;
           }
         }
         
-        &.login-btn {
-          background-color: #15220d;
-          color: white;
+        &.sign-up-btn {
+          background: var(--color-black);
+          color: var(--color-white);
+          border: 2px solid var(--color-black);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
           
           &:hover {
-            background-color: #1e3a0f;
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+          }
+          
+          &:active {
+            transform: scale(0.98);
+            transition: all 0.1s ease;
           }
         }
       }

@@ -13,9 +13,9 @@ const Navbar = () => {
           <img src={logo} alt="Digital Krishi Officer Logo" className="logo-image" />
         </div>
         <div className="navbar-auth">
-          <button className="auth-btn sign-in-btn" onClick={() => navigate('/signup')}>Sign In</button>
+          <button className="auth-btn sign-up-btn" onClick={() => navigate('/signup')}>Sign Up</button>
 
-          <button className="auth-btn log-in-btn" onClick={() => navigate('/login')}>Log In</button>
+          <button className="auth-btn sign-in-btn" onClick={() => navigate('/login')}>Login</button>
         </div>
       </div>
     </nav>

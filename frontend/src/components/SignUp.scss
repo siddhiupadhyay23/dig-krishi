@@ -12,7 +12,7 @@
     background: none;
     border: none;
     font-size: 24px;
-    color: #2d5016;
+    color: var(--color-green);
     cursor: pointer;
     padding: 10px;
     border-radius: 50%;
@@ -36,7 +36,7 @@
     .signup-title {
       font-size: 2.5rem;
       font-weight: bold;
-      color: #2d5016;
+      color: var(--color-green);
       text-align: center;
       margin-bottom: 10px;
       line-height: 1.2;
@@ -64,7 +64,7 @@
 
         &:focus {
           outline: none;
-          border-color: #2d5016;
+          border-color: var(--color-green);
         }
 
         &::placeholder {
@@ -73,23 +73,53 @@
       }
 
       .signup-button {
-        padding: 12px;
-        background-color: #2d5016;
+        padding: 14px 20px;
+        background: linear-gradient(135deg, var(--color-green), #3d6b1f, var(--color-green));
+        background-size: 200% 200%;
         color: white;
         border: none;
-        border-radius: 8px;
+        border-radius: 12px;
         font-size: 16px;
-        font-weight: 500;
+        font-weight: 600;
         cursor: pointer;
-        transition: background-color 0.3s ease;
-
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(45, 80, 22, 0.3);
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+          transition: left 0.6s;
+        }
+        
         &:hover:not(:disabled) {
-          background-color: #1e3a0f;
+          background-position: 100% 100%;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(45, 80, 22, 0.4);
+          
+          &::before {
+            left: 100%;
+          }
+        }
+        
+        &:active:not(:disabled) {
+          transform: translateY(0);
+          box-shadow: 0 4px 15px rgba(45, 80, 22, 0.35);
         }
 
         &:disabled {
           opacity: 0.6;
           cursor: not-allowed;
+          transform: none;
+          box-shadow: 0 2px 8px rgba(45, 80, 22, 0.2);
         }
       }
     }
@@ -139,8 +169,8 @@
         color: #666;
 
         &:hover {
-          border-color: #2d5016;
-          color: #2d5016;
+          border-color: var(--color-green);
+          color: var(--color-green);
         }
 
         svg {
@@ -156,7 +186,7 @@
       font-size: 14px;
 
       .signup-toggle-link {
-        color: #2d5016;
+        color: var(--color-green);
         cursor: pointer;
         font-weight: 500;
         margin-left: 5px;
