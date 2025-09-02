@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 import axios from 'axios';
 import './SignUp.scss';
 
 const SignUp = ({ onBackToHome, onNavigateToLogin }) => {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -101,18 +103,17 @@ const SignUp = ({ onBackToHome, onNavigateToLogin }) => {
             d="M19 12H5m0 0l7 7m-7-7l7-7" 
           />
         </svg>
-        <span className="back-text">Back</span>
+        <span className="back-text">{t('auth.signUp.back')}</span>
       </button>
 
       {/* Main Content */}
       <div className="signup-content">
         <h1 className="signup-title">
-          Welcome to<br />
-          Digital Krishi Officer
+          {t('auth.signUp.title')}
         </h1>
         
         <p className="signup-subtitle">
-          Join our AI-powered farming community for expert agricultural advice and solutions
+          {t('auth.signUp.subtitle')}
         </p>
 
         {/* Success/Error Messages */}
@@ -151,7 +152,7 @@ const SignUp = ({ onBackToHome, onNavigateToLogin }) => {
           <input
             type="text"
             name="name"
-            placeholder="Full Name"
+            placeholder={t('auth.signUp.fullName')}
             className="signup-input"
             value={formData.name}
             onChange={handleInputChange}
@@ -161,7 +162,7 @@ const SignUp = ({ onBackToHome, onNavigateToLogin }) => {
           <input
             type="email"
             name="email"
-            placeholder="Email Address"
+            placeholder={t('auth.signUp.email')}
             className="signup-input"
             value={formData.email}
             onChange={handleInputChange}
@@ -171,7 +172,7 @@ const SignUp = ({ onBackToHome, onNavigateToLogin }) => {
           <input
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder={t('auth.signUp.password')}
             className="signup-input"
             value={formData.password}
             onChange={handleInputChange}
@@ -181,7 +182,7 @@ const SignUp = ({ onBackToHome, onNavigateToLogin }) => {
           <input
             type="password"
             name="confirmPassword"
-            placeholder="Confirm Password"
+            placeholder={t('auth.signUp.confirmPassword')}
             className="signup-input"
             value={formData.confirmPassword}
             onChange={handleInputChange}
@@ -189,16 +190,16 @@ const SignUp = ({ onBackToHome, onNavigateToLogin }) => {
           />
           
           <button type="submit" className="signup-button" disabled={loading}>
-            {loading ? 'Creating Account...' : 'Create Account'}
+            {loading ? t('auth.signUp.createAccount') + '...' : t('auth.signUp.createAccount')}
           </button>
         </form>
 
 
         {/* Toggle to Login */}
         <div className="signup-toggle">
-          Already have an account? 
-          <span className="signup-toggle-link" onClick={onBackToHome}>
-            Sign In
+          {t('auth.signUp.alreadyHaveAccount')} 
+          <span className="signup-toggle-link" onClick={onNavigateToLogin}>
+            {t('auth.signUp.signIn')}
           </span>
         </div>
       </div>

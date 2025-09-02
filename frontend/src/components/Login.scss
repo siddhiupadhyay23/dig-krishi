@@ -170,6 +170,33 @@
           box-shadow: 0 2px 8px rgba(45, 80, 22, 0.2);
         }
       }
+      
+      .login-secondary-button {
+        width: 100%;
+        padding: 12px 20px;
+        background: transparent;
+        color: var(--color-green);
+        border: 2px solid var(--color-green);
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        
+        &:hover {
+          background: var(--color-green);
+          color: white;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(45, 80, 22, 0.3);
+        }
+        
+        &:active {
+          transform: translateY(0);
+          box-shadow: 0 2px 6px rgba(45, 80, 22, 0.4);
+        }
+      }
     }
 
     .login-divider {

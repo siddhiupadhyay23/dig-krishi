@@ -26,6 +26,47 @@
       display: flex;
       gap: 0.75rem;
       align-items: center;
+      
+      .language-toggle-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.6rem 1.5rem;
+        background: var(--color-white);
+        color: var(--color-black);
+        border: 2px solid var(--color-black);
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.025em;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        
+        .language-icon {
+          width: 16px;
+          height: 16px;
+          stroke-width: 2.5;
+          color: var(--color-black);
+        }
+        
+        .language-text {
+          font-size: 0.95rem;
+          font-weight: 600;
+          letter-spacing: 0.025em;
+          text-transform: uppercase;
+        }
+        
+        &:hover {
+          transform: scale(1.05);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        &:active {
+          transform: scale(0.98);
+          transition: all 0.1s ease;
+        }
+      }
 
       .auth-btn {
         padding: 0.6rem 1.5rem;
@@ -85,6 +126,19 @@
       
       .navbar-auth {
         gap: 0.5rem;
+        
+        .language-toggle-btn {
+          padding: 0.4rem 0.6rem;
+          
+          .language-icon {
+            width: 16px;
+            height: 16px;
+          }
+          
+          .language-text {
+            font-size: 0.75rem;
+          }
+        }
         
         .auth-btn {
           padding: 0.4rem 0.8rem;
