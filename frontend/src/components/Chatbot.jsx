@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Chatbot.scss';
-import rectangleTransparent from '../assets/rectangle_only_transparent.png';
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -71,11 +70,45 @@ const Chatbot = () => {
 
   return (
     <div ref={chatbotRef} className="chatbot">
-      <img 
-        src={rectangleTransparent} 
-        alt="Chatbot" 
-        className="chatbot-image" 
-      />
+      <div className="macos-panel">
+        {/* macOS Window Header */}
+        <div className="macos-header">
+          <div className="macos-traffic-lights">
+            <div className="traffic-light close"></div>
+            <div className="traffic-light minimize"></div>
+            <div className="traffic-light maximize"></div>
+          </div>
+          <div className="macos-tabs">
+            <div className="tab active">
+              <div className="tab-icon kripson"></div>
+              <span>Kripson AI</span>
+            </div>
+            <div className="tab">
+              <div className="tab-icon digital-krishi"></div>
+              <span>Digital Krishi</span>
+            </div>
+            <div className="tab-add">+</div>
+          </div>
+          <div className="macos-controls">
+            <div className="control-button">⚙</div>
+          </div>
+        </div>
+        
+        {/* Main Content Area */}
+        <div className="macos-content">
+          <div className="chat-interface">
+            <div className="chat-messages">
+              {/* Placeholder for chat messages */}
+            </div>
+            <div className="chat-input-area">
+              <div className="chat-input">
+                <input type="text" placeholder="Type your message..." />
+                <button className="send-button">→</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
