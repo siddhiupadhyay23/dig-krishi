@@ -40,15 +40,23 @@ const SignUp = ({ onBackToHome, onNavigateToLogin }) => {
         return;
       }
 
+      // Parse full name into first and last name
+      const nameParts = formData.name.trim().split(' ');
+      const firstName = nameParts[0] || '';
+      const lastName = nameParts.slice(1).join(' ') || '';
+
       // Make API call to register user
       const response = await axios.post('http://localhost:5000/api/auth/register', {
-        name: formData.name,
+        fullName: {
+          firstName: firstName,
+          lastName: lastName
+        },
         email: formData.email,
         password: formData.password,
         confirmPassword: formData.confirmPassword
       });
 
-      if (response.data.status === 'success') {
+      if (response.data.message === 'User registered successful') {
         setMessage('Account created successfully! You can now login.');
         // Clear form
         setFormData({

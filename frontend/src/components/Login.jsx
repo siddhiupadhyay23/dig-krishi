@@ -37,11 +37,11 @@ const Login = ({ onBackToHome, onNavigateToSignUp, onLoginSuccess }) => {
         password: formData.password
       });
 
-      if (response.data.status === 'success') {
+      if (response.data.message === 'user logged in sucessful') {
         setMessage('Login successful! Welcome back.');
-        // Store token in localStorage
-        localStorage.setItem('token', response.data.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.data.user));
+        // Store token in localStorage (backend sends token in cookie, but we'll get it from response)
+        localStorage.setItem('token', response.data.token || 'logged_in');
+        localStorage.setItem('user', JSON.stringify(response.data.user));
         
         // Clear form
         setFormData({ email: '', password: '' });
