@@ -5,6 +5,7 @@ import SignUp from '../components/SignUp';
 import Login from '../components/Login';
 import Dashboard from '../components/Dashboard';
 import Profile from '../components/Profile';
+import ProfileSetup from '../components/ProfileSetup';
 import { useAuth } from '../context/AuthContext';
 
 // Default Home component for the root route
@@ -20,7 +21,7 @@ const MainRouter = () => {
 
   const handleSignUpSuccess = (userData, token) => {
     login(userData, token);
-    navigate('/profile');
+    navigate('/profile-setup');
   };
 
   const handleLoginSuccess = (userData, token) => {
@@ -47,6 +48,7 @@ const MainRouter = () => {
       } />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/profile-setup" element={<ProfileSetup />} />
     </Routes>
   );
 };

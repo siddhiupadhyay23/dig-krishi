@@ -6,6 +6,7 @@ const connectToDb = require("./db/db")
 //Routes
 const authRoutes = require("./routes/auth.routes")
 const chatRoutes = require("./routes/chat.routes")
+const profileRoutes = require("./routes/profile.routes")
 
 const app = express();
 connectToDb()
@@ -22,6 +23,7 @@ app.use(cookieParser())
 
 //using Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/chat",chatRoutes);
+app.use("/api/chat", chatRoutes);
+app.use("/api/profile", profileRoutes);
 
 module.exports = app;
