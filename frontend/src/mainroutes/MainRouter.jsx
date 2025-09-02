@@ -1,8 +1,11 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
 import SignUp from '../components/SignUp';
 import Login from '../components/Login';
+import Dashboard from '../components/Dashboard';
+import Profile from '../components/Profile';
+import { useAuth } from '../context/AuthContext';
 
 // Default Home component for the root route
 const Home = () => {
@@ -12,12 +15,38 @@ const Home = () => {
 };
 
 const MainRouter = () => {
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const handleSignUpSuccess = (userData, token) => {
+    login(userData, token);
+    navigate('/profile');
+  };
+
+  const handleLoginSuccess = (userData, token) => {
+    login(userData, token);
+    navigate('/dashboard');
+  };
+
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/signup" element={<SignUp onBackToHome={() => window.location.href = '/'} onNavigateToLogin={() => window.location.href = '/login'} />} />
-      <Route path="/login" element={<Login onBackToHome={() => window.location.href = '/'} onNavigateToSignUp={() => window.location.href = '/signup'} onLoginSuccess={() => window.location.href = '/'} />} />
-      {/* Add more routes here as needed */}
+      <Route path="/signup" element={
+        <SignUp 
+          onBackToHome={() => navigate('/')} 
+          onNavigateToLogin={() => navigate('/login')}
+          onSignUpSuccess={handleSignUpSuccess}
+        />
+      } />
+      <Route path="/login" element={
+        <Login 
+          onBackToHome={() => navigate('/')} 
+          onNavigateToSignUp={() => navigate('/signup')} 
+          onLoginSuccess={handleLoginSuccess}
+        />
+      } />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/profile" element={<Profile />} />
     </Routes>
   );
 };

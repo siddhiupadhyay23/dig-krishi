@@ -4,7 +4,7 @@ import { useLanguage } from '../context/LanguageContext';
 import axios from 'axios';
 import './SignUp.scss';
 
-const SignUp = ({ onBackToHome, onNavigateToLogin }) => {
+const SignUp = ({ onBackToHome, onNavigateToLogin, onSignUpSuccess }) => {
   const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
@@ -57,7 +57,8 @@ const SignUp = ({ onBackToHome, onNavigateToLogin }) => {
       });
 
       if (response.data.message === 'User registered successful') {
-        setMessage('Account created successfully! You can now login.');
+        setMessage('Account created successfully! Setting up your profile...');
+        
         // Clear form
         setFormData({
           name: '',
@@ -66,9 +67,9 @@ const SignUp = ({ onBackToHome, onNavigateToLogin }) => {
           confirmPassword: ''
         });
         
-        // Redirect to login after 2 seconds
+        // Redirect to profile after 2 seconds
         setTimeout(() => {
-          onNavigateToLogin();
+          onSignUpSuccess(response.data.user, response.data.token);
         }, 2000);
       }
     } catch (error) {

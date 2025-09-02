@@ -39,16 +39,13 @@ const Login = ({ onBackToHome, onNavigateToSignUp, onLoginSuccess }) => {
 
       if (response.data.message === 'user logged in sucessful') {
         setMessage('Login successful! Welcome back.');
-        // Store token in localStorage (backend sends token in cookie, but we'll get it from response)
-        localStorage.setItem('token', response.data.token || 'logged_in');
-        localStorage.setItem('user', JSON.stringify(response.data.user));
         
         // Clear form
         setFormData({ email: '', password: '' });
         
-        // Redirect to profile after 1 second
+        // Redirect to dashboard after 1 second
         setTimeout(() => {
-          onLoginSuccess();
+          onLoginSuccess(response.data.user, response.data.token);
         }, 1000);
       }
     } catch (error) {

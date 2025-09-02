@@ -1,12 +1,19 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
+import { useAuth } from '../context/AuthContext';
 import './Navbar.scss';
 import logo from '../assets/logo1.png';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { t, toggleLanguage, currentLanguage } = useLanguage();
+  const { isAuthenticated, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   return (
     <nav className="navbar">
@@ -33,13 +40,25 @@ const Navbar = () => {
             <span className="language-text">{t('navbar.language')}</span>
           </button>
 
-          <button className="auth-btn sign-up-btn" onClick={() => navigate('/signup')}>
-            {t('navbar.signUp')}
-          </button>
-
-          <button className="auth-btn sign-in-btn" onClick={() => navigate('/login')}>
-            {t('navbar.login')}
-          </button>
+          {isAuthenticated ? (
+            <>
+              <button className="auth-btn profile-btn" onClick={() => navigate('/profile')}>
+                Profile
+              </button>
+              <button className="auth-btn logout-btn" onClick={handleLogout}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <button className="auth-btn sign-up-btn" onClick={() => navigate('/signup')}>
+                {t('navbar.signUp')}
+              </button>
+              <button className="auth-btn sign-in-btn" onClick={() => navigate('/login')}>
+                {t('navbar.login')}
+              </button>
+            </>
+          )}
         </div>
       </div>
     </nav>
