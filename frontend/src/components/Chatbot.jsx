@@ -22,23 +22,23 @@ const Chatbot = () => {
       let initialWidth, initialHeight, finalWidth, finalHeight, finalScale;
       
       if (isSmallMobile) {
-        initialWidth = '90vw';
+        initialWidth = '70vw';
+        initialHeight = '35vh';
+        finalWidth = '100vw';
+        finalHeight = '65vh';
+        finalScale = 1.001; // Barely any scaling - 0.1% increase
+      } else if (isMobile) {
+        initialWidth = '60vw';
+        initialHeight = '40vh';
+        finalWidth = '100vw';
+        finalHeight = '75vh';
+        finalScale = 1.001; // Barely any scaling - 0.1% increase
+      } else {
+        initialWidth = '45vw';
         initialHeight = '50vh';
         finalWidth = '100vw';
-        finalHeight = '80vh';
-        finalScale = 1.1; // 10% additional scale
-      } else if (isMobile) {
-        initialWidth = '80vw';
-        initialHeight = '60vh';
-        finalWidth = '100vw';
-        finalHeight = '90vh';
-        finalScale = 1.15; // 15% additional scale
-      } else {
-        initialWidth = '60vw';
-        initialHeight = '80vh';
-        finalWidth = '100vw';
-        finalHeight = '100vh';
-        finalScale = 1.2; // 20% additional scale for desktop
+        finalHeight = '85vh';
+        finalScale = 1.002; // Barely any scaling - 0.2% increase
       }
 
       // Create the scroll trigger animation with transform scale

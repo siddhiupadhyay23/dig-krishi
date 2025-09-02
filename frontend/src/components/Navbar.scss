@@ -35,7 +35,7 @@
         cursor: pointer;
         transition: all 0.3s ease;
         
-        &.sign-in-btn {
+        &.sign-up-btn {
           background-color: transparent;
           color: #15220d;
           border: 2px solid #2d5016;
@@ -46,7 +46,7 @@
           }
         }
         
-        &.log-in-btn {
+        &.login-btn {
           background-color: #15220d;
           color: white;
           
