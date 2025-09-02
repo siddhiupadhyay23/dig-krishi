@@ -9,6 +9,10 @@ const Navbar = () => {
         <div className="navbar-logo">
           <img src={logo} alt="Digital Krishi Officer Logo" className="logo-image" />
         </div>
+        <div className="navbar-auth">
+          <button className="auth-btn sign-in-btn">Sign In</button>
+          <button className="auth-btn log-in-btn">Log In</button>
+        </div>
       </div>
     </nav>
   );
