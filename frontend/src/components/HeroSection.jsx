@@ -16,6 +16,9 @@ const HeroSection = () => {
         <h1 className="hero-title">
           {t('hero.title')} <span className="italic-text">{t('hero.titleItalic')}</span>
         </h1>
+        <p className="hero-slogan">
+          {t('hero.slogan')}
+        </p>
         <div className="hero-svg">
           <img src={headSvg} alt="Head" className="head-svg" />
         </div>

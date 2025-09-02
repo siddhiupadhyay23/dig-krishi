@@ -9,8 +9,9 @@ export const translations = {
     
     // Hero Section translations
     hero: {
-      title: "Growing More than Crops -",
-      titleItalic: "Growing Confidence.",
+      title: "A Farmer AI",
+      titleItalic: "Assistant",
+      slogan: "Growing More than Crops - Growing Confidence.",
       chatPlaceholder: "Ask me anything about farming..."
     },
     
@@ -83,8 +84,9 @@ export const translations = {
     
     // Hero Section translations  
     hero: {
-      title: "വിളകളേക്കാൾ കൂടുതൽ വളർത്തുന്നു -",
-      titleItalic: "ആത്മവിശ്വാസം വളർത്തുന്നു.",
+      title: "കർഷക AI",
+      titleItalic: "സഹായി",
+      slogan: "വിളകളേക്കാൾ കൂടുതൽ വളർത്തുന്നു - ആത്മവിശ്വാസം വളർത്തുന്നു.",
       chatPlaceholder: "കൃഷിയെക്കുറിച്ച് എന്തും ചോദിക്കുക..."
     },
     
