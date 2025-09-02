@@ -49,7 +49,7 @@ export const translations = {
     auth: {
       signUp: {
         title: "Welcome to Digital Krishi Officer",
-        subtitle: "Join our AI-powered farming community for expert agricultural advice and solutions",
+        subtitle: "Growing More than Crops - Growing Confidence.",
         fullName: "Full Name",
         email: "Email Address", 
         password: "Password",
@@ -61,7 +61,7 @@ export const translations = {
       },
       login: {
         title: "Welcome Back to Digital Krishi Officer",
-        subtitle: "Sign in to access your AI-powered farming assistant and get expert agricultural guidance",
+        subtitle: "Growing More than Crops - Growing Confidence.",
         email: "Email Address",
         password: "Password", 
         signIn: "Sign In",
@@ -123,7 +123,7 @@ export const translations = {
     auth: {
       signUp: {
         title: "ഡിജിറ്റൽ കൃഷി ഉദ്യോഗസ്ഥനിലേക്ക് സ്വാഗതം",
-        subtitle: "വിദഗ്ധ കാർഷിക ഉപദേശങ്ങൾക്കും പരിഹാരങ്ങൾക്കുമായി ഞങ്ങളുടെ AI-പവർ ചെയ്ത കാർഷിക സമൂഹത്തിൽ ചേരുക",
+        subtitle: "വിളകളേക്കാൾ കൂടുതൽ വളർത്തുന്നു - ആത്മവിശ്വാസം വളർത്തുന്നു.",
         fullName: "പൂർണ്ണ നാമം",
         email: "ഇമെയിൽ വിലാസം",
         password: "പാസ്‌വേഡ്",
@@ -135,7 +135,7 @@ export const translations = {
       },
       login: {
         title: "ഡിജിറ്റൽ കൃഷി ഉദ്യോഗസ്ഥനിലേക്ക് തിരികെ സ്വാഗതം",
-        subtitle: "നിങ്ങളുടെ AI-പവർ ചെയ്ത കാർഷിക സഹായിയെ ആക്‌സസ് ചെയ്യാനും വിദഗ്ധ കാർഷിക മാർഗ്ഗനിർദ്ദേശം നേടാനും സൈൻ ഇൻ ചെയ്യുക",
+        subtitle: "വിളകളേക്കാൾ കൂടുതൽ വളർത്തുന്നു - ആത്മവിശ്വാസം വളർത്തുന്നു.",
         email: "ഇമെയിൽ വിലാസം",
         password: "പാസ്‌വേഡ്",
         signIn: "സൈൻ ഇൻ",
