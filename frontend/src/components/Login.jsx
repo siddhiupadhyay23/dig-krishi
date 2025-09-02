@@ -160,15 +160,7 @@ const Login = ({ onBackToHome, onNavigateToSignUp, onLoginSuccess }) => {
             {loading ? t('auth.login.signIn') + '...' : t('auth.login.signIn')}
           </button>
         </form>
-        {/* Create Account Button */}
-        <div style={{ marginTop: "10px", marginBottom: "20px" }}>
-          <button
-            className="login-secondary-button"
-            onClick={onNavigateToSignUp}
-          >
-            {t('auth.login.createAccount')}
-          </button>
-        </div>
+
 
         {/* Toggle to SignUp */}
         <div className="login-toggle">
