@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import './Reports.scss';
 
 const Reports = () => {
   const { t } = useLanguage();
   const { user } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
   const [chatMessages, setChatMessages] = useState([
     { type: 'bot', message: 'Hello! I\'m your AI farming assistant. How can I help you today?' },
@@ -121,6 +124,22 @@ const Reports = () => {
       category: 'scheme'
     }
   ];
+
+  // Handle URL parameters for tab navigation
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const tabParam = urlParams.get('tab');
+    if (tabParam && tabs.some(tab => tab.id === tabParam)) {
+      setActiveTab(tabParam);
+    }
+  }, [location.search]);
+
+  const handleTabChange = (tabId) => {
+    setActiveTab(tabId);
+    // Update URL without page reload
+    const newUrl = `/reports?tab=${tabId}`;
+    navigate(newUrl, { replace: true });
+  };
 
   const weatherData = {
     current: {
@@ -683,7 +702,7 @@ const Reports = () => {
               <button
                 key={tab.id}
                 className={`sidebar-item ${activeTab === tab.id ? 'active' : ''}`}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => handleTabChange(tab.id)}
               >
                 <span className="sidebar-icon">{tab.icon}</span>
                 <span className="sidebar-label">{tab.label}</span>
