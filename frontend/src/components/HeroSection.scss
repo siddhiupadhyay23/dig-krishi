@@ -2,12 +2,21 @@
   height: 100vh;
   max-height: 100vh;
   background-color: var(--color-white);
+  background-image: url('../assets/wide_leafs.png');
+  background-size: 150% auto;
+  background-position: 40% center;
+  background-repeat: no-repeat;
   position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
   overflow-x: hidden;
   overflow-y: hidden;
+
+  // Mobile and tablet - use square leafs.png
+  @media (max-width: 1024px) {
+    background-image: url('../assets/leafs.png');
+  }
 
   .hero-title {
     position: absolute;

@@ -6,6 +6,7 @@ import Navbar from './Navbar';
 import Features from './Features';
 import Working from './Working';
 import Footer from './Footer';
+import leafs from '../assets/leafs.png';
 import './HeroSection.scss';
 
 const HeroSection = () => {
