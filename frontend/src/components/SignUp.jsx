@@ -179,6 +179,12 @@ const SignUp = ({ onBackToHome, onNavigateToLogin, onSignUpSuccess }) => {
 
         {/* SignUp Form */}
         <form className="signup-form" onSubmit={handleSubmit} noValidate>
+          <div className="form-header">
+            <div className="form-icon">🌱</div>
+            <h2>Join the Farming Community!</h2>
+            <p>Create your account to access agricultural tools and insights</p>
+          </div>
+          
           <input
             type="text"
             name="name"
@@ -216,7 +222,7 @@ const SignUp = ({ onBackToHome, onNavigateToLogin, onSignUpSuccess }) => {
           />
           
           <button type="submit" className="signup-button" disabled={loading}>
-            {loading ? t('auth.signUp.createAccount') + '...' : t('auth.signUp.createAccount')}
+            {loading ? '🌾 Creating Account...' : '🎆 Create Account'}
           </button>
         </form>
 

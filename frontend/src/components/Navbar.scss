@@ -12,6 +12,7 @@
     width: 100%;
     margin: 0;
     padding: 0 1.5rem;
+    position: relative;
 
     .navbar-logo {
       .logo-image {
@@ -39,6 +40,10 @@
       padding: 0.5rem;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
       
       .nav-menu-item {
         display: flex;
@@ -369,6 +374,8 @@
       }
       
       .navbar-center-menu {
+        position: static;
+        transform: none;
         order: 2;
         width: 100%;
         justify-content: center;

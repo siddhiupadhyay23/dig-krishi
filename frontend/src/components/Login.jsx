@@ -133,6 +133,12 @@ const Login = ({ onBackToHome, onNavigateToSignUp, onLoginSuccess }) => {
 
         {/* Login Form */}
         <form className="login-form" onSubmit={handleSubmit}>
+          <div className="form-header">
+            <div className="form-icon">🌾</div>
+            <h2>Welcome Back, Farmer!</h2>
+            <p>Sign in to access your agricultural dashboard</p>
+          </div>
+          
           <input
             type="email"
             name="email"
@@ -154,7 +160,7 @@ const Login = ({ onBackToHome, onNavigateToSignUp, onLoginSuccess }) => {
           />
           
           <button type="submit" className="login-button" disabled={loading}>
-            {loading ? t('auth.login.signIn') + '...' : t('auth.login.signIn')}
+            {loading ? '🌱 Signing In...' : '🚀 Sign In'}
           </button>
         </form>
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const LandSizeCard = ({ landSize, landUnit, onUpdate, onNext, onPrevious, onSkipToDashboard, loading }) => {
+const LandSizeCard = ({ landSize, landUnit, onUpdate, onNext, onPrevious, onSkipToHome, loading }) => {
   const [size, setSize] = useState(landSize || '');
   const [unit, setUnit] = useState(landUnit || 'acres');
 
@@ -19,7 +19,7 @@ const LandSizeCard = ({ landSize, landUnit, onUpdate, onNext, onPrevious, onSkip
   };
 
   const handleSkip = () => {
-    onSkipToDashboard();
+    onSkipToHome();
   };
 
   const hasEnteredData = size && parseFloat(size) > 0;
@@ -116,7 +116,7 @@ const LandSizeCard = ({ landSize, landUnit, onUpdate, onNext, onPrevious, onSkip
               className="btn btn-skip"
               onClick={handleSkip}
             >
-              Skip to Dashboard
+              Skip & Continue
             </button>
           )}
           {hasEnteredData && (

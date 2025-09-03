@@ -45,7 +45,7 @@ const Navbar = () => {
           <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 14v-2.47l6.88-6.88c.2-.2.51-.2.71 0l1.77 1.77c.2.2.2.51 0 .71L8.47 14H6zm12 0h-7.5l2-2H18v2z"/>
         </svg>
       ), 
-      path: '/reports?tab=ai-chat' 
+      path: '/ai-assistant' 
     },
     { 
       id: 'prediction', 
@@ -55,7 +55,7 @@ const Navbar = () => {
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
         </svg>
       ), 
-      path: '/reports?tab=prediction' 
+      path: '/prediction' 
     },
     { 
       id: 'govt-services', 
@@ -65,7 +65,7 @@ const Navbar = () => {
           <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
         </svg>
       ), 
-      path: '/reports?tab=govt-services' 
+      path: '/government-services' 
     }
   ];
 

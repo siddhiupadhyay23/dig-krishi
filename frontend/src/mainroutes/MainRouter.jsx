@@ -7,6 +7,9 @@ import Profile from '../components/Profile';
 import ProfileSetup from '../components/ProfileSetup';
 import Dashboard from '../components/Dashboard';
 import Reports from '../components/Reports';
+import AIAssistant from '../components/AIAssistant';
+import Prediction from '../components/Prediction';
+import GovernmentServices from '../components/GovernmentServices';
 import { useAuth } from '../context/AuthContext';
 
 // Default Home component for the root route
@@ -27,7 +30,7 @@ const MainRouter = () => {
 
   const handleLoginSuccess = (userData, token) => {
     login(userData, token);
-    navigate('/dashboard');
+    navigate('/');
   };
 
   return (
@@ -50,6 +53,10 @@ const MainRouter = () => {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/profile-setup" element={<ProfileSetup />} />
+      <Route path="/reports" element={<Reports />} />
+      <Route path="/ai-assistant" element={<AIAssistant />} />
+      <Route path="/prediction" element={<Prediction />} />
+      <Route path="/government-services" element={<GovernmentServices />} />
     </Routes>
   );
 };

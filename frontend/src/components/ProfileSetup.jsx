@@ -133,7 +133,7 @@ const ProfileSetup = () => {
       }));
       
       await makeAPICall('crops', { crops: cropsData });
-      navigate('/dashboard');
+      navigate('/');
     } catch (error) {
       setError('Failed to save crop selection. Please try again.');
     }
@@ -152,11 +152,11 @@ const ProfileSetup = () => {
     }
   };
 
-  const goToDashboard = async () => {
+  const goToHome = async () => {
     try {
       // Skip land size step
       await makeAPICall('land-size', { landSize: null, unit: 'acres' });
-      navigate('/dashboard');
+      navigate('/');
     } catch (error) {
       setError('Failed to skip land size. Please try again.');
     }
@@ -215,7 +215,7 @@ const ProfileSetup = () => {
             onUpdate={updateProfileData}
             onNext={handleLandSizeNext}
             onPrevious={goToPreviousStep}
-            onSkipToDashboard={goToDashboard}
+            onSkipToHome={goToHome}
             loading={loading}
           />
         );
