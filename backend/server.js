@@ -14,7 +14,7 @@ const chatHistory = [
 
 const io = new Server(httpServer, {
   cors: {
-    origin: ["http://localhost:3000", "http://localhost:3001", "http://localhost:5173"], // Allow Vite dev server
+    origin: ["http://localhost:3000", "http://localhost:3001", "http://localhost:3002", "http://localhost:5173"], // Allow Vite dev server
     methods: ["GET", "POST"]
   }
 });

@@ -1,11 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Navbar from '../components/Navbar';
+import { useSocket } from '../context/SocketContext';
 import './Chatbot.scss';
 
 const Chatbot = ({ socket }) => {
   const [query, setQuery] = useState('');
   const [messages, setMessages] = useState([]);
   const [showInitialScreen, setShowInitialScreen] = useState(true);
+  const [isWaitingForResponse, setIsWaitingForResponse] = useState(false);
+  const { isConnected, connectionError } = useSocket();
   const messagesEndRef = useRef(null);
 
   // Scroll to bottom of messages
@@ -29,6 +32,7 @@ const Chatbot = ({ socket }) => {
           responseTime: 'Socket.IO'
         };
         setMessages(prev => [...prev, botMessage]);
+        setIsWaitingForResponse(false);
       });
 
       // Cleanup function to remove listeners
@@ -44,7 +48,7 @@ const Chatbot = ({ socket }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (query.trim()) {
+    if (query.trim() && socket && isConnected) {
       // Add user message to chat
       const userMessage = {
         id: Date.now(),
@@ -54,11 +58,10 @@ const Chatbot = ({ socket }) => {
       };
       
       setMessages(prev => [...prev, userMessage]);
+      setIsWaitingForResponse(true);
 
       // Use Socket.IO to send message to backend
-      if (socket) {
-        socket.emit('ai-message', query.trim());
-      }
+      socket.emit('ai-message', query.trim());
       
       // Hide initial screen once first message is sent
       if (showInitialScreen) {
@@ -144,6 +147,19 @@ const Chatbot = ({ socket }) => {
         ) : (
           <div className="chatbot__chat-interface">
             
+            {/* Connection status indicator */}
+            {!isConnected && (
+              <div className="chatbot__connection-status">
+                <div className="chatbot__connection-error">
+                  {connectionError ? (
+                    <>❌ Connection failed: {connectionError}</>
+                  ) : (
+                    <>🔄 Connecting to server...</>
+                  )}
+                </div>
+              </div>
+            )}
+            
             {/* Messages container */}
             <div className="chatbot__messages">
               {messages.map(message => (
@@ -212,6 +228,22 @@ const Chatbot = ({ socket }) => {
                   )}
                 </div>
               ))}
+              
+              {/* Loading indicator when waiting for response */}
+              {isWaitingForResponse && (
+                <div className="chatbot__message chatbot__message--bot">
+                  <div className="chatbot__bot-message">
+                    <div className="chatbot__bot-text">
+                      <div className="chatbot__typing-indicator">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
               <div ref={messagesEndRef} /> {/* Empty div for scrolling to bottom */}
             </div>
             
@@ -232,8 +264,9 @@ const Chatbot = ({ socket }) => {
                     type="text"
                     value={query}
                     onChange={handleInputChange}
-                    placeholder="How can Kripson help?"
+                    placeholder={!isConnected ? "Connecting..." : "How can Kripson help?"}
                     className="chatbot__input"
+                    disabled={!isConnected || isWaitingForResponse}
                     autoFocus
                   />
                   
@@ -249,7 +282,12 @@ const Chatbot = ({ socket }) => {
                     </svg>
                   </div>
                   
-                  <button type="submit" className="chatbot__voice-btn" aria-label="Submit">
+                  <button 
+                    type="submit" 
+                    className="chatbot__voice-btn" 
+                    aria-label="Submit"
+                    disabled={!isConnected || isWaitingForResponse || !query.trim()}
+                  >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <circle cx="12" cy="12" r="10" fill="currentColor"/>
                       <path d="M16 12l-6 4V8l6 4z" fill="white" stroke="white" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>

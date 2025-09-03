@@ -12,6 +12,7 @@ import Prediction from '../components/Prediction';
 import GovernmentServices from '../components/GovernmentServices';
 import Chatbot from '../components/Chatbot';
 import { useAuth } from '../context/AuthContext';
+import { useSocket } from '../context/SocketContext';
 
 // Default Home component for the root route
 const Home = () => {
@@ -23,6 +24,7 @@ const Home = () => {
 const MainRouter = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { socket } = useSocket();
 
   const handleSignUpSuccess = (userData, token) => {
     login(userData, token);
@@ -58,7 +60,7 @@ const MainRouter = () => {
       <Route path="/ai-assistant" element={<AIAssistant />} />
       <Route path="/prediction" element={<Prediction />} />
       <Route path="/government-services" element={<GovernmentServices />} />
-      <Route path="/chatbot" element={<Chatbot />} />
+      <Route path="/chatbot" element={<Chatbot socket={socket} />} />
     </Routes>
   );
 };

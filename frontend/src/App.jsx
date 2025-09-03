@@ -3,14 +3,17 @@ import { BrowserRouter } from 'react-router-dom'
 import MainRouter from './mainroutes/MainRouter'
 import { LanguageProvider } from './context/LanguageContext'
 import { AuthProvider } from './context/AuthContext'
+import { SocketProvider } from './context/SocketContext'
 
 const App = () => {
   return (
     <AuthProvider>
       <LanguageProvider>
-        <BrowserRouter>
-          <MainRouter />
-        </BrowserRouter>
+        <SocketProvider>
+          <BrowserRouter>
+            <MainRouter />
+          </BrowserRouter>
+        </SocketProvider>
       </LanguageProvider>
     </AuthProvider>
   )
