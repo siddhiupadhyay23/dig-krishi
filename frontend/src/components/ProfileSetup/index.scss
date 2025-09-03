@@ -1,7 +1,7 @@
 // Import all ProfileSetup card styles
-@import './BaseCard.scss';
-@import './WelcomeCard.scss';
-@import './StateCard.scss';
-@import './LandSizeCard.scss';
-@import './CropSelectionCard.scss';
-@import './Responsive.scss';
+@use './BaseCard.scss';
+@use './WelcomeCard.scss';
+@use './StateCard.scss';
+@use './LandSizeCard.scss';
+@use './CropSelectionCard.scss';
+@use './Responsive.scss';

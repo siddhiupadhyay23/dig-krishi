@@ -153,6 +153,7 @@ const HeroSection = () => {
       </div>
       <Features />
       <Working />
+      <Footer />
     </>
   );
 };

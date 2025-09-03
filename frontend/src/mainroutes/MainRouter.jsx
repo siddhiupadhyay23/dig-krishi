@@ -10,6 +10,7 @@ import Reports from '../components/Reports';
 import AIAssistant from '../components/AIAssistant';
 import Prediction from '../components/Prediction';
 import GovernmentServices from '../components/GovernmentServices';
+import Chatbot from '../components/Chatbot';
 import { useAuth } from '../context/AuthContext';
 
 // Default Home component for the root route
@@ -57,6 +58,7 @@ const MainRouter = () => {
       <Route path="/ai-assistant" element={<AIAssistant />} />
       <Route path="/prediction" element={<Prediction />} />
       <Route path="/government-services" element={<GovernmentServices />} />
+      <Route path="/chatbot" element={<Chatbot />} />
     </Routes>
   );
 };
