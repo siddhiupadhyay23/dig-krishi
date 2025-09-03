@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { useSocket } from '../context/SocketContext';
+import ImageUpload from './ImageUpload';
 import './Chatbot.scss';
 
 const Chatbot = ({ socket }) => {
@@ -8,6 +9,8 @@ const Chatbot = ({ socket }) => {
   const [messages, setMessages] = useState([]);
   const [showInitialScreen, setShowInitialScreen] = useState(true);
   const [isWaitingForResponse, setIsWaitingForResponse] = useState(false);
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [showImageUpload, setShowImageUpload] = useState(false);
   const { isConnected, connectionError } = useSocket();
   const messagesEndRef = useRef(null);
 
@@ -29,15 +32,29 @@ const Chatbot = ({ socket }) => {
           content: data.response,
           sender: 'bot',
           timestamp: new Date().toISOString(),
-          responseTime: 'Socket.IO'
+          responseTime: 'Socket.IO',
+          hasImage: data.hasImage || false
         };
         setMessages(prev => [...prev, botMessage]);
+        setIsWaitingForResponse(false);
+      });
+
+      socket.on('ai-message-error', (data) => {
+        const errorMessage = {
+          id: Date.now() + 1,
+          content: `Error: ${data.error}`,
+          sender: 'bot',
+          timestamp: new Date().toISOString(),
+          isError: true
+        };
+        setMessages(prev => [...prev, errorMessage]);
         setIsWaitingForResponse(false);
       });
 
       // Cleanup function to remove listeners
       return () => {
         socket.off('ai-message-response');
+        socket.off('ai-message-error');
       };
     }
   }, [socket]);
@@ -46,29 +63,57 @@ const Chatbot = ({ socket }) => {
     setQuery(e.target.value);
   };
 
+  // Handle image upload
+  const handleImageSelect = (imageData) => {
+    setSelectedImages(prev => [...prev, imageData]);
+  };
+
+  const handleRemoveImage = (imageId) => {
+    setSelectedImages(prev => prev.filter(img => img.id !== imageId));
+  };
+
+  const toggleImageUpload = () => {
+    setShowImageUpload(!showImageUpload);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (query.trim() && socket && isConnected) {
-      // Add user message to chat
+    if (socket && isConnected && (query.trim() || selectedImages.length > 0)) {
+      // Prepare user message
       const userMessage = {
         id: Date.now(),
-        content: query.trim(),
+        content: query.trim() || (selectedImages.length > 0 ? 'Sent an image' : ''),
         sender: 'user',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        images: selectedImages.length > 0 ? selectedImages : null
       };
       
       setMessages(prev => [...prev, userMessage]);
       setIsWaitingForResponse(true);
 
-      // Use Socket.IO to send message to backend
-      socket.emit('ai-message', query.trim());
+      // Send message to backend
+      if (selectedImages.length > 0) {
+        // Send message with images
+        const imageData = {
+          text: query.trim(),
+          imageData: selectedImages[0].base64, // For now, send only first image
+          mimeType: selectedImages[0].type
+        };
+        socket.emit('ai-message-with-image', imageData);
+      } else {
+        // Send text-only message
+        socket.emit('ai-message', query.trim());
+      }
+      
+      // Reset form
+      setQuery('');
+      setSelectedImages([]);
+      setShowImageUpload(false);
       
       // Hide initial screen once first message is sent
       if (showInitialScreen) {
         setShowInitialScreen(false);
       }
-      
-      setQuery('');
     }
   };
 
@@ -91,8 +136,37 @@ const Chatbot = ({ socket }) => {
               <h1 className="chatbot__title">Kripson</h1>
             </div>
 
+            {/* Image upload area for initial screen */}
+            {showImageUpload && (
+              <div className="chatbot__image-upload-area">
+                <ImageUpload 
+                  onImageSelect={handleImageSelect}
+                  onRemoveImage={handleRemoveImage}
+                  selectedImages={selectedImages}
+                />
+              </div>
+            )}
+
             {/* Main Search Area */}
             <div className="chatbot__search-section">
+              {/* Selected images preview for initial screen */}
+              {selectedImages.length > 0 && (
+                <div className="chatbot__selected-images">
+                  {selectedImages.map(image => (
+                    <div key={image.id} className="chatbot__selected-image">
+                      <img src={image.dataUrl} alt={image.name} />
+                      <button 
+                        type="button"
+                        onClick={() => handleRemoveImage(image.id)}
+                        className="chatbot__remove-image"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+              
               <form onSubmit={handleSubmit} className="chatbot__search-form">
                 <div className="chatbot__input-container">
                   <button type="button" className="chatbot__mic-btn" aria-label="Voice input">
@@ -108,10 +182,27 @@ const Chatbot = ({ socket }) => {
                     type="text"
                     value={query}
                     onChange={handleInputChange}
-                    placeholder="What do you want to know?"
+                    placeholder={selectedImages.length > 0 ? "Describe the image or ask a question..." : "What do you want to know?"}
                     className="chatbot__input"
                     autoFocus
                   />
+                  
+                  <button 
+                    type="button" 
+                    onClick={toggleImageUpload}
+                    className={`chatbot__image-btn ${showImageUpload ? 'active' : ''}`}
+                    aria-label="Upload image"
+                    title="Upload image"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" strokeWidth="2"/>
+                      <circle cx="9" cy="9" r="2" stroke="currentColor" strokeWidth="2"/>
+                      <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" stroke="currentColor" strokeWidth="2"/>
+                    </svg>
+                    {selectedImages.length > 0 && (
+                      <span className="chatbot__image-count">{selectedImages.length}</span>
+                    )}
+                  </button>
                   
                   <div className="chatbot__model-selector">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -125,11 +216,15 @@ const Chatbot = ({ socket }) => {
                     </svg>
                   </div>
                   
-                  <button type="button" className="chatbot__voice-btn" aria-label="Voice">
+                  <button 
+                    type="submit" 
+                    className="chatbot__voice-btn" 
+                    aria-label="Submit"
+                    disabled={!query.trim() && selectedImages.length === 0}
+                  >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="12" cy="12" r="2" fill="currentColor"/>
-                      <circle cx="12" cy="5" r="2" fill="currentColor"/>
-                      <circle cx="12" cy="19" r="2" fill="currentColor"/>
+                      <circle cx="12" cy="12" r="10" fill="currentColor"/>
+                      <path d="M16 12l-6 4V8l6 4z" fill="white" stroke="white" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </button>
                 </div>
@@ -167,7 +262,7 @@ const Chatbot = ({ socket }) => {
                   {message.sender === 'bot' ? (
                     // Bot message - plain text with actions below
                     <div className="chatbot__bot-message">
-                      <div className="chatbot__bot-text">
+                      <div className={`chatbot__bot-text ${message.isError ? 'chatbot__bot-text--error' : ''}`}>
                         {message.content}
                       </div>
                       <div className="chatbot__message-actions">
@@ -220,8 +315,15 @@ const Chatbot = ({ socket }) => {
                     </div>
                   ) : (
                     // User message - bubble on the right
-                    <div className="chatbot__user-message">
+                    <div className={`chatbot__user-message ${message.images ? 'chatbot__user-message--with-images' : ''}`}>
                       <div className="chatbot__user-bubble">
+                        {message.images && (
+                          <div className="chatbot__user-images">
+                            {message.images.map((image, index) => (
+                              <img key={index} src={image.dataUrl} alt={image.name} />
+                            ))}
+                          </div>
+                        )}
                         {message.content}
                       </div>
                     </div>
@@ -247,9 +349,38 @@ const Chatbot = ({ socket }) => {
               <div ref={messagesEndRef} /> {/* Empty div for scrolling to bottom */}
             </div>
             
+            {/* Image upload area */}
+            {showImageUpload && (
+              <div className="chatbot__image-upload-area">
+                <ImageUpload 
+                  onImageSelect={handleImageSelect}
+                  onRemoveImage={handleRemoveImage}
+                  selectedImages={selectedImages}
+                />
+              </div>
+            )}
+            
             {/* Input container */}
             <div className="chatbot__input-footer">
               <form onSubmit={handleSubmit} className="chatbot__input-form">
+                {/* Selected images preview bar */}
+                {selectedImages.length > 0 && (
+                  <div className="chatbot__selected-images">
+                    {selectedImages.map(image => (
+                      <div key={image.id} className="chatbot__selected-image">
+                        <img src={image.dataUrl} alt={image.name} />
+                        <button 
+                          type="button"
+                          onClick={() => handleRemoveImage(image.id)}
+                          className="chatbot__remove-image"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                
                 <div className="chatbot__input-container">
                   <button type="button" className="chatbot__mic-btn" aria-label="Voice input">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -264,11 +395,28 @@ const Chatbot = ({ socket }) => {
                     type="text"
                     value={query}
                     onChange={handleInputChange}
-                    placeholder={!isConnected ? "Connecting..." : "How can Kripson help?"}
+                    placeholder={!isConnected ? "Connecting..." : selectedImages.length > 0 ? "Describe the image or ask a question..." : "How can Kripson help?"}
                     className="chatbot__input"
                     disabled={!isConnected || isWaitingForResponse}
                     autoFocus
                   />
+                  
+                  <button 
+                    type="button" 
+                    onClick={toggleImageUpload}
+                    className={`chatbot__image-btn ${showImageUpload ? 'active' : ''}`}
+                    aria-label="Upload image"
+                    title="Upload image"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" strokeWidth="2"/>
+                      <circle cx="9" cy="9" r="2" stroke="currentColor" strokeWidth="2"/>
+                      <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" stroke="currentColor" strokeWidth="2"/>
+                    </svg>
+                    {selectedImages.length > 0 && (
+                      <span className="chatbot__image-count">{selectedImages.length}</span>
+                    )}
+                  </button>
                   
                   <div className="chatbot__model-selector">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -286,7 +434,7 @@ const Chatbot = ({ socket }) => {
                     type="submit" 
                     className="chatbot__voice-btn" 
                     aria-label="Submit"
-                    disabled={!isConnected || isWaitingForResponse || !query.trim()}
+                    disabled={!isConnected || isWaitingForResponse || (!query.trim() && selectedImages.length === 0)}
                   >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <circle cx="12" cy="12" r="10" fill="currentColor"/>
