@@ -58,6 +58,11 @@
         .nav-item-icon {
           font-size: 1.2rem;
           transition: transform 0.3s ease;
+          
+          .nav-icon {
+            width: 20px;
+            height: 20px;
+          }
         }
         
         .nav-item-label {

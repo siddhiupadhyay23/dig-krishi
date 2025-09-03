@@ -17,11 +17,56 @@ const Navbar = () => {
   };
 
   const navigationItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: '📊', path: '/dashboard' },
-    { id: 'profile', label: 'Profile', icon: '👤', path: '/profile' },
-    { id: 'ai-assistant', label: 'AI Assistant', icon: '🤖', path: '/reports?tab=ai-chat' },
-    { id: 'prediction', label: 'AI Prediction', icon: '🔮', path: '/reports?tab=prediction' },
-    { id: 'govt-services', label: 'Govt Services', icon: '🏛️', path: '/reports?tab=govt-services' }
+    { 
+      id: 'dashboard', 
+      label: 'Dashboard', 
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor" className="nav-icon">
+          <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+        </svg>
+      ), 
+      path: '/dashboard' 
+    },
+    { 
+      id: 'profile', 
+      label: 'Profile', 
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor" className="nav-icon">
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+        </svg>
+      ), 
+      path: '/profile' 
+    },
+    { 
+      id: 'ai-assistant', 
+      label: 'AI Assistant', 
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor" className="nav-icon">
+          <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 14v-2.47l6.88-6.88c.2-.2.51-.2.71 0l1.77 1.77c.2.2.2.51 0 .71L8.47 14H6zm12 0h-7.5l2-2H18v2z"/>
+        </svg>
+      ), 
+      path: '/reports?tab=ai-chat' 
+    },
+    { 
+      id: 'prediction', 
+      label: 'AI Prediction', 
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor" className="nav-icon">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+      ), 
+      path: '/reports?tab=prediction' 
+    },
+    { 
+      id: 'govt-services', 
+      label: 'Govt Services', 
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor" className="nav-icon">
+          <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+        </svg>
+      ), 
+      path: '/reports?tab=govt-services' 
+    }
   ];
 
   const isActiveTab = (path) => {
