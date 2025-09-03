@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
 import './Navbar.scss';
@@ -7,6 +7,7 @@ import logo from '../assets/logo1.png';
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { t, toggleLanguage, currentLanguage } = useLanguage();
   const { isAuthenticated, logout } = useAuth();
 
@@ -15,56 +16,66 @@ const Navbar = () => {
     navigate('/');
   };
 
+  const navigationItems = [
+    { id: 'dashboard', label: 'Dashboard', icon: '📊', path: '/dashboard' },
+    { id: 'profile', label: 'Profile', icon: '👤', path: '/profile' },
+    { id: 'ai-assistant', label: 'AI Assistant', icon: '🤖', path: '/reports?tab=ai-chat' },
+    { id: 'prediction', label: 'AI Prediction', icon: '🔮', path: '/reports?tab=prediction' },
+    { id: 'govt-services', label: 'Govt Services', icon: '🏛️', path: '/reports?tab=govt-services' }
+  ];
+
+  const isActiveTab = (path) => {
+    if (path.includes('?tab=')) {
+      const [basePath, tabQuery] = path.split('?tab=');
+      return location.pathname === basePath && location.search.includes(tabQuery);
+    }
+    return location.pathname === path;
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
         <div className="navbar-logo">
-          <img src={logo} alt="Digital Krishi Officer Logo" className="logo-image" />
+          <img src={logo} alt="Digital Krishi Officer Logo" className="logo-image" onClick={() => navigate('/')} />
         </div>
-        <div className="navbar-auth">
-          {/* Language Toggle Button */}
-          <button className="language-toggle-btn" onClick={toggleLanguage}>
-            <svg 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              className="language-icon"
-            >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" 
-              />
-            </svg>
-            <span className="language-text">{t('navbar.language')}</span>
-          </button>
 
-          {isAuthenticated ? (
-            <>
-              <button className="auth-btn dashboard-btn" onClick={() => navigate('/dashboard')}>
+        {isAuthenticated ? (
+          // Authenticated Navbar - Center Navigation Menu
+          <>
+            <div className="navbar-center-menu">
+              {navigationItems.map((item) => (
+                <button
+                  key={item.id}
+                  className={`nav-menu-item ${
+                    isActiveTab(item.path) ? 'active' : ''
+                  }`}
+                  onClick={() => navigate(item.path)}
+                >
+                  <span className="nav-item-icon">{item.icon}</span>
+                  <span className="nav-item-label">{item.label}</span>
+                </button>
+              ))}
+            </div>
+            
+            <div className="navbar-user-actions">
+              {/* Language Toggle Button */}
+              <button className="language-toggle-btn" onClick={toggleLanguage}>
                 <svg 
                   viewBox="0 0 24 24" 
                   fill="none" 
                   stroke="currentColor" 
-                  className="dashboard-icon"
+                  className="language-icon"
                 >
-                  <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                  <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    strokeWidth={2} 
+                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" 
+                  />
                 </svg>
-                Dashboard
+                <span className="language-text">{t('navbar.language')}</span>
               </button>
-              <button className="auth-btn profile-btn" onClick={() => navigate('/profile')}>
-                <svg 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  className="profile-icon"
-                >
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                  <circle cx="12" cy="7" r="4"/>
-                </svg>
-                Profile
-              </button>
+              
               <button className="auth-btn logout-btn" onClick={handleLogout}>
                 <svg 
                   viewBox="0 0 24 24" 
@@ -78,18 +89,37 @@ const Navbar = () => {
                 </svg>
                 Logout
               </button>
-            </>
-          ) : (
-            <>
-              <button className="auth-btn sign-up-btn" onClick={() => navigate('/signup')}>
-                {t('navbar.signUp')}
-              </button>
-              <button className="auth-btn sign-in-btn" onClick={() => navigate('/login')}>
-                {t('navbar.login')}
-              </button>
-            </>
-          )}
-        </div>
+            </div>
+          </>
+        ) : (
+          // Unauthenticated Navbar - Simple Layout
+          <div className="navbar-auth">
+            {/* Language Toggle Button */}
+            <button className="language-toggle-btn" onClick={toggleLanguage}>
+              <svg 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                className="language-icon"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" 
+                />
+              </svg>
+              <span className="language-text">{t('navbar.language')}</span>
+            </button>
+
+            <button className="auth-btn sign-up-btn" onClick={() => navigate('/signup')}>
+              {t('navbar.signUp')}
+            </button>
+            <button className="auth-btn sign-in-btn" onClick={() => navigate('/login')}>
+              {t('navbar.login')}
+            </button>
+          </div>
+        )}
       </div>
     </nav>
   );
