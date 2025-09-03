@@ -14,7 +14,7 @@ const {
 const router = express.Router();
 
 // Authentication middleware
-const authMiddleware = require("../middleware/auth.middleware");
+const { authMiddleware } = require("../middlewares/auth.middleware");
 router.use(authMiddleware);
 
 // GET - Get user profile data
