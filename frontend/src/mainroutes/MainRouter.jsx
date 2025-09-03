@@ -7,7 +7,6 @@ import Profile from '../components/Profile';
 import ProfileSetup from '../components/ProfileSetup';
 import Dashboard from '../components/Dashboard';
 import Reports from '../components/Reports';
-import AIAssistant from '../components/AIAssistant';
 import Prediction from '../components/Prediction';
 import GovernmentServices from '../components/GovernmentServices';
 import Chatbot from '../components/Chatbot';
@@ -57,7 +56,6 @@ const MainRouter = () => {
       <Route path="/profile" element={<Profile />} />
       <Route path="/profile-setup" element={<ProfileSetup />} />
       <Route path="/reports" element={<Reports />} />
-      <Route path="/ai-assistant" element={<AIAssistant />} />
       <Route path="/prediction" element={<Prediction />} />
       <Route path="/government-services" element={<GovernmentServices />} />
       <Route path="/chatbot" element={<Chatbot socket={socket} />} />

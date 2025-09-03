@@ -26,7 +26,7 @@ const HeroSection = () => {
     if (question.trim()) {
       if (isAuthenticated) {
         // Redirect to AI assistant page with the question
-        navigate('/ai-assistant', { state: { question: question.trim() } });
+        navigate('/chatbot', { state: { question: question.trim() } });
       } else {
         // Show login popup
         setShowLoginPopup(true);
@@ -37,7 +37,7 @@ const HeroSection = () => {
   const handleLoginSuccess = () => {
     setShowLoginPopup(false);
     // After login, redirect to AI assistant with the question
-    navigate('/ai-assistant', { state: { question: question.trim() } });
+    navigate('/chatbot', { state: { question: question.trim() } });
   };
   
   const handleCloseLoginPopup = () => {
