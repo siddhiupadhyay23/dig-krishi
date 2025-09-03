@@ -5,6 +5,7 @@ import SignUp from '../components/SignUp';
 import Login from '../components/Login';
 import Profile from '../components/Profile';
 import ProfileSetup from '../components/ProfileSetup';
+import Dashboard from '../components/Dashboard';
 import Reports from '../components/Reports';
 import { useAuth } from '../context/AuthContext';
 
@@ -46,7 +47,7 @@ const MainRouter = () => {
           onLoginSuccess={handleLoginSuccess}
         />
       } />
-      <Route path="/dashboard" element={<Reports />} />
+      <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/profile-setup" element={<ProfileSetup />} />
     </Routes>
