@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
@@ -42,6 +42,24 @@ const HeroSection = () => {
     setShowLoginPopup(false);
   };
   
+  // Handle escape key to reset to initial state
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setIsExpanded(false);
+        setQuestion('');
+        setShowLoginPopup(false);
+      }
+    };
+    
+    document.addEventListener('keydown', handleKeyDown);
+    
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+  
+  
   return (
     <>
       <div className="hero-section">
@@ -66,7 +84,10 @@ const HeroSection = () => {
                 <button 
                   type="button" 
                   className="add-button-inline"
-                  onClick={() => setQuestion('')}
+                  onClick={() => {
+                    setIsExpanded(false);
+                    setQuestion('');
+                  }}
                 >
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     <line x1="12" y1="5" x2="12" y2="19"></line>
