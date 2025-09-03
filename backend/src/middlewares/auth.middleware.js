@@ -4,7 +4,15 @@ const jwt = require("jsonwebtoken")
 
 async function authMiddleware(req,res,next) {
     
-    const {token} = req.cookies;
+    // Check for token in cookies first, then in Authorization header
+    let token = req.cookies.token;
+    
+    if (!token) {
+        const authHeader = req.headers.authorization;
+        if (authHeader && authHeader.startsWith('Bearer ')) {
+            token = authHeader.substring(7); // Remove 'Bearer ' prefix
+        }
+    }
 
     if(!token){
         return res.status(401).json({message:"unauthorized"})
@@ -18,8 +26,8 @@ async function authMiddleware(req,res,next) {
         req.user = user;
 
         next();
-    }catch{
-
+    }catch(error){
+        console.error('Auth middleware error:', error);
         res.status(401).json({message:"unauthorized"});
 
     }
