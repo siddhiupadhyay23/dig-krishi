@@ -1,9 +1,29 @@
 const express = require('express');
+const cors = require('cors');
+const cookieParser = require("cookie-parser")
+const connectToDb = require("./db/db")
+
+//Routes
+const authRoutes = require("./routes/auth.routes")
+const chatRoutes = require("./routes/chat.routes")
+const profileRoutes = require("./routes/profile.routes")
+
 const app = express();
+connectToDb()
 
+//using middlewares
+app.use(cors({
+  origin: ["http://localhost:3000", "http://localhost:3001", "http://localhost:5173"], // Frontend URLs
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+}));
+app.use(express.json())
+app.use(cookieParser())
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+//using Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/chat", chatRoutes);
+app.use("/api/profile", profileRoutes);
 
 module.exports = app;

@@ -1,0 +1,88 @@
+.dashboard-container {
+  min-height: 100vh;
+  background-color: var(--color-white);
+  width: 100%;
+
+  .dashboard-content {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 120px; // Account for navbar height
+
+    .dashboard-header {
+      text-align: center;
+      margin-bottom: 3rem;
+
+      .dashboard-title {
+        font-size: 3rem;
+        font-weight: 600;
+        color: var(--color-black);
+        margin-bottom: 1rem;
+        font-family: 'Playfair Display', serif;
+      }
+
+      .dashboard-subtitle {
+        font-size: 1.2rem;
+        color: var(--color-primary);
+        margin: 0;
+      }
+    }
+
+    .dashboard-main {
+      .dashboard-placeholder {
+        background-color: var(--color-light-green);
+        border: 2px solid var(--color-primary);
+        border-radius: 12px;
+        padding: 4rem 2rem;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 181, 100, 0.1);
+
+        h2 {
+          color: var(--color-black);
+          font-size: 2rem;
+          margin-bottom: 1rem;
+        }
+
+        p {
+          color: var(--color-primary);
+          font-size: 1.1rem;
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  // Mobile responsive
+  @media (max-width: 768px) {
+    .dashboard-content {
+      padding: 1rem;
+      padding-top: 100px;
+
+      .dashboard-header {
+        margin-bottom: 2rem;
+
+        .dashboard-title {
+          font-size: 2.5rem;
+        }
+
+        .dashboard-subtitle {
+          font-size: 1rem;
+        }
+      }
+
+      .dashboard-main {
+        .dashboard-placeholder {
+          padding: 2rem 1rem;
+
+          h2 {
+            font-size: 1.5rem;
+          }
+
+          p {
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+  }
+}

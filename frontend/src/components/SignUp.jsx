@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 import axios from 'axios';
 import './SignUp.scss';
 
-const SignUp = ({ onBackToHome, onNavigateToLogin }) => {
+const SignUp = ({ onBackToHome, onNavigateToLogin, onSignUpSuccess }) => {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -18,9 +21,20 @@ const SignUp = ({ onBackToHome, onNavigateToLogin }) => {
       ...formData,
       [e.target.name]: e.target.value
     });
+    
     // Clear messages when user types
-    if (error) setError('');
-    if (message) setMessage('');
+    setError('');
+    setMessage('');
+  };
+
+  // Check if all required fields are filled
+  const isFormValid = () => {
+    const nameValid = formData.name && formData.name.trim().length > 0;
+    const emailValid = formData.email && formData.email.trim().length > 0;
+    const passwordValid = formData.password && formData.password.length > 0;
+    const confirmPasswordValid = formData.confirmPassword && formData.confirmPassword.length > 0;
+    
+    return nameValid && emailValid && passwordValid && confirmPasswordValid;
   };
 
   const handleSubmit = async (e) => {
@@ -30,6 +44,13 @@ const SignUp = ({ onBackToHome, onNavigateToLogin }) => {
     setMessage('');
 
     try {
+      // Validate all fields are filled
+      if (!isFormValid()) {
+        setError('All fields are required');
+        setLoading(false);
+        return;
+      }
+
       // Validate passwords match
       if (formData.password !== formData.confirmPassword) {
         setError('Passwords do not match');
@@ -37,16 +58,27 @@ const SignUp = ({ onBackToHome, onNavigateToLogin }) => {
         return;
       }
 
+      setMessage('Creating your account...');
+
+      // Parse full name into first and last name
+      const nameParts = formData.name.trim().split(' ');
+      const firstName = nameParts[0] || '';
+      const lastName = nameParts.slice(1).join(' ') || '';
+
       // Make API call to register user
       const response = await axios.post('http://localhost:5000/api/auth/register', {
-        name: formData.name,
+        fullName: {
+          firstName: firstName,
+          lastName: lastName
+        },
         email: formData.email,
         password: formData.password,
         confirmPassword: formData.confirmPassword
       });
 
-      if (response.data.status === 'success') {
-        setMessage('Account created successfully! You can now login.');
+      if (response.data.message === 'User registered successful') {
+        setMessage('Account created successfully! Setting up your profile...');
+        
         // Clear form
         setFormData({
           name: '',
@@ -55,9 +87,9 @@ const SignUp = ({ onBackToHome, onNavigateToLogin }) => {
           confirmPassword: ''
         });
         
-        // Redirect to login after 2 seconds
+        // Redirect to profile after 2 seconds
         setTimeout(() => {
-          onNavigateToLogin();
+          onSignUpSuccess(response.data.user, response.data.token);
         }, 2000);
       }
     } catch (error) {
@@ -87,18 +119,30 @@ const SignUp = ({ onBackToHome, onNavigateToLogin }) => {
     <div className="signup-container">
       {/* Back Button */}
       <button className="signup-back-btn" onClick={onBackToHome}>
-        ←
+        <svg 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          className="back-arrow-icon"
+        >
+          <path 
+            strokeLinecap="round" 
+            strokeLinejoin="round" 
+            strokeWidth={2} 
+            d="M19 12H5m0 0l7 7m-7-7l7-7" 
+          />
+        </svg>
+        <span className="back-text">{t('auth.signUp.back')}</span>
       </button>
 
       {/* Main Content */}
       <div className="signup-content">
         <h1 className="signup-title">
-          Welcome to<br />
-          Digital Krishi Officer
+          {t('auth.signUp.title')}
         </h1>
         
         <p className="signup-subtitle">
-          Join our AI-powered farming community for expert agricultural advice and solutions
+          {t('auth.signUp.subtitle')}
         </p>
 
         {/* Success/Error Messages */}
@@ -132,59 +176,56 @@ const SignUp = ({ onBackToHome, onNavigateToLogin }) => {
           </div>
         )}
 
+
         {/* SignUp Form */}
-        <form className="signup-form" onSubmit={handleSubmit}>
+        <form className="signup-form" onSubmit={handleSubmit} noValidate>
           <input
             type="text"
             name="name"
-            placeholder="Full Name"
+            placeholder={t('auth.signUp.fullName')}
             className="signup-input"
             value={formData.name}
             onChange={handleInputChange}
-            required
           />
           
           <input
             type="email"
             name="email"
-            placeholder="Email Address"
+            placeholder={t('auth.signUp.email')}
             className="signup-input"
             value={formData.email}
             onChange={handleInputChange}
-            required
           />
           
           <input
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder={t('auth.signUp.password')}
             className="signup-input"
             value={formData.password}
             onChange={handleInputChange}
-            required
           />
 
           <input
             type="password"
             name="confirmPassword"
-            placeholder="Confirm Password"
+            placeholder={t('auth.signUp.confirmPassword')}
             className="signup-input"
             value={formData.confirmPassword}
             onChange={handleInputChange}
-            required
           />
           
           <button type="submit" className="signup-button" disabled={loading}>
-            {loading ? 'Creating Account...' : 'Create Account'}
+            {loading ? t('auth.signUp.createAccount') + '...' : t('auth.signUp.createAccount')}
           </button>
         </form>
 
 
         {/* Toggle to Login */}
         <div className="signup-toggle">
-          Already have an account? 
-          <span className="signup-toggle-link" onClick={onBackToHome}>
-            Sign In
+          {t('auth.signUp.alreadyHaveAccount')} 
+          <span className="signup-toggle-link" onClick={onNavigateToLogin}>
+            {t('auth.signUp.signIn')}
           </span>
         </div>
       </div>
