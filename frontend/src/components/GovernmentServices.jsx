@@ -338,17 +338,17 @@ const GovernmentServices = () => {
   };
 
   const tabs = [
-    { id: 'schemes', label: 'Government Schemes', icon: '🏛️' },
-    { id: 'subsidies', label: 'Subsidies', icon: '💰' },
-    { id: 'policies', label: 'Agricultural Policies', icon: '📋' },
-    { id: 'apply', label: 'Apply Online', icon: '📝' },
-    { id: 'track', label: 'Track Application', icon: '🔍' }
+    { id: 'schemes', label: 'Government Schemes', icon: 'S' },
+    { id: 'subsidies', label: 'Subsidies', icon: '$' },
+    { id: 'policies', label: 'Agricultural Policies', icon: 'P' },
+    { id: 'apply', label: 'Apply Online', icon: 'A' },
+    { id: 'track', label: 'Track Application', icon: 'T' }
   ];
 
   const renderSchemes = () => (
     <div className="schemes-section">
       <div className="section-header">
-        <h2>🏛️ Government Schemes for Farmers</h2>
+        <h2>Government Schemes for Farmers</h2>
         <p>Comprehensive list of central and state government schemes available for farmers</p>
       </div>
 
@@ -369,17 +369,17 @@ const GovernmentServices = () => {
             <p className="scheme-description">{scheme.description}</p>
 
             <div className="scheme-benefits">
-              <h4>💰 Benefits</h4>
+              <h4>Benefits</h4>
               <p>{scheme.benefits}</p>
             </div>
 
             <div className="scheme-deadline">
-              <h4>📅 Application Deadline</h4>
+              <h4>Application Deadline</h4>
               <p>{scheme.deadline}</p>
             </div>
 
             <div className="scheme-contact">
-              <h4>📞 Contact Information</h4>
+              <h4>Contact Information</h4>
               <div className="contact-details">
                 <p><strong>Helpline:</strong> {scheme.contactInfo.helpline}</p>
                 <p><strong>Email:</strong> {scheme.contactInfo.email}</p>
@@ -412,7 +412,7 @@ const GovernmentServices = () => {
 
             <div className="modal-body">
               <div className="detail-section">
-                <h3>📋 Eligibility Criteria</h3>
+                <h3>Eligibility Criteria</h3>
                 <ul>
                   {selectedScheme.eligibility.map((criteria, index) => (
                     <li key={index}>{criteria}</li>
@@ -421,7 +421,7 @@ const GovernmentServices = () => {
               </div>
 
               <div className="detail-section">
-                <h3>📄 Required Documents</h3>
+                <h3>Required Documents</h3>
                 <ul>
                   {selectedScheme.documents.map((document, index) => (
                     <li key={index}>{document}</li>
@@ -430,7 +430,7 @@ const GovernmentServices = () => {
               </div>
 
               <div className="detail-section">
-                <h3>📝 Application Process</h3>
+                <h3>Application Process</h3>
                 <ol>
                   {selectedScheme.applicationProcess.map((step, index) => (
                     <li key={index}>{step}</li>
@@ -447,7 +447,7 @@ const GovernmentServices = () => {
   const renderSubsidies = () => (
     <div className="subsidies-section">
       <div className="section-header">
-        <h2>💰 Agricultural Subsidies</h2>
+        <h2>Agricultural Subsidies</h2>
         <p>Financial assistance and subsidies available for farmers</p>
       </div>
 
@@ -498,7 +498,7 @@ const GovernmentServices = () => {
   const renderPolicies = () => (
     <div className="policies-section">
       <div className="section-header">
-        <h2>📋 Agricultural Policies</h2>
+        <h2>Agricultural Policies</h2>
         <p>National and state agricultural policies affecting farmers</p>
       </div>
 
@@ -578,7 +578,7 @@ const GovernmentServices = () => {
   const renderApplicationForm = () => (
     <div className="application-section">
       <div className="section-header">
-        <h2>📝 Apply for Government Schemes</h2>
+        <h2>Apply for Government Schemes</h2>
         <p>Submit your application for various government schemes online</p>
       </div>
 
@@ -713,13 +713,13 @@ const GovernmentServices = () => {
   const renderTrackApplication = () => (
     <div className="track-section">
       <div className="section-header">
-        <h2>🔍 Track Your Applications</h2>
+        <h2>Track Your Applications</h2>
         <p>Monitor the status of your submitted applications</p>
       </div>
 
       {applications.length === 0 ? (
         <div className="no-applications">
-          <div className="no-app-icon">📄</div>
+          <div className="no-app-icon">N</div>
           <h3>No Applications Found</h3>
           <p>You haven't submitted any applications yet. Visit the Apply Online section to submit your first application.</p>
         </div>
@@ -745,19 +745,19 @@ const GovernmentServices = () => {
                 <div className="app-progress">
                   <div className="progress-steps">
                     <div className="step completed">
-                      <div className="step-icon">✓</div>
+                      <div className="step-icon">1</div>
                       <span>Submitted</span>
                     </div>
                     <div className="step">
-                      <div className="step-icon">⏳</div>
+                      <div className="step-icon">2</div>
                       <span>Under Review</span>
                     </div>
                     <div className="step">
-                      <div className="step-icon">📋</div>
+                      <div className="step-icon">3</div>
                       <span>Approved</span>
                     </div>
                     <div className="step">
-                      <div className="step-icon">💰</div>
+                      <div className="step-icon">4</div>
                       <span>Payment</span>
                     </div>
                   </div>
@@ -781,7 +781,7 @@ const GovernmentServices = () => {
       <div className="gov-services-container">
         <div className="services-header">
           <div className="header-content">
-            <h1>🏛️ Government Services</h1>
+            <h1>Government Services</h1>
             <p>Access government schemes, subsidies, and policies for agricultural development</p>
           </div>
           <div className="user-info">

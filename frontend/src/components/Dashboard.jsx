@@ -1,6 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import Navbar from './Navbar';
+import { 
+  SunIcon, 
+  TomatoIcon, 
+  LocationIcon, 
+  SeedlingIcon, 
+  WindIcon, 
+  ThermometerIcon, 
+  WaterIcon, 
+  SproutIcon, 
+  RiceIcon,
+  AIIcon,
+  SatelliteIcon,
+  ProcessingIcon,
+  NetworkIcon
+} from './icons';
 import './Dashboard.scss';
 
 const Dashboard = () => {
@@ -16,7 +31,7 @@ const Dashboard = () => {
           <div className="weather-card">
             <div className="temperature">24°C</div>
             <div className="weather-status">
-              <span className="weather-icon">☀️</span>
+              <SunIcon className="weather-icon" size={20} />
               <span className="weather-text">Sunny</span>
             </div>
             <div className="weather-details">
@@ -28,11 +43,11 @@ const Dashboard = () => {
           {/* Google Maps Farm View */}
           <div className="farm-map-card">
             <div className="map-header">
-              <h3>🍅 Tomato Garden 01</h3>
+              <h3><TomatoIcon className="crop-icon" size={18} /> Tomato Garden 01</h3>
               <div className="location-info">
                 <span className="field-code">PL-OCK</span>
-                <span className="area">📏 Area: 200m²</span>
-                <span className="health-status">🌿 Healthy</span>
+                <span className="area"><LocationIcon className="area-icon" size={14} /> Area: 200m²</span>
+                <span className="health-status"><SeedlingIcon className="health-icon" size={14} /> Healthy</span>
               </div>
             </div>
             <div className="map-container">
@@ -71,23 +86,23 @@ const Dashboard = () => {
                 
                 {/* Farm zones */}
                 <div className="farm-zone tomato-zone" title="Tomato Growing Area">
-                  <span className="zone-label">🍅 Zone A</span>
+                  <span className="zone-label"><TomatoIcon size={12} /> Zone A</span>
                 </div>
                 <div className="farm-zone greenhouse-zone" title="Greenhouse">
-                  <span className="zone-label">🏡 GH-1</span>
+                  <span className="zone-label"><SeedlingIcon size={12} /> GH-1</span>
                 </div>
               </div>
               
               {/* Map controls */}
               <div className="map-controls">
                 <button className="map-control-btn satellite" title="Satellite View">
-                  🛰️
+                  <SatelliteIcon size={16} />
                 </button>
                 <button className="map-control-btn terrain" title="Terrain View">
-                  🏔️
+                  <SeedlingIcon size={16} />
                 </button>
                 <button className="map-control-btn fullscreen" title="Fullscreen">
-                  ⛶️
+                  <NetworkIcon size={16} />
                 </button>
               </div>
               
@@ -112,7 +127,7 @@ const Dashboard = () => {
           {/* Environmental Cards Grid */}
           <div className="env-cards-row">
             <div className="env-card plant-health">
-              <div className="card-icon">🌿</div>
+              <SeedlingIcon className="card-icon" size={24} />
               <div className="card-content">
                 <div className="card-title">Plant Health</div>
                 <div className="card-value">
@@ -120,11 +135,11 @@ const Dashboard = () => {
                 </div>
                 <div className="card-subtitle">Your plants are thriving and showing excellent health</div>
               </div>
-              <div className="card-arrow">→</div>
+              <div className="card-arrow">›</div>
             </div>
             
             <div className="env-card wind">
-              <div className="card-icon">💨</div>
+              <WindIcon className="card-icon" size={24} />
               <div className="card-content">
                 <div className="card-title">Wind</div>
                 <div className="card-value">
@@ -132,50 +147,50 @@ const Dashboard = () => {
                 </div>
                 <div className="card-subtitle">Make sure there is still adequate airflow</div>
               </div>
-              <div className="card-arrow">→</div>
+              <div className="card-arrow">›</div>
             </div>
             
             <div className="env-card temperature">
-              <div className="card-icon">🌡️</div>
+              <ThermometerIcon className="card-icon" size={24} />
               <div className="card-content">
                 <div className="card-title">Temperature</div>
                 <div className="card-value">18°C</div>
                 <div className="card-subtitle">Maintain consistent between 15°C and 20°C</div>
               </div>
-              <div className="card-arrow">→</div>
+              <div className="card-arrow">›</div>
             </div>
           </div>
 
           {/* Bottom Metrics Row */}
           <div className="bottom-metrics-row">
             <div className="metric-card">
-              <div className="metric-icon">🧪</div>
+              <ProcessingIcon className="metric-icon" size={24} />
               <div className="metric-content">
                 <div className="metric-title">pH Level</div>
                 <div className="metric-value">7.6</div>
                 <div className="metric-subtitle">Add acidic compost to balance the pH</div>
               </div>
-              <div className="metric-arrow">→</div>
+              <div className="metric-arrow">›</div>
             </div>
             
             <div className="metric-card">
-              <div className="metric-icon">💧</div>
+              <WaterIcon className="metric-icon" size={24} />
               <div className="metric-content">
                 <div className="metric-title">Humidity</div>
                 <div className="metric-value">82%</div>
                 <div className="metric-subtitle">Ensure ventilation is sufficient to prevent mold growth</div>
               </div>
-              <div className="metric-arrow">→</div>
+              <div className="metric-arrow">›</div>
             </div>
             
             <div className="metric-card">
-              <div className="metric-icon">🌱</div>
+              <SproutIcon className="metric-icon" size={24} />
               <div className="metric-content">
                 <div className="metric-title">Soil Moisture</div>
                 <div className="metric-value">65%</div>
                 <div className="metric-subtitle">Keep monitoring to ensure it remains consistent</div>
               </div>
-              <div className="metric-arrow">→</div>
+              <div className="metric-arrow">›</div>
             </div>
           </div>
         </div>
@@ -192,7 +207,7 @@ const Dashboard = () => {
           {/* Crop Metrics */}
           <div className="crop-metrics-card">
             <div className="metric-row">
-              <div className="metric-icon">🌾</div>
+              <RiceIcon className="metric-icon" size={18} />
               <div className="metric-info">
                 <div className="metric-label">Crop Health Index</div>
                 <div className="metric-value">85/100 (AI)</div>
@@ -201,7 +216,7 @@ const Dashboard = () => {
             </div>
             
             <div className="metric-row">
-              <div className="metric-icon">💧</div>
+              <WaterIcon className="metric-icon" size={18} />
               <div className="metric-info">
                 <div className="metric-label">Soil Moisture</div>
                 <div className="metric-value">65% (Ideal)</div>
@@ -210,7 +225,7 @@ const Dashboard = () => {
             </div>
             
             <div className="metric-row">
-              <div className="metric-icon">🌡️</div>
+              <ThermometerIcon className="metric-icon" size={18} />
               <div className="metric-info">
                 <div className="metric-label">Temperature</div>
                 <div className="metric-value">24°C</div>
@@ -219,7 +234,7 @@ const Dashboard = () => {
             </div>
             
             <div className="metric-row">
-              <div className="metric-icon">☀️</div>
+              <SunIcon className="metric-icon" size={18} />
               <div className="metric-info">
                 <div className="metric-label">Sunlight Exposure</div>
                 <div className="metric-value">7 hrs/day</div>
@@ -242,11 +257,11 @@ const Dashboard = () => {
               </div>
               <div className="wheat-image">
                 <div className="wheat-background">
-                  <div className="wheat-pattern">🌾</div>
+                  <RiceIcon className="wheat-pattern" size={32} />
                 </div>
               </div>
               <button className="ask-ai-btn">
-                <span className="ai-icon">🤖</span>
+                <AIIcon className="ai-icon" size={18} />
                 <span>Ask AI</span>
                 <span className="ai-arrow">›</span>
               </button>

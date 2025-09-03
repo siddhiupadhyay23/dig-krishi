@@ -75,6 +75,7 @@ async function loginUser(req,res) {
 
     res.status(200).json({
         message:"user logged in sucessful",
+        token: token, // Add token to response body
         user:{
             email:user.email,
             _id: user._id,

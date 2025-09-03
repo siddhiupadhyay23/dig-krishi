@@ -60,7 +60,7 @@ const StateCard = ({ selectedState, onUpdate, onNext, onPrevious, loading }) => 
               margin: 0,
               fontSize: '0.9rem'
             }}>
-              ✓ Selected: <strong>{state}</strong>
+              Selected: <strong>{state}</strong>
             </p>
           </div>
         )}

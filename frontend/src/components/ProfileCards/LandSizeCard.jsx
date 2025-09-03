@@ -72,7 +72,7 @@ const LandSizeCard = ({ landSize, landUnit, onUpdate, onNext, onPrevious, onSkip
               margin: 0,
               fontSize: '0.9rem'
             }}>
-              ✓ Land Size: <strong>{size} {unit}</strong>
+              Land Size: <strong>{size} {unit}</strong>
             </p>
           </div>
         )}
@@ -89,7 +89,7 @@ const LandSizeCard = ({ landSize, landUnit, onUpdate, onNext, onPrevious, onSkip
             margin: '0 0 0.5rem 0',
             fontSize: '1rem' 
           }}>
-            💡 Why do we ask for land size?
+            Why do we ask for land size?
           </h4>
           <p style={{ 
             color: 'var(--color-black)', 

@@ -90,6 +90,11 @@ const profileSchema = new mongoose.Schema({
 
   // Land Information
   landDetails: {
+    farmName: {
+      type: String,
+      default: null,
+      trim: true
+    },
     totalLandSize: {
       value: {
         type: Number,
@@ -168,7 +173,7 @@ const profileSchema = new mongoose.Schema({
   // Current Step in Profile Setup
   currentProfileStep: {
     type: Number,
-    default: 1, // 1: Welcome, 2: Phone, 3: State, 4: City, 5: District, 6: Land Size, 7: Crop Selection
+    default: 1, // 1: Welcome, 2: Phone, 3: State, 4: City, 5: District (optional), 6: Land Size, 7: Crop Selection
     min: 1,
     max: 7
   },
@@ -198,14 +203,13 @@ profileSchema.index({ 'cropsGrown.cropName': 1 });
 profileSchema.pre('save', function(next) {
   this.lastUpdated = new Date();
   
-  // Check if profile is complete
+  // Check if profile is complete (district is optional)
   const completion = this.profileCompletion;
   this.profileCompletion.isProfileComplete = 
     completion.welcomeCompleted && 
     completion.phoneCompleted && 
     completion.stateCompleted && 
     completion.cityCompleted && 
-    completion.districtCompleted && 
     completion.landSizeCompleted && 
     completion.cropSelectionCompleted;
   
@@ -217,24 +221,33 @@ profileSchema.pre('save', function(next) {
   next();
 });
 
-// Instance method to get profile completion percentage
+// Instance method to get profile completion percentage (district is optional)
 profileSchema.methods.getCompletionPercentage = function() {
   const completion = this.profileCompletion;
-  const totalSteps = 7;
-  let completedSteps = 0;
+  const totalRequiredSteps = 6; // Excluding district as it's optional
+  const totalOptionalSteps = 1; // District
+  let completedRequiredSteps = 0;
+  let completedOptionalSteps = 0;
   
-  if (completion.welcomeCompleted) completedSteps++;
-  if (completion.phoneCompleted) completedSteps++;
-  if (completion.stateCompleted) completedSteps++;
-  if (completion.cityCompleted) completedSteps++;
-  if (completion.districtCompleted) completedSteps++;
-  if (completion.landSizeCompleted) completedSteps++;
-  if (completion.cropSelectionCompleted) completedSteps++;
+  // Required steps
+  if (completion.welcomeCompleted) completedRequiredSteps++;
+  if (completion.phoneCompleted) completedRequiredSteps++;
+  if (completion.stateCompleted) completedRequiredSteps++;
+  if (completion.cityCompleted) completedRequiredSteps++;
+  if (completion.landSizeCompleted) completedRequiredSteps++;
+  if (completion.cropSelectionCompleted) completedRequiredSteps++;
   
-  return Math.round((completedSteps / totalSteps) * 100);
+  // Optional steps
+  if (completion.districtCompleted) completedOptionalSteps++;
+  
+  // Calculate percentage with optional steps as bonus
+  const requiredPercentage = (completedRequiredSteps / totalRequiredSteps) * 90; // 90% for required
+  const optionalPercentage = (completedOptionalSteps / totalOptionalSteps) * 10; // 10% bonus for optional
+  
+  return Math.round(requiredPercentage + optionalPercentage);
 };
 
-// Instance method to get next step
+// Instance method to get next step (district step is optional, can be skipped)
 profileSchema.methods.getNextStep = function() {
   const completion = this.profileCompletion;
   
@@ -242,8 +255,7 @@ profileSchema.methods.getNextStep = function() {
   if (!completion.phoneCompleted) return 2;
   if (!completion.stateCompleted) return 3;
   if (!completion.cityCompleted) return 4;
-  if (!completion.districtCompleted) return 5;
-  if (!completion.landSizeCompleted) return 6;
+  if (!completion.landSizeCompleted) return 6; // Skip district (5) as it's optional
   if (!completion.cropSelectionCompleted) return 7;
   
   return 0; // Profile complete

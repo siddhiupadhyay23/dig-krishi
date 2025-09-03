@@ -28,42 +28,42 @@ const AIAssistant = () => {
       id: 1,
       title: 'Crop Recommendations',
       description: 'Get AI-powered crop suggestions based on soil and weather',
-      icon: '🌾',
+      icon: 'C',
       action: 'What crops should I plant this season?'
     },
     {
       id: 2,
       title: 'Pest Management',
       description: 'Identify and manage crop pests effectively',
-      icon: '🐛',
+      icon: 'P',
       action: 'How can I manage pests in my crops naturally?'
     },
     {
       id: 3,
       title: 'Soil Health',
       description: 'Learn about soil testing and improvement',
-      icon: '🌱',
+      icon: 'S',
       action: 'How can I improve my soil health?'
     },
     {
       id: 4,
       title: 'Weather Advisory',
       description: 'Get weather-based farming advice',
-      icon: '🌤️',
+      icon: 'W',
       action: 'What farming activities should I do based on current weather?'
     },
     {
       id: 5,
       title: 'Food Technology',
       description: 'Learn about food processing and preservation',
-      icon: '🏭',
+      icon: 'F',
       action: 'How can I process and preserve my harvest?'
     },
     {
       id: 6,
       title: 'Rural Development',
       description: 'Information about rural development schemes',
-      icon: '🏘️',
+      icon: 'R',
       action: 'What rural development programs are available for farmers?'
     }
   ];
@@ -241,7 +241,7 @@ const AIAssistant = () => {
       <div className="assistant-container">
         <div className="assistant-header">
           <div className="header-content">
-            <h1>🧠 AI Agricultural Assistant</h1>
+            <h1>AI Agricultural Assistant</h1>
             <p>Your intelligent farming companion for sustainable agriculture and rural development</p>
           </div>
           <div className="user-info">
@@ -251,7 +251,7 @@ const AIAssistant = () => {
 
         <div className="chat-container">
           <div className="conversation-starters">
-            <h3>🚀 Quick Start Topics</h3>
+            <h3>Quick Start Topics</h3>
             <div className="starter-buttons">
               {quickActions.map((action) => (
                 <button
@@ -270,7 +270,7 @@ const AIAssistant = () => {
             <div className="chat-messages">
               {messages.length === 1 ? (
                 <div className="welcome-message">
-                  <div className="welcome-icon">🌾</div>
+                  <div className="welcome-icon">AI</div>
                   <h3>Welcome to Your AI Agricultural Assistant!</h3>
                   <p>
                     I'm here to help you with farming techniques, crop management, 

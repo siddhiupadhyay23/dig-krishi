@@ -64,13 +64,13 @@ const Prediction = () => {
       uvIndex: 'Moderate'
     },
     forecast: [
-      { day: 'Today', temp: '29°C', condition: 'Partly Cloudy', icon: '⛅', rain: '20%' },
-      { day: 'Tomorrow', temp: '31°C', condition: 'Sunny', icon: '☀️', rain: '5%' },
-      { day: 'Wed', temp: '28°C', condition: 'Rainy', icon: '🌧️', rain: '80%' },
-      { day: 'Thu', temp: '27°C', condition: 'Cloudy', icon: '☁️', rain: '40%' },
-      { day: 'Fri', temp: '30°C', condition: 'Sunny', icon: '☀️', rain: '10%' },
-      { day: 'Sat', temp: '29°C', condition: 'Partly Cloudy', icon: '⛅', rain: '30%' },
-      { day: 'Sun', temp: '28°C', condition: 'Light Rain', icon: '🌦️', rain: '60%' }
+      { day: 'Today', temp: '29°C', condition: 'Partly Cloudy', icon: 'PC', rain: '20%' },
+      { day: 'Tomorrow', temp: '31°C', condition: 'Sunny', icon: 'S', rain: '5%' },
+      { day: 'Wed', temp: '28°C', condition: 'Rainy', icon: 'R', rain: '80%' },
+      { day: 'Thu', temp: '27°C', condition: 'Cloudy', icon: 'C', rain: '40%' },
+      { day: 'Fri', temp: '30°C', condition: 'Sunny', icon: 'S', rain: '10%' },
+      { day: 'Sat', temp: '29°C', condition: 'Partly Cloudy', icon: 'PC', rain: '30%' },
+      { day: 'Sun', temp: '28°C', condition: 'Light Rain', icon: 'LR', rain: '60%' }
     ],
     alerts: [
       { type: 'warning', message: 'Heavy rainfall expected on Wednesday. Protect crops and ensure proper drainage.', priority: 'high' },
@@ -124,16 +124,16 @@ const Prediction = () => {
   };
 
   const tabs = [
-    { id: 'crop-prediction', label: 'Crop Prediction', icon: '🌾' },
-    { id: 'weather-forecast', label: 'Weather Forecast', icon: '🌤️' },
-    { id: 'market-trends', label: 'Market Trends', icon: '📈' }
+    { id: 'crop-prediction', label: 'Crop Prediction', icon: 'C' },
+    { id: 'weather-forecast', label: 'Weather Forecast', icon: 'W' },
+    { id: 'market-trends', label: 'Market Trends', icon: 'M' }
   ];
 
   const renderCropPrediction = () => (
     <div className="crop-prediction-section">
       <div className="prediction-form-container">
         <div className="form-header">
-          <h2>🌾 AI Crop Yield Prediction</h2>
+          <h2>AI Crop Yield Prediction</h2>
           <p>Get accurate crop yield predictions based on advanced AI models and real-time data</p>
         </div>
 
@@ -238,7 +238,7 @@ const Prediction = () => {
               </>
             ) : (
               <>
-                🔮 Generate Prediction
+                Generate Prediction
               </>
             )}
           </button>
@@ -247,12 +247,12 @@ const Prediction = () => {
         {predictionResult && (
           <div className="prediction-results">
             <div className="results-header">
-              <h3>🎯 Prediction Results for {predictionResult.crop.charAt(0).toUpperCase() + predictionResult.crop.slice(1)}</h3>
+              <h3>Prediction Results for {predictionResult.crop.charAt(0).toUpperCase() + predictionResult.crop.slice(1)}</h3>
             </div>
 
             <div className="results-grid">
               <div className="result-card primary">
-                <div className="result-icon">🌾</div>
+                <div className="result-icon">Y</div>
                 <div className="result-content">
                   <h4>Expected Yield</h4>
                   <p className="result-value">{predictionResult.expectedYield}</p>
@@ -261,7 +261,7 @@ const Prediction = () => {
               </div>
 
               <div className="result-card">
-                <div className="result-icon">📊</div>
+                <div className="result-icon">R</div>
                 <div className="result-content">
                   <h4>Yield Range</h4>
                   <p className="result-value">{predictionResult.yieldRange}</p>
@@ -269,7 +269,7 @@ const Prediction = () => {
               </div>
 
               <div className="result-card">
-                <div className="result-icon">💰</div>
+                <div className="result-icon">$</div>
                 <div className="result-content">
                   <h4>Market Price</h4>
                   <p className="result-value">{predictionResult.marketPrice}</p>
@@ -278,7 +278,7 @@ const Prediction = () => {
             </div>
 
             <div className="recommendations-section">
-              <h4>📝 AI Recommendations</h4>
+              <h4>AI Recommendations</h4>
               <ul className="recommendations-list">
                 {predictionResult.recommendations.map((rec, index) => (
                   <li key={index}>{rec}</li>
@@ -287,7 +287,7 @@ const Prediction = () => {
             </div>
 
             <div className="risk-analysis">
-              <h4>⚠️ Risk Analysis</h4>
+              <h4>Risk Analysis</h4>
               <div className="risk-factors">
                 {predictionResult.riskFactors.map((risk, index) => (
                   <div key={index} className={`risk-factor ${risk.level.toLowerCase()}`}>
@@ -309,7 +309,7 @@ const Prediction = () => {
   const renderWeatherForecast = () => (
     <div className="weather-section">
       <div className="weather-header">
-        <h2>🌤️ Weather Forecast & Agricultural Advisory</h2>
+        <h2>Weather Forecast & Agricultural Advisory</h2>
         <p>7-day weather forecast with farming recommendations</p>
       </div>
 
@@ -317,7 +317,7 @@ const Prediction = () => {
         <h3>Current Weather</h3>
         <div className="current-weather-card">
           <div className="weather-main">
-            <div className="weather-icon">🌤️</div>
+            <div className="weather-icon">W</div>
             <div className="weather-info">
               <h4>{weatherData.current.location}</h4>
               <p className="temperature">{weatherData.current.temperature}</p>
@@ -361,12 +361,12 @@ const Prediction = () => {
       </div>
 
       <div className="weather-alerts">
-        <h3>🚨 Weather Alerts & Advisories</h3>
+        <h3>Weather Alerts & Advisories</h3>
         <div className="alerts-list">
           {weatherData.alerts.map((alert, index) => (
             <div key={index} className={`alert-card ${alert.type} ${alert.priority}`}>
               <div className="alert-icon">
-                {alert.type === 'warning' ? '⚠️' : alert.type === 'info' ? 'ℹ️' : '📢'}
+                {alert.type === 'warning' ? '!' : alert.type === 'info' ? 'i' : 'A'}
               </div>
               <div className="alert-content">
                 <div className="alert-priority">{alert.priority.toUpperCase()}</div>
@@ -382,7 +382,7 @@ const Prediction = () => {
   const renderMarketTrends = () => (
     <div className="market-section">
       <div className="market-header">
-        <h2>📈 Market Trends & Price Predictions</h2>
+        <h2>Market Trends & Price Predictions</h2>
         <p>Real-time market data and price forecasts for agricultural commodities</p>
       </div>
 
@@ -391,28 +391,28 @@ const Prediction = () => {
           <div className="market-card trending-up">
             <h4>Rice</h4>
             <p className="price">₹28,500/ton</p>
-            <p className="trend">↗️ +12% this month</p>
+            <p className="trend">+12% this month</p>
           </div>
           <div className="market-card trending-down">
             <h4>Coconut</h4>
             <p className="price">₹15,200/ton</p>
-            <p className="trend">↘️ -5% this month</p>
+            <p className="trend">-5% this month</p>
           </div>
           <div className="market-card stable">
             <h4>Black Pepper</h4>
             <p className="price">₹45,000/kg</p>
-            <p className="trend">→ Stable</p>
+            <p className="trend">Stable</p>
           </div>
           <div className="market-card trending-up">
             <h4>Cardamom</h4>
             <p className="price">₹1,200/kg</p>
-            <p className="trend">↗️ +18% this month</p>
+            <p className="trend">+18% this month</p>
           </div>
         </div>
       </div>
 
       <div className="market-insights">
-        <h3>🧠 Market Insights</h3>
+        <h3>Market Insights</h3>
         <div className="insights-grid">
           <div className="insight-card">
             <h4>Best Time to Sell</h4>
@@ -442,7 +442,7 @@ const Prediction = () => {
       <div className="prediction-container">
         <div className="prediction-header">
           <div className="header-content">
-            <h1>🔮 AI Prediction & Analytics</h1>
+            <h1>AI Prediction & Analytics</h1>
             <p>Advanced AI-powered predictions for crop yields, weather forecasting, and market trends</p>
           </div>
           <div className="user-info">

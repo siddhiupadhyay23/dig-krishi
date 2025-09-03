@@ -10,7 +10,6 @@ build/
 .env
 .env.local
 .env.development.local
-.env.test.local
 .env.production.local
 
 # Logs
@@ -30,8 +29,6 @@ pids
 coverage/
 *.lcov
 
-# nyc test coverage
-.nyc_output
 
 # Dependency directories
 jspm_packages/

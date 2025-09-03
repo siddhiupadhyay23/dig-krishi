@@ -35,7 +35,7 @@ const ProfileSetup = () => {
 
   // Get auth token for API calls
   const getAuthToken = () => {
-    return localStorage.getItem('token');
+    return localStorage.getItem('authToken');
   };
 
   // API call helper

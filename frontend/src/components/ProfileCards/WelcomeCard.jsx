@@ -20,7 +20,7 @@ const WelcomeCard = ({ user, phoneNumber, onUpdate, onNext, loading }) => {
     <div className="profile-card">
       <div className="card-header">
         <h2 className="card-title">
-          Welcome, {user?.fullName?.firstName}! 👋
+          Welcome, {user?.fullName?.firstName}!
         </h2>
         <p className="card-subtitle">
           Let's set up your profile to get personalized farming assistance
@@ -41,7 +41,7 @@ const WelcomeCard = ({ user, phoneNumber, onUpdate, onNext, loading }) => {
               margin: '0 0 0.5rem 0',
               fontSize: '1.1rem' 
             }}>
-              🌱 Welcome to Digital Krishi Officer!
+              Welcome to Digital Krishi Officer!
             </h3>
             <p style={{ 
               color: 'var(--color-black)', 

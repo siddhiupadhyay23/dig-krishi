@@ -176,17 +176,11 @@ async function updateCity(req, res) {
     }
 }
 
-// Update district (Step 5)
+// Update district (Step 5 - Optional)
 async function updateDistrict(req, res) {
     try {
         const userId = req.user.id;
         const { district } = req.body;
-
-        if (!district) {
-            return res.status(400).json({
-                message: "District is required"
-            });
-        }
 
         let profile = await profileModel.findOne({ userId });
         if (!profile) {
@@ -195,13 +189,14 @@ async function updateDistrict(req, res) {
             });
         }
 
-        profile.location.district = district;
+        // District is optional, so allow null/empty values
+        profile.location.district = district || null;
         profile.profileCompletion.districtCompleted = true;
         profile.currentProfileStep = 6;
         await profile.save();
 
         res.status(200).json({
-            message: "District updated successfully",
+            message: district ? "District updated successfully" : "District step skipped",
             profile: profile,
             nextStep: profile.getNextStep()
         });
@@ -359,10 +354,10 @@ async function skipStep(req, res) {
                     message: "City step cannot be skipped"
                 });
             case 5:
-                // District cannot be skipped
-                return res.status(400).json({
-                    message: "District step cannot be skipped"
-                });
+                // District can be skipped as it's optional
+                profile.profileCompletion.districtCompleted = true;
+                profile.location.district = null;
+                break;
             case 6:
                 profile.profileCompletion.landSizeCompleted = true;
                 profile.landDetails.totalLandSize.value = null;
@@ -391,6 +386,407 @@ async function skipStep(req, res) {
     }
 }
 
+// Update complete personal information
+async function updatePersonalInfo(req, res) {
+    try {
+        const userId = req.user.id;
+        const { phoneNumber, profilePhoto } = req.body;
+
+        // Validate phone number if provided
+        if (phoneNumber && !/^\d{10}$/.test(phoneNumber)) {
+            return res.status(400).json({
+                message: "Phone number must be 10 digits"
+            });
+        }
+
+        let profile = await profileModel.findOne({ userId });
+        if (!profile) {
+            profile = await profileModel.createInitialProfile(userId);
+        }
+
+        // Update personal information
+        if (phoneNumber !== undefined) {
+            profile.phoneNumber = phoneNumber;
+            profile.profileCompletion.phoneCompleted = true;
+        }
+
+        await profile.save();
+
+        // Populate user data for response
+        await profile.populate('userId', 'email fullName');
+
+        res.status(200).json({
+            message: "Personal information updated successfully",
+            profile: profile,
+            completionPercentage: profile.getCompletionPercentage(),
+            nextStep: profile.getNextStep()
+        });
+    } catch (error) {
+        console.error('Update personal info error:', error);
+        res.status(500).json({
+            message: "Internal server error",
+            error: error.message
+        });
+    }
+}
+
+// Update complete farm details
+async function updateFarmDetails(req, res) {
+    try {
+        const userId = req.user.id;
+        const { 
+            farmName, 
+            landSize, 
+            unit, 
+            landType, 
+            soilType,
+            state,
+            city,
+            district,
+            pincode,
+            primaryCrops,
+            secondaryCrops,
+            customPrimaryCrops,
+            customSecondaryCrops,
+            experience,
+            farmingMethod
+        } = req.body;
+
+        let profile = await profileModel.findOne({ userId });
+        if (!profile) {
+            return res.status(404).json({
+                message: "Profile not found"
+            });
+        }
+
+        // Update location if provided
+        if (state) {
+            profile.location.state = state;
+            profile.profileCompletion.stateCompleted = true;
+        }
+        if (city) {
+            profile.location.city = city;
+            profile.profileCompletion.cityCompleted = true;
+        }
+        if (district) {
+            profile.location.district = district;
+            profile.profileCompletion.districtCompleted = true;
+        }
+        // Pincode is optional now
+        if (pincode !== undefined) {
+            if (pincode && !/^\d{6}$/.test(pincode)) {
+                return res.status(400).json({
+                    message: "Pincode must be 6 digits"
+                });
+            }
+            profile.location.pincode = pincode || null;
+        }
+
+        // Update farm name
+        if (farmName !== undefined) {
+            profile.landDetails.farmName = farmName || null;
+        }
+
+        // Update land details
+        if (landSize !== undefined) {
+            if (landSize && landSize <= 0) {
+                return res.status(400).json({
+                    message: "Land size must be greater than 0"
+                });
+            }
+            profile.landDetails.totalLandSize.value = landSize;
+            profile.landDetails.totalLandSize.unit = unit || 'acres';
+            profile.profileCompletion.landSizeCompleted = true;
+        }
+        
+        if (landType) {
+            profile.landDetails.landType = landType;
+        }
+        if (soilType) {
+            profile.landDetails.soilType = soilType;
+        }
+
+        // Update farming experience
+        if (experience !== undefined) {
+            // Map frontend experience values to years
+            let yearsOfExperience = null;
+            if (experience === 'beginner') yearsOfExperience = 1;
+            else if (experience === 'intermediate') yearsOfExperience = 5;
+            else if (experience === 'experienced') yearsOfExperience = 15;
+            
+            profile.farmingExperience.yearsOfExperience = yearsOfExperience;
+        }
+
+        if (farmingMethod !== undefined) {
+            // Map frontend values to backend enum
+            const farmingTypeMap = {
+                'organic': 'organic',
+                'conventional': 'traditional',
+                'mixed': 'mixed',
+                'sustainable': 'modern'
+            };
+            profile.farmingExperience.farmingType = farmingTypeMap[farmingMethod] || farmingMethod;
+        }
+
+        // Handle crops data - convert arrays + custom fields to complex cropsGrown array
+        if (primaryCrops !== undefined || secondaryCrops !== undefined) {
+            const cropNames = [];
+            
+            // Handle primary crops array
+            if (Array.isArray(primaryCrops) && primaryCrops.length > 0) {
+                // Add predefined primary crops
+                const predefinedPrimaryCrops = primaryCrops.filter(crop => crop !== 'other');
+                cropNames.push(...predefinedPrimaryCrops);
+                
+                // Add custom primary crops if 'other' is selected
+                if (primaryCrops.includes('other') && customPrimaryCrops) {
+                    cropNames.push(...customPrimaryCrops.split(',').map(crop => crop.trim()).filter(crop => crop));
+                }
+            }
+            
+            // Handle secondary crops array (optional)
+            if (Array.isArray(secondaryCrops) && secondaryCrops.length > 0) {
+                // Add predefined secondary crops
+                const predefinedSecondaryCrops = secondaryCrops.filter(crop => crop !== 'other');
+                cropNames.push(...predefinedSecondaryCrops);
+                
+                // Add custom secondary crops if 'other' is selected
+                if (secondaryCrops.includes('other') && customSecondaryCrops) {
+                    cropNames.push(...customSecondaryCrops.split(',').map(crop => crop.trim()).filter(crop => crop));
+                }
+            }
+            
+            // Convert to cropsGrown array format
+            profile.cropsGrown = cropNames.map(cropName => ({
+                cropName: cropName,
+                cropType: 'other', // Default type
+                season: 'kharif', // Default season
+                areaAllocated: {
+                    value: null, // No area specified
+                    unit: unit || 'acres'
+                },
+                isActive: true
+            }));
+            
+            if (cropNames.length > 0) {
+                profile.profileCompletion.cropSelectionCompleted = true;
+            }
+        }
+
+        await profile.save();
+        await profile.populate('userId', 'email fullName');
+
+        res.status(200).json({
+            message: "Farm details updated successfully",
+            profile: profile,
+            completionPercentage: profile.getCompletionPercentage(),
+            nextStep: profile.getNextStep()
+        });
+    } catch (error) {
+        console.error('Update farm details error:', error);
+        res.status(500).json({
+            message: "Internal server error",
+            error: error.message
+        });
+    }
+}
+
+// Update farming experience
+async function updateFarmingExperience(req, res) {
+    try {
+        const userId = req.user.id;
+        const { yearsOfExperience, farmingType } = req.body;
+
+        let profile = await profileModel.findOne({ userId });
+        if (!profile) {
+            return res.status(404).json({
+                message: "Profile not found"
+            });
+        }
+
+        // Update farming experience
+        if (yearsOfExperience !== undefined) {
+            if (yearsOfExperience < 0) {
+                return res.status(400).json({
+                    message: "Years of experience cannot be negative"
+                });
+            }
+            profile.farmingExperience.yearsOfExperience = yearsOfExperience;
+        }
+        
+        if (farmingType) {
+            profile.farmingExperience.farmingType = farmingType;
+        }
+
+        await profile.save();
+        await profile.populate('userId', 'email fullName');
+
+        res.status(200).json({
+            message: "Farming experience updated successfully",
+            profile: profile,
+            completionPercentage: profile.getCompletionPercentage(),
+            nextStep: profile.getNextStep()
+        });
+    } catch (error) {
+        console.error('Update farming experience error:', error);
+        res.status(500).json({
+            message: "Internal server error",
+            error: error.message
+        });
+    }
+}
+
+// Add new crop
+async function addCrop(req, res) {
+    try {
+        const userId = req.user.id;
+        const { cropName, cropType, season, areaAllocated, unit } = req.body;
+
+        if (!cropName) {
+            return res.status(400).json({
+                message: "Crop name is required"
+            });
+        }
+
+        let profile = await profileModel.findOne({ userId });
+        if (!profile) {
+            return res.status(404).json({
+                message: "Profile not found"
+            });
+        }
+
+        // Check if crop already exists
+        const existingCrop = profile.cropsGrown.find(crop => 
+            crop.cropName.toLowerCase() === cropName.toLowerCase() && crop.isActive
+        );
+        
+        if (existingCrop) {
+            return res.status(400).json({
+                message: "This crop is already added to your profile"
+            });
+        }
+
+        // Add new crop
+        const newCrop = {
+            cropName: cropName,
+            cropType: cropType || 'other',
+            season: season || 'kharif',
+            areaAllocated: {
+                value: areaAllocated || null,
+                unit: unit || 'acres'
+            },
+            isActive: true
+        };
+
+        profile.cropsGrown.push(newCrop);
+        await profile.save();
+        await profile.populate('userId', 'email fullName');
+
+        res.status(200).json({
+            message: "Crop added successfully",
+            profile: profile,
+            addedCrop: newCrop
+        });
+    } catch (error) {
+        console.error('Add crop error:', error);
+        res.status(500).json({
+            message: "Internal server error",
+            error: error.message
+        });
+    }
+}
+
+// Remove crop
+async function removeCrop(req, res) {
+    try {
+        const userId = req.user.id;
+        const { cropId } = req.params;
+
+        let profile = await profileModel.findOne({ userId });
+        if (!profile) {
+            return res.status(404).json({
+                message: "Profile not found"
+            });
+        }
+
+        // Find and remove the crop
+        const cropIndex = profile.cropsGrown.findIndex(crop => 
+            crop._id.toString() === cropId
+        );
+        
+        if (cropIndex === -1) {
+            return res.status(404).json({
+                message: "Crop not found"
+            });
+        }
+
+        const removedCrop = profile.cropsGrown[cropIndex];
+        profile.cropsGrown.splice(cropIndex, 1);
+        
+        await profile.save();
+        await profile.populate('userId', 'email fullName');
+
+        res.status(200).json({
+            message: "Crop removed successfully",
+            profile: profile,
+            removedCrop: removedCrop
+        });
+    } catch (error) {
+        console.error('Remove crop error:', error);
+        res.status(500).json({
+            message: "Internal server error",
+            error: error.message
+        });
+    }
+}
+
+// Update crop
+async function updateCrop(req, res) {
+    try {
+        const userId = req.user.id;
+        const { cropId } = req.params;
+        const { cropName, cropType, season, areaAllocated, unit, isActive } = req.body;
+
+        let profile = await profileModel.findOne({ userId });
+        if (!profile) {
+            return res.status(404).json({
+                message: "Profile not found"
+            });
+        }
+
+        // Find the crop to update
+        const crop = profile.cropsGrown.id(cropId);
+        if (!crop) {
+            return res.status(404).json({
+                message: "Crop not found"
+            });
+        }
+
+        // Update crop fields
+        if (cropName) crop.cropName = cropName;
+        if (cropType) crop.cropType = cropType;
+        if (season) crop.season = season;
+        if (areaAllocated !== undefined) crop.areaAllocated.value = areaAllocated;
+        if (unit) crop.areaAllocated.unit = unit;
+        if (isActive !== undefined) crop.isActive = isActive;
+        
+        await profile.save();
+        await profile.populate('userId', 'email fullName');
+
+        res.status(200).json({
+            message: "Crop updated successfully",
+            profile: profile,
+            updatedCrop: crop
+        });
+    } catch (error) {
+        console.error('Update crop error:', error);
+        res.status(500).json({
+            message: "Internal server error",
+            error: error.message
+        });
+    }
+}
+
 module.exports = {
     getUserProfile,
     updateWelcomeStep,
@@ -400,5 +796,11 @@ module.exports = {
     updateDistrict,
     updateLandSize,
     updateCropSelection,
-    skipStep
+    skipStep,
+    updatePersonalInfo,
+    updateFarmDetails,
+    updateFarmingExperience,
+    addCrop,
+    removeCrop,
+    updateCrop
 };

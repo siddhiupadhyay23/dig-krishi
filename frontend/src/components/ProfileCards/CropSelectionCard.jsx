@@ -143,7 +143,7 @@ const CropSelectionCard = ({ selectedCrops, onUpdate, onPrevious, onFinish, load
           onClick={handleFinish}
           disabled={crops.length === 0 || loading}
         >
-          {loading ? 'Completing...' : 'Finish Setup 🎉'}
+          {loading ? 'Completing...' : 'Finish Setup'}
         </button>
       </div>
     </div>

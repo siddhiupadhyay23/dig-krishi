@@ -25,11 +25,11 @@ const Reports = () => {
   });
 
   const tabs = [
-    { id: 'overview', label: 'Overview', icon: '📊' },
-    { id: 'profile', label: 'Profile', icon: '👤' },
-    { id: 'govt-services', label: 'Govt Services & Subsidies', icon: '🏛️' },
-    { id: 'prediction', label: 'AI Prediction & Weather', icon: '🤖' },
-    { id: 'ai-chat', label: 'AI Assistant', icon: '💬' }
+    { id: 'overview', label: 'Overview', icon: 'O' },
+    { id: 'profile', label: 'Profile', icon: 'P' },
+    { id: 'govt-services', label: 'Govt Services & Subsidies', icon: 'G' },
+    { id: 'prediction', label: 'AI Prediction & Weather', icon: 'A' },
+    { id: 'ai-chat', label: 'AI Assistant', icon: 'C' }
   ];
 
   const governmentSchemes = [
@@ -153,11 +153,11 @@ const Reports = () => {
       visibility: '10km'
     },
     forecast: [
-      { day: 'Today', temp: '29°C', condition: 'Partly Cloudy', icon: '⛅', rain: '20%' },
-      { day: 'Tomorrow', temp: '31°C', condition: 'Sunny', icon: '☀️', rain: '5%' },
-      { day: 'Wednesday', temp: '28°C', condition: 'Rainy', icon: '🌧️', rain: '80%' },
-      { day: 'Thursday', temp: '27°C', condition: 'Cloudy', icon: '☁️', rain: '40%' },
-      { day: 'Friday', temp: '30°C', condition: 'Sunny', icon: '☀️', rain: '10%' }
+      { day: 'Today', temp: '29°C', condition: 'Partly Cloudy', icon: 'PC', rain: '20%' },
+      { day: 'Tomorrow', temp: '31°C', condition: 'Sunny', icon: 'S', rain: '5%' },
+      { day: 'Wednesday', temp: '28°C', condition: 'Rainy', icon: 'R', rain: '80%' },
+      { day: 'Thursday', temp: '27°C', condition: 'Cloudy', icon: 'C', rain: '40%' },
+      { day: 'Friday', temp: '30°C', condition: 'Sunny', icon: 'S', rain: '10%' }
     ],
     alerts: [
       { type: 'warning', message: 'Heavy rainfall expected on Wednesday. Protect crops.', priority: 'high' },
@@ -202,7 +202,7 @@ const Reports = () => {
             
             <div className="metrics-grid">
               <div className="metric-card">
-                <div className="metric-icon">👨‍🌾</div>
+                <div className="metric-icon">F</div>
                 <div className="metric-info">
                   <h3>Registered Farmers</h3>
                   <div className="metric-value">4,209</div>
@@ -211,7 +211,7 @@ const Reports = () => {
               </div>
               
               <div className="metric-card">
-                <div className="metric-icon">🌾</div>
+                <div className="metric-icon">C</div>
                 <div className="metric-info">
                   <h3>Active Farms</h3>
                   <div className="metric-value">1,302</div>
@@ -220,7 +220,7 @@ const Reports = () => {
               </div>
               
               <div className="metric-card">
-                <div className="metric-icon">🏛️</div>
+                <div className="metric-icon">G</div>
                 <div className="metric-info">
                   <h3>Govt Schemes</h3>
                   <div className="metric-value">23</div>
@@ -229,7 +229,7 @@ const Reports = () => {
               </div>
               
               <div className="metric-card">
-                <div className="metric-icon">💰</div>
+                <div className="metric-icon">$</div>
                 <div className="metric-info">
                   <h3>Subsidies</h3>
                   <div className="metric-value">₹50Cr</div>
@@ -331,32 +331,32 @@ const Reports = () => {
         return (
           <div className="ai-chat-content">
             <div className="page-header">
-              <h1>💬 AI Agricultural Assistant</h1>
+              <h1>AI Agricultural Assistant</h1>
               <p>Get instant expert advice and solutions for your farming questions</p>
             </div>
 
             <div className="chat-container">
               <div className="chat-messages">
                 <div className="chat-message bot">
-                  <div className="message-avatar">🤖</div>
+                  <div className="message-avatar">AI</div>
                   <div className="message-content">
                     Namaste! I'm your AI agricultural assistant specialized in Kerala farming. How can I help you grow better crops today?
                   </div>
                 </div>
                 
                 <div className="chat-message user">
-                  <div className="message-avatar">👨‍🌾</div>
+                  <div className="message-avatar">F</div>
                   <div className="message-content">
                     What's the best time to plant rice in Kerala this season?
                   </div>
                 </div>
                 
                 <div className="chat-message bot">
-                  <div className="message-avatar">🤖</div>
+                  <div className="message-avatar">AI</div>
                   <div className="message-content">
                     Perfect timing! For Kerala, the ideal rice planting periods are:<br/>
-                    🌧️ <strong>Kharif Season:</strong> June-July (with monsoon)<br/>
-                    ☀️ <strong>Rabi Season:</strong> November-December (post-monsoon)<br/>
+                    <strong>Kharif Season:</strong> June-July (with monsoon)<br/>
+                    <strong>Rabi Season:</strong> November-December (post-monsoon)<br/>
                     Based on current weather patterns, I recommend planting in the next 2-3 weeks for optimal yield!
                   </div>
                 </div>
@@ -364,7 +364,7 @@ const Reports = () => {
                 {chatMessages.slice(1).map((msg, index) => (
                   <div key={index + 3} className={`chat-message ${msg.type}`}>
                     <div className="message-avatar">
-                      {msg.type === 'bot' ? '🤖' : '👤'}
+                      {msg.type === 'bot' ? 'AI' : 'U'}
                     </div>
                     <div className="message-content">{msg.message}</div>
                   </div>
@@ -379,30 +379,30 @@ const Reports = () => {
                   placeholder="Ask me about crops, diseases, weather, fertilizers, market prices..."
                   className="chat-input"
                 />
-                <button type="submit" className="chat-send">💬 Send</button>
+                <button type="submit" className="chat-send">Send</button>
               </form>
             </div>
             
             <div className="chat-suggestions">
-              <h3>💡 Popular Questions</h3>
+              <h3>Popular Questions</h3>
               <div className="suggestions-grid">
                 <button className="suggestion-btn" onClick={() => setChatInput('What fertilizer is best for coconut trees?')}>
-                  🥥 Coconut Fertilizer
+                  Coconut Fertilizer
                 </button>
                 <button className="suggestion-btn" onClick={() => setChatInput('How to prevent pest attacks on vegetables?')}>
-                  🐛 Pest Control
+                  Pest Control
                 </button>
                 <button className="suggestion-btn" onClick={() => setChatInput('Current market price for cardamom?')}>
-                  💰 Market Prices
+                  Market Prices
                 </button>
                 <button className="suggestion-btn" onClick={() => setChatInput('Organic farming techniques for spices?')}>
-                  🌿 Organic Farming
+                  Organic Farming
                 </button>
                 <button className="suggestion-btn" onClick={() => setChatInput('Best irrigation schedule for rubber plantation?')}>
-                  💧 Irrigation
+                  Irrigation
                 </button>
                 <button className="suggestion-btn" onClick={() => setChatInput('Soil testing and health improvement?')}>
-                  🧪 Soil Health
+                  Soil Health
                 </button>
               </div>
             </div>
@@ -454,7 +454,7 @@ const Reports = () => {
                     className="apply-btn"
                     onClick={() => setSelectedScheme(scheme)}
                   >
-                    🚀 Apply Now
+                    Apply Now
                   </button>
                 </div>
               ))}
@@ -466,7 +466,7 @@ const Reports = () => {
                   <h3>Apply for {selectedScheme.name}</h3>
                   <p>Your application for <strong>{selectedScheme.name}</strong> has been submitted successfully. You will receive updates via SMS and email.</p>
                   <div className="modal-actions">
-                    <button className="primary-btn" onClick={() => setSelectedScheme(null)}>✅ Got it</button>
+                    <button className="primary-btn" onClick={() => setSelectedScheme(null)}>Got it</button>
                   </div>
                 </div>
               </div>
@@ -478,7 +478,7 @@ const Reports = () => {
         return (
           <div className="prediction-weather-content">
             <div className="page-header">
-              <h1>🤖 AI Prediction & Weather Intelligence</h1>
+              <h1>AI Prediction & Weather Intelligence</h1>
               <p>Advanced crop predictions powered by AI and real-time weather data</p>
             </div>
 
@@ -487,7 +487,7 @@ const Reports = () => {
               <div className="weather-section">
                 <div className="current-weather">
                   <div className="weather-main">
-                    <div className="weather-icon">⛅</div>
+                    <div className="weather-icon">W</div>
                     <div className="weather-info">
                       <h2>{weatherData.current.temperature}</h2>
                       <p>{weatherData.current.condition}</p>
@@ -516,25 +516,25 @@ const Reports = () => {
                 </div>
 
                 <div className="weather-forecast">
-                  <h3>🌤️ 5-Day Weather Forecast</h3>
+                  <h3>5-Day Weather Forecast</h3>
                   <div className="forecast-grid">
                     {weatherData.forecast.map((day, index) => (
                       <div key={index} className="forecast-item">
                         <div className="forecast-day">{day.day}</div>
                         <div className="forecast-icon">{day.icon}</div>
                         <div className="forecast-temp">{day.temp}</div>
-                        <div className="forecast-rain">☂️ {day.rain}</div>
+                        <div className="forecast-rain">Rain: {day.rain}</div>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 <div className="weather-alerts">
-                  <h3>⚠️ Agricultural Weather Alerts</h3>
+                  <h3>Agricultural Weather Alerts</h3>
                   {weatherData.alerts.map((alert, index) => (
                     <div key={index} className={`weather-alert ${alert.priority}`}>
                       <div className="alert-icon">
-                        {alert.type === 'warning' ? '⚠️' : 'ℹ️'}
+                        {alert.type === 'warning' ? '!' : 'i'}
                       </div>
                       <div className="alert-message">{alert.message}</div>
                     </div>
@@ -545,27 +545,27 @@ const Reports = () => {
               {/* AI Prediction Section */}
               <div className="ai-prediction-section">
                 <div className="prediction-card">
-                  <h3>🔮 Smart Crop Yield Prediction</h3>
+                  <h3>Smart Crop Yield Prediction</h3>
                   <form className="prediction-form" onSubmit={handlePredictionSubmit}>
                     <div className="form-grid">
                       <select 
                         value={predictionForm.crop} 
                         onChange={(e) => setPredictionForm({...predictionForm, crop: e.target.value})}
                       >
-                        <option value="">🌾 Select Crop Type</option>
-                        <option value="rice">🍚 Rice (Paddy)</option>
-                        <option value="coconut">🥥 Coconut</option>
-                        <option value="pepper">🌶️ Black Pepper</option>
-                        <option value="cardamom">🫚 Cardamom</option>
-                        <option value="rubber">🌿 Rubber</option>
-                        <option value="banana">🍌 Banana</option>
-                        <option value="cashew">🥜 Cashew</option>
-                        <option value="ginger">🧄 Ginger</option>
+                        <option value="">Select Crop Type</option>
+                        <option value="rice">Rice (Paddy)</option>
+                        <option value="coconut">Coconut</option>
+                        <option value="pepper">Black Pepper</option>
+                        <option value="cardamom">Cardamom</option>
+                        <option value="rubber">Rubber</option>
+                        <option value="banana">Banana</option>
+                        <option value="cashew">Cashew</option>
+                        <option value="ginger">Ginger</option>
                       </select>
                       
                       <input 
                         type="number" 
-                        placeholder="📏 Area (hectares)"
+                        placeholder="Area (hectares)"
                         value={predictionForm.area}
                         onChange={(e) => setPredictionForm({...predictionForm, area: e.target.value})}
                       />
@@ -574,17 +574,17 @@ const Reports = () => {
                         value={predictionForm.season} 
                         onChange={(e) => setPredictionForm({...predictionForm, season: e.target.value})}
                       >
-                        <option value="">🗓️ Select Season</option>
-                        <option value="kharif">🌧️ Kharif (Monsoon)</option>
-                        <option value="rabi">❄️ Rabi (Winter)</option>
-                        <option value="summer">☀️ Summer</option>
+                        <option value="">Select Season</option>
+                        <option value="kharif">Kharif (Monsoon)</option>
+                        <option value="rabi">Rabi (Winter)</option>
+                        <option value="summer">Summer</option>
                       </select>
 
                       <select 
                         value={predictionForm.soilType} 
                         onChange={(e) => setPredictionForm({...predictionForm, soilType: e.target.value})}
                       >
-                        <option value="">🪨 Select Soil Type</option>
+                        <option value="">Select Soil Type</option>
                         <option value="laterite">Laterite Soil</option>
                         <option value="alluvial">Alluvial Soil</option>
                         <option value="red">Red Soil</option>
@@ -592,13 +592,13 @@ const Reports = () => {
                         <option value="coastal">Coastal Sandy Soil</option>
                       </select>
                       
-                      <button type="submit" className="predict-btn">🚀 Generate AI Prediction</button>
+                      <button type="submit" className="predict-btn">Generate AI Prediction</button>
                     </div>
                   </form>
 
                   {cropPrediction && (
                     <div className="prediction-result">
-                      <h4>🎯 Prediction Results for {cropPrediction.crop.charAt(0).toUpperCase() + cropPrediction.crop.slice(1)}</h4>
+                      <h4>Prediction Results for {cropPrediction.crop.charAt(0).toUpperCase() + cropPrediction.crop.slice(1)}</h4>
                       <div className="prediction-stats">
                         <div className="prediction-stat">
                           <span>Expected Yield</span>
@@ -619,26 +619,26 @@ const Reports = () => {
                       </div>
                       
                       <div className="recommendations">
-                        <h5>🎯 AI-Powered Recommendations:</h5>
+                        <h5>AI-Powered Recommendations:</h5>
                         <ul>
                           {cropPrediction.recommendations.map((rec, index) => (
-                            <li key={index}>✅ {rec}</li>
+                            <li key={index}>{rec}</li>
                           ))}
-                          <li>💧 Monitor soil moisture - current weather suggests balanced irrigation</li>
-                          <li>📅 Optimal harvest window: Based on weather patterns</li>
-                          <li>💰 Best market timing for maximum profit: Peak season pricing</li>
+                          <li>Monitor soil moisture - current weather suggests balanced irrigation</li>
+                          <li>Optimal harvest window: Based on weather patterns</li>
+                          <li>Best market timing for maximum profit: Peak season pricing</li>
                         </ul>
                       </div>
                       
                       <div className="weather-impact">
-                        <h5>🌤️ Weather Impact Analysis:</h5>
+                        <h5>Weather Impact Analysis:</h5>
                         <div className="impact-factors">
                           <div className="impact-factor positive">
-                            <span>✅ Adequate Rainfall</span>
+                            <span>+ Adequate Rainfall</span>
                             <div>Expected rainfall will support crop growth</div>
                           </div>
                           <div className="impact-factor positive">
-                            <span>✅ Optimal Temperature</span>
+                            <span>+ Optimal Temperature</span>
                             <div>Temperature range suitable for selected crop</div>
                           </div>
                         </div>
@@ -648,10 +648,10 @@ const Reports = () => {
                 </div>
                 
                 <div className="prediction-history">
-                  <h3>📊 Previous Predictions</h3>
+                  <h3>Previous Predictions</h3>
                   <div className="history-list">
                     <div className="history-item">
-                      <div className="history-crop">🍚 Rice</div>
+                      <div className="history-crop">Rice</div>
                       <div className="history-details">
                         <div>Predicted: 2.8 tonnes/ha</div>
                         <div>Actual: 2.7 tonnes/ha</div>
@@ -659,7 +659,7 @@ const Reports = () => {
                       </div>
                     </div>
                     <div className="history-item">
-                      <div className="history-crop">🥥 Coconut</div>
+                      <div className="history-crop">Coconut</div>
                       <div className="history-details">
                         <div>Predicted: 12,000 nuts/ha</div>
                         <div>Actual: 11,800 nuts/ha</div>
@@ -667,7 +667,7 @@ const Reports = () => {
                       </div>
                     </div>
                     <div className="history-item">
-                      <div className="history-crop">🌶️ Pepper</div>
+                      <div className="history-crop">Pepper</div>
                       <div className="history-details">
                         <div>Predicted: 850 kg/ha</div>
                         <div>Actual: 820 kg/ha</div>
@@ -693,7 +693,7 @@ const Reports = () => {
         {/* Sidebar Navigation */}
         <div className="reports-sidebar">
           <div className="sidebar-header">
-            <h2>🌾 Dashboard</h2>
+            <h2>Dashboard</h2>
             <p>Kerala Agricultural Portal</p>
           </div>
           

@@ -141,15 +141,6 @@
     position: relative;
     z-index: 1;
 
-    &::before {
-      content: '🌱';
-      font-size: 2rem;
-      display: block;
-      margin-bottom: 0.5rem;
-      opacity: 0.8;
-      filter: drop-shadow(0 2px 4px rgba(76, 175, 80, 0.2));
-    }
-
     .card-title {
       font-family: 'Playfair Display', 'Libre Baskerville', Georgia, 'Times New Roman', serif;
       font-size: 1.5rem;
@@ -185,16 +176,6 @@
         font-size: 0.9rem;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        position: relative;
-        padding-left: 1.5rem;
-
-        &::before {
-          position: absolute;
-          left: 0;
-          top: 50%;
-          transform: translateY(-50%);
-          font-size: 1rem;
-        }
       }
 
       input,
@@ -316,6 +297,26 @@
           box-shadow: 0 8px 25px rgba(46, 125, 50, 0.4);
         }
       }
+
+      &.btn-outline {
+        background: white;
+        color: #666;
+        border: 2px solid #e5e7eb;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+        &:hover:not(:disabled) {
+          background: #f9f9f9;
+          border-color: #d1d5db;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
     }
   }
 }
@@ -353,10 +354,6 @@
     .card-header {
       margin-bottom: 1rem;
       
-      &::before {
-        font-size: 1.5rem;
-      }
-      
       .card-title {
         font-size: 1.3rem;
       }
@@ -374,11 +371,6 @@
         
         label {
           font-size: 0.8rem;
-          padding-left: 1.2rem;
-          
-          &::before {
-            font-size: 0.9rem;
-          }
         }
         
         input, select {

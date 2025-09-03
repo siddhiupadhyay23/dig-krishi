@@ -100,7 +100,7 @@ const CityCard = ({ selectedCity, selectedState, onUpdate, onNext, onPrevious, l
               margin: 0,
               fontSize: '0.9rem'
             }}>
-              ✓ Selected: <strong>{city}, {selectedState}</strong>
+              Selected: <strong>{city}, {selectedState}</strong>
             </p>
           </div>
         )}

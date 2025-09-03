@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import axios from 'axios';
 import './SignUp.scss';
+import logo from '../assets/logo1.png';
 
 const SignUp = ({ onBackToHome, onNavigateToLogin, onSignUpSuccess }) => {
   const { t } = useLanguage();
@@ -180,7 +181,9 @@ const SignUp = ({ onBackToHome, onNavigateToLogin, onSignUpSuccess }) => {
         {/* SignUp Form */}
         <form className="signup-form" onSubmit={handleSubmit} noValidate>
           <div className="form-header">
-            <div className="form-icon">🌱</div>
+            <div className="form-icon">
+              <img src={logo} alt="Digital Krishi Officer Logo" className="logo-image" />
+            </div>
             <h2>Join the Farming Community!</h2>
             <p>Create your account to access agricultural tools and insights</p>
           </div>
@@ -222,7 +225,7 @@ const SignUp = ({ onBackToHome, onNavigateToLogin, onSignUpSuccess }) => {
           />
           
           <button type="submit" className="signup-button" disabled={loading}>
-            {loading ? '🌾 Creating Account...' : '🎆 Create Account'}
+            {loading ? 'Creating Account...' : 'Create Account'}
           </button>
         </form>
 

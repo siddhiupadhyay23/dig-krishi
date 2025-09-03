@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
 
   // Check authentication status on mount
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('authToken'); // Changed to match API service
     const userData = localStorage.getItem('user');
     
     if (token && userData) {
@@ -25,9 +25,10 @@ export const AuthProvider = ({ children }) => {
         const parsedUser = JSON.parse(userData);
         setUser(parsedUser);
         setIsAuthenticated(true);
+        console.log('User authenticated from localStorage:', parsedUser);
       } catch (error) {
         console.error('Error parsing user data:', error);
-        localStorage.removeItem('token');
+        localStorage.removeItem('authToken');
         localStorage.removeItem('user');
       }
     }
@@ -36,14 +37,15 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (userData, token) => {
-    localStorage.setItem('token', token || 'logged_in');
+    console.log('Logging in user:', userData, 'with token:', token);
+    localStorage.setItem('authToken', token); // Changed to match API service
     localStorage.setItem('user', JSON.stringify(userData));
     setUser(userData);
     setIsAuthenticated(true);
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('authToken'); // Changed to match API service
     localStorage.removeItem('user');
     setUser(null);
     setIsAuthenticated(false);

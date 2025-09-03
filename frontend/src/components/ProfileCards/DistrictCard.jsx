@@ -39,31 +39,34 @@ const DistrictCard = ({ selectedDistrict, selectedState, onUpdate, onNext, onPre
   const availableDistricts = districtsByState[selectedState] || [];
 
   const handleNext = () => {
-    if (district && district !== 'other') {
-      const data = { district };
-      onUpdate(data);
-      onNext(data); // Pass data to API handler
-    }
+    const data = { district: district || '' };
+    onUpdate(data);
+    onNext(data); // Pass data to API handler
+  };
+
+  const handleSkip = () => {
+    const data = { district: '' };
+    onUpdate(data);
+    onNext(data); // Skip with empty district
   };
 
   return (
     <div className="profile-card">
       <div className="card-header">
-        <h2 className="card-title">Select Your District</h2>
+        <h2 className="card-title">Select Your District (Optional)</h2>
         <p className="card-subtitle">
-          Choose the district where your farm is located in {selectedState}
+          Choose the district where your farm is located in {selectedState}. You can skip this step if you prefer.
         </p>
       </div>
 
       <div className="card-content">
         <div className="form-group">
-          <label htmlFor="district">District *</label>
+          <label htmlFor="district">District (Optional)</label>
           {availableDistricts.length > 0 ? (
             <select
               id="district"
               value={district}
               onChange={(e) => setDistrict(e.target.value)}
-              required
             >
               <option value="">Select your district</option>
               {availableDistricts.map((districtName) => (
@@ -80,20 +83,18 @@ const DistrictCard = ({ selectedDistrict, selectedState, onUpdate, onNext, onPre
               placeholder="Enter your district name"
               value={district}
               onChange={(e) => setDistrict(e.target.value)}
-              required
             />
           )}
         </div>
 
         {district === 'other' && (
           <div className="form-group">
-            <label htmlFor="customDistrict">Specify Your District *</label>
+            <label htmlFor="customDistrict">Specify Your District</label>
             <input
               type="text"
               id="customDistrict"
               placeholder="Enter your district name"
               onChange={(e) => setDistrict(e.target.value)}
-              required
             />
           </div>
         )}
@@ -111,7 +112,7 @@ const DistrictCard = ({ selectedDistrict, selectedState, onUpdate, onNext, onPre
               margin: 0,
               fontSize: '0.9rem'
             }}>
-              ✓ Selected: <strong>{district} District, {selectedState}</strong>
+              Selected: <strong>{district} District, {selectedState}</strong>
             </p>
           </div>
         )}
@@ -124,13 +125,22 @@ const DistrictCard = ({ selectedDistrict, selectedState, onUpdate, onNext, onPre
         >
           ← Previous
         </button>
-        <button 
-          className="btn btn-primary"
-          onClick={handleNext}
-          disabled={!district || district === 'other' || loading}
-        >
-          {loading ? 'Saving...' : 'Next →'}
-        </button>
+        <div className="action-buttons">
+          <button 
+            className="btn btn-outline"
+            onClick={handleSkip}
+            disabled={loading}
+          >
+            Skip
+          </button>
+          <button 
+            className="btn btn-primary"
+            onClick={handleNext}
+            disabled={loading}
+          >
+            {loading ? 'Saving...' : 'Next →'}
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  CelebrationIcon,
+  SeedlingIcon,
+  RocketIcon,
+  SproutIcon,
+  AIIcon,
+  SunIcon,
+  GovernmentIcon,
+  AnalyticsIcon,
+  RiceIcon,
+  CheckIcon
+} from './icons';
 import './WelcomeCard.scss';
 
 const WelcomeCard = ({ user, onClose, onContinue }) => {
@@ -9,17 +21,17 @@ const WelcomeCard = ({ user, onClose, onContinue }) => {
 
   const welcomeSteps = [
     {
-      icon: '🎉',
+      icon: <CelebrationIcon size={32} />,
       title: 'Welcome to DigKrishi!',
       message: `Hello ${user?.fullName?.firstName || 'Farmer'}! Your agricultural journey begins now.`
     },
     {
-      icon: '🌱',
+      icon: <SeedlingIcon size={32} />,
       title: 'Your Farm Awaits',
       message: 'Access AI-powered insights, weather forecasts, and government schemes tailored for you.'
     },
     {
-      icon: '🚀',
+      icon: <RocketIcon size={32} />,
       title: 'Ready to Grow?',
       message: 'Let\'s set up your farm profile and start maximizing your agricultural potential!'
     }
@@ -69,9 +81,9 @@ const WelcomeCard = ({ user, onClose, onContinue }) => {
       <div className={`welcome-card ${isVisible ? 'slide-in' : ''}`}>
         {/* Background Decorations */}
         <div className="card-decorations">
-          <div className="decoration-leaf decoration-leaf-1">🍃</div>
-          <div className="decoration-leaf decoration-leaf-2">🌿</div>
-          <div className="decoration-leaf decoration-leaf-3">🌾</div>
+          <div className="decoration-leaf decoration-leaf-1"><SproutIcon size={16} /></div>
+          <div className="decoration-leaf decoration-leaf-2"><SeedlingIcon size={16} /></div>
+          <div className="decoration-leaf decoration-leaf-3"><SproutIcon size={16} /></div>
         </div>
 
         {/* Progress Indicators */}
@@ -106,26 +118,26 @@ const WelcomeCard = ({ user, onClose, onContinue }) => {
             <div className="user-details">
               <h3>{user?.fullName?.firstName} {user?.fullName?.lastName}</h3>
               <p>{user?.email}</p>
-              <span className="user-badge">🌱 New Farmer</span>
+              <span className="user-badge"><SeedlingIcon size={14} /> New Farmer</span>
             </div>
           </div>
 
           {/* Features Preview */}
           <div className="features-preview">
             <div className="feature-item">
-              <span className="feature-icon">🤖</span>
+              <AIIcon className="feature-icon" size={16} />
               <span className="feature-text">AI Assistant</span>
             </div>
             <div className="feature-item">
-              <span className="feature-icon">🌤️</span>
+              <SunIcon className="feature-icon" size={16} />
               <span className="feature-text">Weather Insights</span>
             </div>
             <div className="feature-item">
-              <span className="feature-icon">🏛️</span>
+              <GovernmentIcon className="feature-icon" size={16} />
               <span className="feature-text">Govt. Schemes</span>
             </div>
             <div className="feature-item">
-              <span className="feature-icon">📈</span>
+              <AnalyticsIcon className="feature-icon" size={16} />
               <span className="feature-text">Crop Predictions</span>
             </div>
           </div>
@@ -143,14 +155,18 @@ const WelcomeCard = ({ user, onClose, onContinue }) => {
             className="btn btn-primary"
             onClick={handleContinue}
           >
-            {currentStep === welcomeSteps.length - 1 ? '🌾 Set Up My Farm' : '⏭️ Continue'}
+            {currentStep === welcomeSteps.length - 1 ? (
+              <><RiceIcon size={16} /> Set Up My Farm</>
+            ) : (
+              <>Continue ›</>
+            )}
           </button>
         </div>
 
         {/* Success Animation */}
         <div className="success-animation">
           <div className="success-circle">
-            <div className="success-check">✓</div>
+            <CheckIcon className="success-check" size={24} />
           </div>
         </div>
       </div>

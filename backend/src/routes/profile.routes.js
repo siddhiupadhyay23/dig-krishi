@@ -8,7 +8,13 @@ const {
     updateDistrict,
     updateLandSize,
     updateCropSelection,
-    skipStep
+    skipStep,
+    updatePersonalInfo,
+    updateFarmDetails,
+    updateFarmingExperience,
+    addCrop,
+    removeCrop,
+    updateCrop
 } = require("../controller/profile.controller");
 
 const router = express.Router();
@@ -31,5 +37,23 @@ router.post("/crops", updateCropSelection);
 
 // POST - Skip optional steps
 router.post("/skip", skipStep);
+
+// POST - Update complete personal information
+router.put("/personal-info", updatePersonalInfo);
+
+// POST - Update complete farm details
+router.put("/farm-details", updateFarmDetails);
+
+// POST - Update farming experience
+router.put("/farming-experience", updateFarmingExperience);
+
+// POST - Add new crop
+router.post("/crop/add", addCrop);
+
+// DELETE - Remove crop
+router.delete("/crop/:cropId", removeCrop);
+
+// PUT - Update crop
+router.put("/crop/:cropId", updateCrop);
 
 module.exports = router;
