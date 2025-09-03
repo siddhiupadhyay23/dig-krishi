@@ -1,7 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import Navbar from './Navbar';
-import Chatbot from './Chatbot';
 import Features from './Features';
 import './HeroSection.scss';
 import headSvg from '../assets/head.svg';
@@ -22,7 +21,6 @@ const HeroSection = () => {
         <div className="hero-svg">
           <img src={headSvg} alt="Head" className="head-svg" />
         </div>
-        <Chatbot />
       </div>
       <Features />
     </>
