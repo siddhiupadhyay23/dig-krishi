@@ -1,0 +1,146 @@
+@import './BaseCard.scss';
+
+.welcome-card {
+  .card-header {
+    &::before {
+      content: '🌱';
+    }
+  }
+
+  // Enhanced welcome message box
+  .welcome-message,
+  div[style*="background"] {
+    background: linear-gradient(135deg, #f1f8e9, #e8f5e9) !important;
+    border: 2px solid #4caf50 !important;
+    border-radius: 20px !important;
+    padding: 2.5rem 2rem !important;
+    margin: 2rem 0 !important;
+    box-shadow: 
+      0 8px 25px rgba(76, 175, 80, 0.15),
+      0 4px 12px rgba(0, 0, 0, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+    position: relative !important;
+    overflow: hidden !important;
+
+    // Decorative element
+    &::before {
+      content: '' !important;
+      position: absolute !important;
+      top: -50% !important;
+      right: -50% !important;
+      width: 200% !important;
+      height: 200% !important;
+      background: radial-gradient(circle, rgba(76, 175, 80, 0.05) 0%, transparent 70%) !important;
+      pointer-events: none !important;
+      transform: rotate(45deg) !important;
+    }
+
+    h3, h4 {
+      color: #2e7d32 !important;
+      font-size: 1.3rem !important;
+      font-weight: 700 !important;
+      margin: 0 0 1.2rem 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 0.8rem !important;
+      position: relative !important;
+      z-index: 1 !important;
+      font-family: 'Playfair Display', 'Libre Baskerville', Georgia, serif !important;
+
+      &::after {
+        content: '🌾' !important;
+        font-size: 1.5rem !important;
+        opacity: 0.8 !important;
+        filter: drop-shadow(0 2px 4px rgba(76, 175, 80, 0.3)) !important;
+      }
+    }
+
+    p {
+      color: #2e7d32 !important;
+      font-size: 1.1rem !important;
+      line-height: 1.8 !important;
+      margin: 0 !important;
+      position: relative !important;
+      z-index: 1 !important;
+      font-weight: 500 !important;
+      text-align: center !important;
+    }
+
+    // Hover effect
+    &:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 
+        0 12px 35px rgba(76, 175, 80, 0.2),
+        0 6px 15px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+    }
+  }
+
+  // Enhanced form inputs
+  .form-group {
+    margin-bottom: 2.5rem !important;
+
+    label {
+      display: block !important;
+      margin-bottom: 1rem !important;
+      color: #2e7d32 !important;
+      font-weight: 700 !important;
+      font-size: 1.1rem !important;
+      text-transform: uppercase !important;
+      letter-spacing: 1px !important;
+      position: relative !important;
+      padding-left: 2rem !important;
+
+      &::before {
+        content: '📱' !important;
+        position: absolute !important;
+        left: 0 !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        font-size: 1.3rem !important;
+      }
+    }
+
+    input {
+      width: 100% !important;
+      padding: 1.5rem 1.8rem !important;
+      border: 3px solid #e8f5e9 !important;
+      border-radius: 16px !important;
+      font-size: 1.2rem !important;
+      background: white !important;
+      color: #2e7d32 !important;
+      font-weight: 600 !important;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      box-sizing: border-box !important;
+      box-shadow: 
+        0 4px 12px rgba(76, 175, 80, 0.1),
+        inset 0 2px 4px rgba(0, 0, 0, 0.02) !important;
+      position: relative !important;
+
+      &:focus {
+        outline: none !important;
+        border-color: #4caf50 !important;
+        box-shadow: 
+          0 0 0 4px rgba(76, 175, 80, 0.15),
+          0 8px 25px rgba(76, 175, 80, 0.2),
+          inset 0 2px 4px rgba(0, 0, 0, 0.02) !important;
+        transform: translateY(-3px) !important;
+        background: linear-gradient(135deg, #ffffff, #f9fdf9) !important;
+      }
+
+      &::placeholder {
+        color: #81c784 !important;
+        font-style: italic !important;
+        font-weight: 500 !important;
+      }
+
+      &:hover {
+        border-color: #66bb6a !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 
+          0 6px 15px rgba(76, 175, 80, 0.15),
+          inset 0 2px 4px rgba(0, 0, 0, 0.02) !important;
+      }
+    }
+  }
+}

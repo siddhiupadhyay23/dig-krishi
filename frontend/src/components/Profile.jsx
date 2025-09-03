@@ -28,61 +28,59 @@ const Profile = () => {
         return (
           <div className="content-section">
             <h2>Personal Information</h2>
-            <div className="profile-card">
+            <div className="personal-info">
               <div className="profile-avatar">
                 <div className="avatar-circle">
                   {(userData.fullName?.firstName || 'U')[0].toUpperCase()}
                 </div>
                 <button className="change-avatar-btn">Change Photo</button>
               </div>
-              <div className="profile-details">
-                <div className="detail-group">
-                  <div className="detail-item">
-                    <label>First Name</label>
-                    <input 
-                      type="text" 
-                      value={userData.fullName?.firstName || ''} 
-                      readOnly 
-                      className="profile-input"
-                    />
-                  </div>
-                  <div className="detail-item">
-                    <label>Last Name</label>
-                    <input 
-                      type="text" 
-                      value={userData.fullName?.lastName || ''} 
-                      readOnly 
-                      className="profile-input"
-                    />
-                  </div>
-                </div>
+              <div className="detail-group">
                 <div className="detail-item">
-                  <label>Email Address</label>
+                  <label>First Name</label>
                   <input 
-                    type="email" 
-                    value={userData.email || ''} 
+                    type="text" 
+                    value={userData.fullName?.firstName || ''} 
                     readOnly 
                     className="profile-input"
                   />
                 </div>
                 <div className="detail-item">
-                  <label>Phone Number</label>
-                  <input 
-                    type="tel" 
-                    placeholder="Add your phone number" 
-                    className="profile-input"
-                  />
-                </div>
-                <div className="detail-item">
-                  <label>Location</label>
+                  <label>Last Name</label>
                   <input 
                     type="text" 
-                    placeholder="Add your location" 
+                    value={userData.fullName?.lastName || ''} 
+                    readOnly 
                     className="profile-input"
                   />
                 </div>
-                <button className="save-btn">Save Changes</button>
               </div>
+              <div className="detail-item">
+                <label>Email Address</label>
+                <input 
+                  type="email" 
+                  value={userData.email || ''} 
+                  readOnly 
+                  className="profile-input"
+                />
+              </div>
+              <div className="detail-item">
+                <label>Phone Number</label>
+                <input 
+                  type="tel" 
+                  placeholder="Add your phone number" 
+                  className="profile-input"
+                />
+              </div>
+              <div className="detail-item">
+                <label>Location</label>
+                <input 
+                  type="text" 
+                  placeholder="Add your location" 
+                  className="profile-input"
+                />
+              </div>
+              <button className="save-btn">Save Changes</button>
             </div>
           </div>
         );

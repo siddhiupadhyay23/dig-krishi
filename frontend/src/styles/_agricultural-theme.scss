@@ -1,0 +1,290 @@
+// Digital Krishi Agricultural Theme
+// Inspired by food tech, agriculture, and rural development
+
+// Color Palette - Agricultural & Nature Inspired
+:root {
+  // Primary Agricultural Colors
+  --color-primary: #2e7d32;        // Deep Forest Green
+  --color-primary-light: #4caf50;   // Fresh Green
+  --color-primary-lighter: #66bb6a; // Light Green
+  --color-primary-dark: #1b5e20;    // Dark Forest
+  
+  // Secondary Agricultural Colors
+  --color-secondary: #8bc34a;       // Fresh Grass
+  --color-secondary-light: #aed581; // Light Grass
+  --color-accent: #ffc107;          // Golden Harvest
+  --color-accent-light: #fff350;    // Light Golden
+  
+  // Earth & Soil Tones
+  --color-earth: #5d4037;           // Rich Soil
+  --color-earth-light: #8d6e63;     // Light Earth
+  --color-sand: #f5f5dc;           // Beige/Sand
+  --color-clay: #a0522d;           // Clay Brown
+  
+  // Sky & Water
+  --color-sky: #87ceeb;            // Sky Blue
+  --color-water: #4fc3f7;          // Fresh Water
+  
+  // Neutrals
+  --color-white: #ffffff;
+  --color-cream: #fafafa;
+  --color-light-gray: #f5f5f5;
+  --color-gray: #9e9e9e;
+  --color-dark-gray: #424242;
+  --color-black: #212121;
+  
+  // Gradients
+  --gradient-primary: linear-gradient(135deg, #2e7d32, #4caf50, #66bb6a);
+  --gradient-secondary: linear-gradient(135deg, #8bc34a, #aed581);
+  --gradient-earth: linear-gradient(135deg, #5d4037, #8d6e63);
+  --gradient-harvest: linear-gradient(135deg, #ffc107, #fff350);
+  --gradient-nature: linear-gradient(135deg, #f1f8e9, #e8f5e9);
+  
+  // Shadows
+  --shadow-sm: 0 2px 8px rgba(46, 125, 50, 0.1);
+  --shadow-md: 0 4px 12px rgba(46, 125, 50, 0.15);
+  --shadow-lg: 0 8px 25px rgba(46, 125, 50, 0.2);
+  --shadow-xl: 0 15px 40px rgba(46, 125, 50, 0.25);
+  
+  // Typography
+  --font-primary: 'Playfair Display', 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+  --font-secondary: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  
+  // Border Radius
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 50px;
+  
+  // Spacing
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+}
+
+// Mixins for Agricultural Theme
+@mixin agricultural-card {
+  background: var(--color-white);
+  border: 2px solid rgba(46, 125, 50, 0.2);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(46, 125, 50, 0.03) 0%, transparent 70%);
+    pointer-events: none;
+    transform: rotate(45deg);
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--color-primary-light);
+  }
+}
+
+@mixin agricultural-button($variant: primary) {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-primary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  @if $variant == primary {
+    background: var(--gradient-primary);
+    color: var(--color-white);
+    box-shadow: var(--shadow-md);
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+  } @else if $variant == secondary {
+    background: var(--color-white);
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+    box-shadow: var(--shadow-sm);
+
+    &:hover {
+      background: var(--color-light-gray);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+  } @else if $variant == harvest {
+    background: var(--gradient-harvest);
+    color: var(--color-black);
+    box-shadow: var(--shadow-md);
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+@mixin agricultural-input {
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 3px solid rgba(46, 125, 50, 0.2);
+  border-radius: var(--radius-lg);
+  font-size: 1.1rem;
+  background: var(--color-white);
+  color: var(--color-primary);
+  font-weight: 600;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+  box-shadow: var(--shadow-sm);
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary-light);
+    box-shadow: 
+      0 0 0 4px rgba(46, 125, 50, 0.15),
+      var(--shadow-md);
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #ffffff, #f9fdf9);
+  }
+
+  &:hover {
+    border-color: var(--color-primary-lighter);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  &::placeholder {
+    color: rgba(46, 125, 50, 0.6);
+    font-style: italic;
+    font-weight: 500;
+  }
+}
+
+@mixin agricultural-title {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@mixin agricultural-text {
+  color: var(--color-dark-gray);
+  line-height: 1.6;
+  font-family: var(--font-secondary);
+}
+
+@mixin agricultural-section {
+  background: linear-gradient(135deg, #f8fdf8 0%, #e8f5e8 100%);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 20% 20%, rgba(46, 125, 50, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(76, 175, 80, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 40% 60%, rgba(46, 125, 50, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+  }
+}
+
+// Agricultural Icons
+@mixin agricultural-icon($icon) {
+  &::before {
+    @if $icon == plant { content: '🌱'; }
+    @else if $icon == harvest { content: '🌾'; }
+    @else if $icon == farm { content: '🚜'; }
+    @else if $icon == seed { content: '🌰'; }
+    @else if $icon == water { content: '💧'; }
+    @else if $icon == sun { content: '☀️'; }
+    @else if $icon == earth { content: '🌍'; }
+    @else if $icon == growth { content: '🌿'; }
+    @else if $icon == fruit { content: '🍎'; }
+    @else if $icon == vegetable { content: '🥕'; }
+    @else if $icon == technology { content: '🔬'; }
+    @else if $icon == rural { content: '🏞️'; }
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+  }
+}
+
+// Responsive Typography Scale
+@mixin responsive-text($base-size) {
+  font-size: $base-size;
+  
+  @media (max-width: 1024px) {
+    font-size: calc(#{$base-size} * 0.9);
+  }
+  
+  @media (max-width: 768px) {
+    font-size: calc(#{$base-size} * 0.8);
+  }
+  
+  @media (max-width: 480px) {
+    font-size: calc(#{$base-size} * 0.75);
+  }
+}
+
+// Animation Keyframes
+@keyframes agriculturalFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes agriculturalGrow {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes agriculturalPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}

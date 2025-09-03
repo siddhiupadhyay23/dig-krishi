@@ -77,8 +77,8 @@
         }
         
         &:hover {
-          background: rgba(15, 118, 110, 0.1);
-          color: #0f766e;
+          background: rgba(76, 175, 80, 0.1);
+          color: #2e7d32;
           transform: translateY(-2px);
           
           .nav-item-icon {
@@ -87,9 +87,9 @@
         }
         
         &.active {
-          background: linear-gradient(135deg, #0f766e, #0d9488);
+          background: linear-gradient(135deg, #4caf50, #66bb6a);
           color: white;
-          box-shadow: 0 4px 12px rgba(15, 118, 110, 0.3);
+          box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
           
           .nav-item-icon {
             transform: scale(1.1);
@@ -97,7 +97,7 @@
           
           &:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(15, 118, 110, 0.4);
+            box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
             
             .nav-item-icon {
               transform: scale(1.2);
@@ -288,16 +288,16 @@
         }
         
         &.dashboard-btn {
-          background: linear-gradient(135deg, #0f766e, #0d9488);
+          background: linear-gradient(135deg, #4caf50, #66bb6a);
           color: var(--color-white);
-          border: 2px solid #0f766e;
-          box-shadow: 0 2px 6px rgba(15, 118, 110, 0.15);
+          border: 2px solid #4caf50;
+          box-shadow: 0 2px 6px rgba(76, 175, 80, 0.15);
           
           &:hover {
             transform: scale(1.05);
-            box-shadow: 0 6px 16px rgba(15, 118, 110, 0.25);
-            background: linear-gradient(135deg, #0d9488, #0f766e);
-            border-color: #0d9488;
+            box-shadow: 0 6px 16px rgba(76, 175, 80, 0.25);
+            background: linear-gradient(135deg, #66bb6a, #4caf50);
+            border-color: #66bb6a;
           }
           
           &:active {
@@ -307,16 +307,16 @@
         }
         
         &.reports-btn {
-          background: linear-gradient(135deg, #0f766e, #0d9488);
+          background: linear-gradient(135deg, #4caf50, #66bb6a);
           color: var(--color-white);
-          border: 2px solid #0f766e;
-          box-shadow: 0 2px 6px rgba(15, 118, 110, 0.15);
+          border: 2px solid #4caf50;
+          box-shadow: 0 2px 6px rgba(76, 175, 80, 0.15);
           
           &:hover {
             transform: scale(1.05);
-            box-shadow: 0 6px 16px rgba(15, 118, 110, 0.25);
-            background: linear-gradient(135deg, #0d9488, #0f766e);
-            border-color: #0d9488;
+            box-shadow: 0 6px 16px rgba(76, 175, 80, 0.25);
+            background: linear-gradient(135deg, #66bb6a, #4caf50);
+            border-color: #66bb6a;
           }
           
           &:active {

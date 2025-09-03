@@ -1,0 +1,17 @@
+@import './BaseCard.scss';
+
+.land-size-card {
+  .card-header {
+    &::before {
+      content: '🏖️';
+    }
+  }
+
+  .form-group {
+    label {
+      &::before {
+        content: '🏁' !important;
+      }
+    }
+  }
+}

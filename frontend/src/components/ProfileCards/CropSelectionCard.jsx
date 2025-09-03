@@ -52,7 +52,7 @@ const CropSelectionCard = ({ selectedCrops, onUpdate, onPrevious, onFinish, load
   };
 
   return (
-    <div className="profile-card">
+    <div className="profile-card crop-selection-card">
       <div className="card-header">
         <h2 className="card-title">Select Your Crops</h2>
         <p className="card-subtitle">
@@ -61,91 +61,60 @@ const CropSelectionCard = ({ selectedCrops, onUpdate, onPrevious, onFinish, load
       </div>
 
       <div className="card-content">
-        <div className="form-group">
-          <label htmlFor="cropSelect">Add Crop</label>
-          <select
-            id="cropSelect"
-            value={selectedCrop}
-            onChange={handleDropdownChange}
-          >
-            <option value="">Select a crop</option>
-            {keralaCrops.map((crop) => (
-              <option key={crop} value={crop}>
-                {crop}
-              </option>
-            ))}
-            <option value="other">Other (Please specify)</option>
-          </select>
-        </div>
-
-        {showCustomInput && (
+        <div className="add-crop-section">
           <div className="form-group">
-            <label htmlFor="customCrop">Enter Crop Name</label>
-            <input
-              type="text"
-              id="customCrop"
-              placeholder="Enter crop name"
-              value={customCrop}
-              onChange={(e) => setCustomCrop(e.target.value)}
-            />
+            <label htmlFor="cropSelect">Add Crop</label>
+            <select
+              id="cropSelect"
+              value={selectedCrop}
+              onChange={handleDropdownChange}
+            >
+              <option value="">Select a crop</option>
+              {keralaCrops.map((crop) => (
+                <option key={crop} value={crop}>
+                  {crop}
+                </option>
+              ))}
+              <option value="other">Other (Please specify)</option>
+            </select>
           </div>
-        )}
 
-        <button
-          className="btn btn-primary"
-          onClick={handleAddCrop}
-          disabled={!selectedCrop && !customCrop}
-          style={{ marginBottom: '1.5rem', width: '100%' }}
-        >
-          Add Crop
-        </button>
+          {showCustomInput && (
+            <div className="form-group">
+              <label htmlFor="customCrop">Enter Crop Name</label>
+              <input
+                type="text"
+                id="customCrop"
+                placeholder="Enter crop name"
+                value={customCrop}
+                onChange={(e) => setCustomCrop(e.target.value)}
+              />
+            </div>
+          )}
+
+          <button
+            className="add-crop-btn"
+            onClick={handleAddCrop}
+            disabled={!selectedCrop && !customCrop}
+            type="button"
+          >
+          </button>
+        </div>
 
         {/* Selected Crops Display */}
         {crops.length > 0 && (
-          <div style={{
-            backgroundColor: 'var(--color-light-green)',
-            padding: '1.5rem',
-            borderRadius: '12px',
-            border: '1px solid var(--color-primary)'
-          }}>
-            <h4 style={{ 
-              color: 'var(--color-primary)', 
-              margin: '0 0 1rem 0',
-              fontSize: '1rem' 
-            }}>
-              🌾 Your Selected Crops:
+          <div className="selected-crops-container">
+            <h4 className="crops-title">
+              Your Selected Crops:
             </h4>
-            <div style={{ 
-              display: 'flex', 
-              flexWrap: 'wrap', 
-              gap: '0.5rem' 
-            }}>
+            <div className="crops-grid">
               {crops.map((crop, index) => (
-                <div
-                  key={index}
-                  style={{
-                    backgroundColor: 'var(--color-primary)',
-                    color: 'var(--color-white)',
-                    padding: '0.5rem 0.75rem',
-                    borderRadius: '20px',
-                    fontSize: '0.85rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem'
-                  }}
-                >
-                  <span>{crop}</span>
+                <div key={index} className="crop-tag">
+                  <span className="crop-name">{crop}</span>
                   <button
+                    className="remove-btn"
                     onClick={() => handleRemoveCrop(crop)}
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      color: 'var(--color-white)',
-                      cursor: 'pointer',
-                      padding: 0,
-                      fontSize: '1.2rem',
-                      lineHeight: 1
-                    }}
+                    aria-label={`Remove ${crop}`}
                   >
                     ×
                   </button>
@@ -156,21 +125,8 @@ const CropSelectionCard = ({ selectedCrops, onUpdate, onPrevious, onFinish, load
         )}
 
         {crops.length === 0 && (
-          <div style={{
-            backgroundColor: 'var(--color-light-green)',
-            padding: '1.5rem',
-            borderRadius: '12px',
-            marginTop: '1rem',
-            border: '1px solid var(--color-primary)',
-            textAlign: 'center'
-          }}>
-            <p style={{ 
-              color: 'var(--color-primary)', 
-              margin: 0,
-              fontSize: '0.9rem'
-            }}>
-              Please add at least one crop to continue
-            </p>
+          <div className="empty-state">
+            <p>Please add at least one crop to continue</p>
           </div>
         )}
       </div>

@@ -1,0 +1,426 @@
+// Base ProfileSetup container styles
+.profile-setup {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fdf8 0%, #e8f5e8 100%);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+
+  // Agricultural background decorations
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 20% 20%, rgba(76, 175, 80, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(102, 187, 106, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 40% 60%, rgba(46, 125, 50, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .progress-container {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 3rem;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+
+    .progress-bar {
+      width: 100%;
+      height: 12px;
+      background: #e8f5e9;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      box-shadow: inset 0 2px 4px rgba(76, 175, 80, 0.1);
+      border: 1px solid rgba(76, 175, 80, 0.2);
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #4caf50, #66bb6a);
+        transition: width 0.4s ease;
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+      }
+    }
+
+    .progress-text {
+      color: #2e7d32;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: 'Playfair Display', 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+    }
+  }
+
+  .card-container {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+}
+
+// Base card styles
+.profile-card {
+  background: white;
+  border: 2px solid rgba(76, 175, 80, 0.2);
+  border-radius: 20px;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 450px;
+  min-height: 350px;
+  box-shadow: 
+    0 2px 20px rgba(0, 0, 0, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  // Agricultural theme colors
+  * {
+    &:not(button) {
+      color: #2e7d32 !important;
+    }
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #2e7d32 !important;
+    font-weight: 700 !important;
+    background: transparent !important;
+  }
+
+  p, span, div {
+    color: #2e7d32 !important;
+    
+    &.card-title {
+      color: #2e7d32 !important;
+    }
+  }
+
+  label {
+    color: #2e7d32 !important;
+    font-weight: 700 !important;
+    background: transparent !important;
+  }
+
+  // Decorative elements
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(76, 175, 80, 0.03) 0%, transparent 70%);
+    pointer-events: none;
+    transform: rotate(45deg);
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+      0 25px 70px rgba(76, 175, 80, 0.15),
+      0 10px 35px rgba(0, 0, 0, 0.1);
+    border-color: #4caf50;
+  }
+
+  .card-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+
+    &::before {
+      content: '🌱';
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 0.5rem;
+      opacity: 0.8;
+      filter: drop-shadow(0 2px 4px rgba(76, 175, 80, 0.2));
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #2e7d32;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .card-subtitle {
+      font-size: 0.9rem;
+      color: #666;
+      margin: 0;
+      line-height: 1.4;
+    }
+  }
+
+  .card-content {
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+
+    // Enhanced form groups for all cards
+    .form-group {
+      margin-bottom: 1.5rem;
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #2e7d32;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        position: relative;
+        padding-left: 1.5rem;
+
+        &::before {
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          font-size: 1rem;
+        }
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        background: white;
+        color: #1a1a1a;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        box-sizing: border-box;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+        &:focus {
+          outline: none;
+          border-color: #4caf50;
+          box-shadow: 
+            0 0 0 4px rgba(76, 175, 80, 0.15),
+            0 8px 25px rgba(76, 175, 80, 0.2),
+            inset 0 2px 4px rgba(0, 0, 0, 0.02);
+          transform: translateY(-3px);
+          background: linear-gradient(135deg, #ffffff, #f9fdf9);
+        }
+
+        &:hover {
+          border-color: #66bb6a;
+          transform: translateY(-1px);
+          box-shadow: 
+            0 6px 15px rgba(76, 175, 80, 0.15),
+            inset 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        &::placeholder {
+          color: #81c784;
+          font-style: italic;
+          font-weight: 500;
+        }
+      }
+
+      select {
+        cursor: pointer;
+        background-image: url('data:image/svg+xml;utf8,<svg fill="%234caf50" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 1.5rem center;
+        background-size: 1.5rem;
+        appearance: none;
+        padding-right: 4rem;
+      }
+
+      .input-group {
+        display: flex;
+        gap: 1.5rem;
+
+        input {
+          flex: 1;
+        }
+
+        select {
+          flex: 0 0 140px;
+        }
+      }
+    }
+  }
+
+  .card-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-width: 100px;
+      position: relative;
+      overflow: hidden;
+
+      &.btn-primary {
+        background: linear-gradient(135deg, #4caf50, #66bb6a);
+        color: white;
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+
+        &:hover:not(:disabled) {
+          transform: translateY(-3px);
+          box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+        }
+      }
+
+      &.btn-secondary {
+        background: white;
+        color: #4caf50;
+        border: 2px solid #4caf50;
+        box-shadow: 0 2px 8px rgba(76, 175, 80, 0.1);
+
+        &:hover:not(:disabled) {
+          background: #f1f8e9;
+          transform: translateY(-3px);
+          box-shadow: 0 6px 20px rgba(76, 175, 80, 0.2);
+        }
+      }
+
+      &.btn-finish {
+        background: linear-gradient(135deg, #2e7d32, #4caf50);
+        color: white;
+        box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+
+        &:hover:not(:disabled) {
+          transform: translateY(-3px) scale(1.05);
+          box-shadow: 0 8px 25px rgba(46, 125, 50, 0.4);
+        }
+      }
+    }
+  }
+}
+
+// Responsive Design for Better Centering
+@media (max-width: 768px) {
+  .profile-setup {
+    padding: 0.5rem;
+    justify-content: flex-start;
+    padding-top: 2rem;
+    
+    .progress-container {
+      margin-bottom: 1.5rem;
+      max-width: 100%;
+      
+      .progress-bar {
+        height: 6px;
+      }
+      
+      .progress-text {
+        font-size: 0.8rem;
+      }
+    }
+    
+    .card-container {
+      max-width: 100%;
+    }
+  }
+  
+  .profile-card {
+    max-width: 100%;
+    min-height: auto;
+    padding: 1rem;
+    
+    .card-header {
+      margin-bottom: 1rem;
+      
+      &::before {
+        font-size: 1.5rem;
+      }
+      
+      .card-title {
+        font-size: 1.3rem;
+      }
+      
+      .card-subtitle {
+        font-size: 0.8rem;
+      }
+    }
+    
+    .card-content {
+      margin-bottom: 1rem;
+      
+      .form-group {
+        margin-bottom: 1rem;
+        
+        label {
+          font-size: 0.8rem;
+          padding-left: 1.2rem;
+          
+          &::before {
+            font-size: 0.9rem;
+          }
+        }
+        
+        input, select {
+          padding: 0.6rem 0.8rem;
+          font-size: 0.8rem;
+        }
+      }
+    }
+    
+    .card-actions {
+      gap: 0.5rem;
+      
+      .btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.8rem;
+        min-width: 80px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-setup {
+    padding: 0.25rem;
+    
+    .card-container {
+      padding: 0;
+    }
+  }
+  
+  .profile-card {
+    border-radius: 16px;
+    padding: 0.75rem;
+    
+    .card-actions {
+      flex-direction: column;
+      gap: 0.75rem;
+      
+      .btn {
+        width: 100%;
+        min-width: auto;
+      }
+    }
+  }
+}

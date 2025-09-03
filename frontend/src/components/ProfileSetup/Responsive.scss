@@ -1,0 +1,136 @@
+// Mobile responsive styles for all profile cards
+@media (max-width: 768px) {
+  .profile-setup {
+    padding: 1rem !important;
+    min-height: 100vh !important;
+
+    .progress-container {
+      margin-bottom: 1.5rem !important;
+      max-width: 100% !important;
+    }
+
+    .card-container {
+      max-width: 100% !important;
+      padding: 0 !important;
+    }
+  }
+
+  .profile-card {
+    padding: 1.5rem !important;
+    margin: 0 !important;
+    border-radius: 16px !important;
+    min-height: auto !important;
+
+    .card-header {
+      margin-bottom: 1.5rem !important;
+
+      &::before {
+        font-size: 2rem !important;
+        margin-bottom: 0.8rem !important;
+      }
+
+      .card-title {
+        font-size: 1.5rem !important;
+        line-height: 1.3 !important;
+      }
+
+      .card-subtitle {
+        font-size: 1rem !important;
+      }
+    }
+
+    .card-content {
+      margin-bottom: 1.5rem !important;
+
+      .form-group {
+        margin-bottom: 2rem !important;
+
+        label {
+          font-size: 1rem !important;
+          padding-left: 1.8rem !important;
+          margin-bottom: 0.8rem !important;
+
+          &::before {
+            font-size: 1.1rem !important;
+          }
+        }
+
+        input,
+        select {
+          padding: 1.2rem 1.5rem !important;
+          font-size: 1.1rem !important;
+          border-radius: 12px !important;
+        }
+
+        select {
+          padding-right: 3.5rem !important;
+        }
+
+        .input-group {
+          flex-direction: column !important;
+          gap: 1rem !important;
+
+          select {
+            flex: 1 !important;
+          }
+        }
+      }
+    }
+
+    .card-actions {
+      flex-direction: column !important;
+      gap: 1rem !important;
+
+      .btn {
+        width: 100% !important;
+        padding: 1rem 1.5rem !important;
+        font-size: 1rem !important;
+      }
+
+      .btn-group {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.8rem !important;
+        width: 100% !important;
+
+        .btn {
+          flex: none !important;
+          width: 100% !important;
+        }
+      }
+    }
+  }
+}
+
+// Tablet responsive
+@media (max-width: 1024px) and (min-width: 769px) {
+  .profile-setup {
+    padding: 1.5rem !important;
+  }
+
+  .profile-card {
+    padding: 2rem !important;
+  }
+}
+
+// Small mobile devices
+@media (max-width: 480px) {
+  .profile-setup {
+    padding: 0.5rem !important;
+  }
+
+  .profile-card {
+    padding: 1rem !important;
+    border-radius: 12px !important;
+
+    .card-header {
+      .card-title {
+        font-size: 1.3rem !important;
+      }
+
+      .card-subtitle {
+        font-size: 0.9rem !important;
+      }
+    }
+  }
+}

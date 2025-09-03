@@ -1,0 +1,17 @@
+@import './BaseCard.scss';
+
+.state-card {
+  .card-header {
+    &::before {
+      content: '🌏';
+    }
+  }
+
+  .form-group {
+    label {
+      &::before {
+        content: '🗺️' !important;
+      }
+    }
+  }
+}

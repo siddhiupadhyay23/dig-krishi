@@ -10,7 +10,7 @@
 
     .reports-sidebar {
       width: 280px;
-      background: linear-gradient(135deg, #0f766e, #0d9488);
+      background: linear-gradient(135deg, #4caf50, #66bb6a);
       color: white;
       padding: 2rem 0;
       box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
@@ -145,7 +145,7 @@
             font-size: 2.5rem;
             font-weight: 800;
             margin: 0 0 0.5rem 0;
-            color: #0f766e;
+            color: #2e7d32;
           }
 
           p {
@@ -186,8 +186,8 @@
 
               &:focus {
                 outline: none;
-                border-color: #0d9488;
-                box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+                border-color: #4caf50;
+                box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
               }
             }
           }
@@ -197,7 +197,7 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.75rem 1.5rem;
-            background: linear-gradient(135deg, #0f766e, #0d9488);
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
             color: white;
             border: none;
             border-radius: 8px;
@@ -358,7 +358,7 @@
 
                 &:focus {
                   outline: none;
-                  border-color: #0d9488;
+                  border-color: #4caf50;
                 }
               }
             }
@@ -562,7 +562,7 @@
         h1 {
           font-size: 2.5rem;
           font-weight: 800;
-          color: #0f766e;
+          color: #2e7d32;
           margin-bottom: 1rem;
         }
         
@@ -598,7 +598,7 @@
             
             .metric-icon {
               font-size: 3rem;
-              background: linear-gradient(135deg, #0f766e, #0d9488);
+              background: linear-gradient(135deg, #4caf50, #66bb6a);
               border-radius: 50%;
               width: 80px;
               height: 80px;
@@ -658,7 +658,7 @@
                 
                 .bar {
                   flex: 1;
-                  background: linear-gradient(135deg, #0f766e, #0d9488);
+                  background: linear-gradient(135deg, #4caf50, #66bb6a);
                   border-radius: 8px 8px 0 0;
                   transition: all 0.3s ease;
                   
@@ -849,12 +849,12 @@
                 flex-direction: row-reverse;
                 
                 .message-avatar {
-                  background: linear-gradient(135deg, #0f766e, #0d9488);
+                  background: linear-gradient(135deg, #4caf50, #66bb6a);
                   color: white;
                 }
                 
                 .message-content {
-                  background: linear-gradient(135deg, #0f766e, #0d9488);
+                  background: linear-gradient(135deg, #4caf50, #66bb6a);
                   color: white;
                 }
               }
@@ -874,14 +874,14 @@
               font-size: 1rem;
               
               &:focus {
-                border-color: #0f766e;
+                border-color: #4caf50;
                 box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
               }
             }
             
             .chat-send {
               padding: 1rem 2rem;
-              background: linear-gradient(135deg, #0f766e, #0d9488);
+              background: linear-gradient(135deg, #4caf50, #66bb6a);
               color: white;
               border: none;
               border-radius: 25px;
@@ -926,9 +926,9 @@
               text-align: left;
               
               &:hover {
-                border-color: #0f766e;
+                border-color: #4caf50;
                 background: #f0fdfa;
-                color: #0f766e;
+                color: #4caf50;
                 transform: translateY(-2px);
               }
             }
@@ -956,14 +956,14 @@
               transition: all 0.3s ease;
               
               &:hover {
-                border-color: #0f766e;
-                color: #0f766e;
+                border-color: #4caf50;
+                color: #4caf50;
               }
               
               &.active {
-                background: linear-gradient(135deg, #0f766e, #0d9488);
+                background: linear-gradient(135deg, #4caf50, #66bb6a);
                 color: white;
-                border-color: #0f766e;
+                border-color: #4caf50;
               }
             }
           }
@@ -985,7 +985,7 @@
             &:hover {
               transform: translateY(-5px);
               box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-              border-color: #0f766e;
+              border-color: #4caf50;
             }
             
             .scheme-header {
@@ -1055,7 +1055,7 @@
               .scheme-amount {
                 font-size: 1.5rem;
                 font-weight: 700;
-                color: #0f766e;
+                color: #4caf50;
               }
               
               .scheme-applied {
@@ -1080,7 +1080,7 @@
             .apply-btn {
               width: 100%;
               padding: 1rem;
-              background: linear-gradient(135deg, #0f766e, #0d9488);
+              background: linear-gradient(135deg, #4caf50, #66bb6a);
               color: white;
               border: none;
               border-radius: 12px;
@@ -1133,7 +1133,7 @@
             .modal-actions {
               .primary-btn {
                 padding: 1rem 2rem;
-                background: linear-gradient(135deg, #0f766e, #0d9488);
+                background: linear-gradient(135deg, #4caf50, #66bb6a);
                 color: white;
                 border: none;
                 border-radius: 12px;
