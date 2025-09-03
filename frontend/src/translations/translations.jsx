@@ -11,7 +11,7 @@ export const translations = {
     hero: {
       title: "A Farmer AI",
       titleItalic: "Assistant",
-      slogan: "Growing More than Crops - Growing Confidence.",
+      slogan: "always available, always learning, and always farmer-first",
       chatPlaceholder: "Ask me anything about farming..."
     },
     
@@ -50,7 +50,7 @@ export const translations = {
     auth: {
       signUp: {
         title: "Welcome to Digital Krishi Officer",
-        subtitle: "Growing More than Crops - Growing Confidence.",
+        subtitle: "always available, always learning, and always farmer-first",
         fullName: "Full Name",
         email: "Email Address", 
         password: "Password",
@@ -62,7 +62,7 @@ export const translations = {
       },
       login: {
         title: "Welcome Back to Digital Krishi Officer",
-        subtitle: "Growing More than Crops - Growing Confidence.",
+        subtitle: "always available, always learning, and always farmer-first",
         email: "Email Address",
         password: "Password", 
         signIn: "Sign In",
@@ -86,7 +86,7 @@ export const translations = {
     hero: {
       title: "കർഷക AI",
       titleItalic: "സഹായി",
-      slogan: "വിളകളേക്കാൾ കൂടുതൽ വളർത്തുന്നു - ആത്മവിശ്വാസം വളർത്തുന്നു.",
+      slogan: "എപ്പോഴും ലഭ്യമായ, എപ്പോഴും പഠിക്കുന്ന, എപ്പോഴും കർഷക-മുൻഗണന",
       chatPlaceholder: "കൃഷിയെക്കുറിച്ച് എന്തും ചോദിക്കുക..."
     },
     
@@ -125,7 +125,7 @@ export const translations = {
     auth: {
       signUp: {
         title: "ഡിജിറ്റൽ കൃഷി ഉദ്യോഗസ്ഥനിലേക്ക് സ്വാഗതം",
-        subtitle: "വിളകളേക്കാൾ കൂടുതൽ വളർത്തുന്നു - ആത്മവിശ്വാസം വളർത്തുന്നു.",
+        subtitle: "എപ്പോഴും ലഭ്യമായ, എപ്പോഴും പഠിക്കുന്ന, എപ്പോഴും കർഷക-മുൻഗണന",
         fullName: "പൂർണ്ണ നാമം",
         email: "ഇമെയിൽ വിലാസം",
         password: "പാസ്‌വേഡ്",
@@ -137,7 +137,7 @@ export const translations = {
       },
       login: {
         title: "ഡിജിറ്റൽ കൃഷി ഉദ്യോഗസ്ഥനിലേക്ക് തിരികെ സ്വാഗതം",
-        subtitle: "വിളകളേക്കാൾ കൂടുതൽ വളർത്തുന്നു - ആത്മവിശ്വാസം വളർത്തുന്നു.",
+        subtitle: "എപ്പോഴും ലഭ്യമായ, എപ്പോഴും പഠിക്കുന്ന, എപ്പോഴും കർഷക-മുൻഗണന",
         email: "ഇമെയിൽ വിലാസം",
         password: "പാസ്‌വേഡ്",
         signIn: "സൈൻ ഇൻ",
