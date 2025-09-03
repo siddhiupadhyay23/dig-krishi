@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import Navbar from './Navbar';
 import Features from './Features';
 import Working from './Working';
+import Footer from './Footer';
 import './HeroSection.scss';
 
 const HeroSection = () => {
@@ -151,6 +152,7 @@ const HeroSection = () => {
       </div>
       <Features />
       <Working />
+      <Footer />
     </>
   );
 };

@@ -1,0 +1,15 @@
+.working-section {
+  width: 100%;
+  height: 115vh;
+  overflow: hidden;
+  position: relative;
+}
+.working-section .working-image {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: bottom;
+     object-position: bottom;
+  display: block;
+}/*# sourceMappingURL=Working.css.map */
