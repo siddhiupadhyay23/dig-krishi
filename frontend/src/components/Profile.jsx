@@ -1866,11 +1866,7 @@ const Profile = () => {
       <div className="profile-container">
       <div className="profile-header farmer-profile-header">
         <div className="header-content">
-<<<<<<< HEAD
           <h1><FarmerIcon size={24} /> Farmer Profile</h1>
-=======
-          <h1>Farmer Profile</h1>
->>>>>>> 54e108c (✨ Enhanced Farm Details System: Comprehensive profile management with analytics)
           <p>Manage your agricultural profile, farm details, and account settings</p>
           {profileData?.metadata && (
             <div className="profile-completion">
