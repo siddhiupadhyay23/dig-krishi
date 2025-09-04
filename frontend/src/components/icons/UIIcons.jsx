@@ -139,3 +139,31 @@ export const RocketIcon = ({ className = "icon", size = 24 }) => (
     <path d="M2.81,14.12L5.64,11.29L8.17,10.79C6.36,6.81 7.62,2.05 12.14,0.08C16.74,-2.05 22.05,0.37 22.05,5.44C22.05,7.69 21.09,9.5 19.88,11.29C20.84,12.25 20.84,13.75 19.88,14.71C18.92,15.67 17.42,15.67 16.46,14.71C14.67,15.92 12.86,16.88 10.61,16.88C5.54,16.88 3.12,11.57 5.25,6.97C7.22,2.45 11.98,1.19 15.96,2.26L15.46,4.79L18.29,7.62L14.37,11.54L7.9,18.01C7.4,18.51 6.60,18.51 6.10,18.01C5.6,17.51 5.6,16.71 6.10,16.21L8.54,13.77L2.81,14.12M16.77,9.75A1.25,1.25 0 0,0 18.02,8.5A1.25,1.25 0 0,0 16.77,7.25A1.25,1.25 0 0,0 15.52,8.5A1.25,1.25 0 0,0 16.77,9.75Z"/>
   </svg>
 );
+
+// Bell/Notification icon
+export const BellIcon = ({ className = "icon", size = 24 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M12,2C13.1,2 14,2.9 14,4C14,5.1 13.1,6 12,6C10.9,6 10,5.1 10,4C10,2.9 10.9,2 12,2M21,6V8H15L13.5,7V4.5L15,3H21M7,10H9V16H7V10M15,10H17V16H15V10M11,24V22H13V24H11Z"/>
+  </svg>
+);
+
+// Credit Card icon
+export const CreditCardIcon = ({ className = "icon", size = 24 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M20,8H4V6H20M20,18H4V12H20M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"/>
+  </svg>
+);
+
+// Scheme/Plan icon
+export const SchemeIcon = ({ className = "icon", size = 24 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M19,3H5C3.9,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.9 20.1,3 19,3M19,5V9H5V5H19M5,19V11H19V19H5M17,13H15V17H17V13M13,13H11V17H13V13M9,13H7V17H9V13Z"/>
+  </svg>
+);
+
+// Advisory/Warning icon
+export const AdvisoryIcon = ({ className = "icon", size = 24 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M11,15H13V17H11V15M11,7H13V13H11V7M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20Z"/>
+  </svg>
+);

@@ -10,7 +10,7 @@ import leafs from '../assets/leafs.png';
 import './HeroSection.scss';
 
 const HeroSection = () => {
-  const { t } = useLanguage();
+  const { t, currentLanguage } = useLanguage();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const [isExpanded, setIsExpanded] = useState(false);
@@ -64,7 +64,7 @@ const HeroSection = () => {
   
   return (
     <>
-      <div className="hero-section">
+      <div className={`hero-section ${currentLanguage === 'ml' ? 'malayalam' : 'english'}`}>
         <Navbar />
         <h1 className="hero-title">
           {t('hero.title')} <span className="italic-text">{t('hero.titleItalic')}</span>
@@ -101,7 +101,7 @@ const HeroSection = () => {
                   type="text"
                   value={question}
                   onChange={(e) => setQuestion(e.target.value)}
-                  placeholder="Ask me anything about farming..."
+                  placeholder={t('hero.chatPlaceholder')}
                   className="question-input-inline"
                   autoFocus
                 />
