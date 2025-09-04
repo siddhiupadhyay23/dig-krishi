@@ -43,6 +43,9 @@ const Features = () => {
     <section className="features-section">
       <div className="features-container">
         <div className="features-header">
+          <h3 className="features-subtitle">
+            Our Features
+          </h3>
           <h2 className="features-title">
             {translations.features.title}
           </h2>
