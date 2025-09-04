@@ -66,12 +66,12 @@ const HeroSection = () => {
     <>
       <div className="hero-section">
         <Navbar />
-        <p className="hero-slogan">
-          {t('hero.slogan')}
-        </p>
         <h1 className="hero-title">
           {t('hero.title')} <span className="italic-text">{t('hero.titleItalic')}</span>
         </h1>
+        <p className="hero-slogan">
+          {t('hero.slogan')}
+        </p>
         <div className={`hero-cta-container ${isExpanded ? 'expanded' : ''}`}>
           {!isExpanded ? (
             <button className="hero-cta-button" onClick={handleGetStarted}>

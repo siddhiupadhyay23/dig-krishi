@@ -11,7 +11,7 @@ export const translations = {
     hero: {
       title: "A Farmer AI",
       titleItalic: "Assistant",
-      slogan: "always available, always learning, and always farmer-first",
+      slogan: "Always available, always learning, and always farmer-first",
       chatPlaceholder: "Ask me anything about farming..."
     },
     
