@@ -1,5 +1,5 @@
-// SCSS Variables
-$primary-color: #10b981;
+// Modern Farmer Profile Theme Variables
+$primary-color: #10b981; // Emerald green
 $primary-light: #34d399;
 $primary-dark: #059669;
 $success-color: #22c55e;
@@ -11,6 +11,15 @@ $text-light: #9ca3af;
 $border-light: #e5e7eb;
 $bg-light: #f8fafc;
 $bg-white: #ffffff;
+
+// Additional farmer theme colors
+$farmer-green: #059669;
+$farmer-green-light: #10b981;
+$farmer-accent: #22c55e;
+$card-shadow: 0 4px 20px rgba(5, 150, 105, 0.1);
+$card-shadow-hover: 0 8px 32px rgba(5, 150, 105, 0.15);
+$gradient-primary: linear-gradient(135deg, #10b981, #059669);
+$gradient-success: linear-gradient(135deg, #22c55e, #16a34a);
 
 .profile {
   min-height: 100vh;
