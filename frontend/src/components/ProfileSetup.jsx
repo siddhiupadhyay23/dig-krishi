@@ -137,15 +137,19 @@ const ProfileSetup = () => {
   const handleCropSelectionFinish = async (data) => {
     try {
       updateProfileData(data);
+      
+      // Convert crop names to the format expected by the backend
       const cropsData = data.selectedCrops.map(cropName => ({
         cropName: cropName,
         cropType: 'other',
         season: 'kharif'
       }));
       
+      console.log('Sending crop data:', { crops: cropsData });
       await makeAPICall('crops', { crops: cropsData });
       navigate('/');
     } catch (error) {
+      console.error('Crop selection error:', error);
       setError('Failed to save crop selection. Please try again.');
     }
   };

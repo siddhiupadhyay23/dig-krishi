@@ -22,14 +22,25 @@ async function authMiddleware(req,res,next) {
         const decoded = jwt.verify(token,process.env.JWT_SECRET);
 
         const user = await userModel.findById(decoded.id)
+        
+        // Check if user exists
+        if (!user) {
+            console.error('User not found for token:', decoded.id);
+            return res.status(401).json({message: "User not found"});
+        }
 
         req.user = user;
 
         next();
     }catch(error){
         console.error('Auth middleware error:', error);
-        res.status(401).json({message:"unauthorized"});
-
+        if (error.name === 'JsonWebTokenError') {
+            return res.status(401).json({message: "Invalid token"});
+        }
+        if (error.name === 'TokenExpiredError') {
+            return res.status(401).json({message: "Token expired"});
+        }
+        res.status(401).json({message: "unauthorized"});
     }
 
 }

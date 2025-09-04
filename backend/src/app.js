@@ -8,6 +8,7 @@ const authRoutes = require("./routes/auth.routes")
 const chatRoutes = require("./routes/chat.routes")
 const profileRoutes = require("./routes/profile.routes")
 const analyticsRoutes = require("./routes/analytics.routes")
+const debugRoutes = require("./routes/debug.routes")
 
 const app = express();
 connectToDb()
@@ -27,5 +28,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/analytics", analyticsRoutes);
+app.use("/api/debug", debugRoutes);
 
 module.exports = app;

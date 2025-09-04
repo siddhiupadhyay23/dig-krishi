@@ -98,6 +98,7 @@ const CropSelectionCard = ({ selectedCrops, onUpdate, onPrevious, onFinish, load
             disabled={!selectedCrop && !customCrop}
             type="button"
           >
+            Add Crop
           </button>
         </div>
 

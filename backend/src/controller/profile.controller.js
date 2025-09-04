@@ -4,7 +4,29 @@ const userModel = require("../models/user.model");
 // Get user profile data
 async function getUserProfile(req, res) {
     try {
-        const userId = req.user.id; // Assuming you have auth middleware
+        // Debug logging
+        console.log('GetUserProfile - req.user:', req.user);
+        console.log('GetUserProfile - req.headers:', req.headers.authorization ? 'Bearer token present' : 'No Bearer token');
+        console.log('GetUserProfile - req.cookies:', req.cookies.token ? 'Cookie token present' : 'No cookie token');
+        
+        // Check if user exists in request
+        if (!req.user) {
+            console.error('No req.user found in getUserProfile');
+            return res.status(401).json({
+                message: "User not authenticated - no user data in request"
+            });
+        }
+        
+        if (!req.user.id && !req.user._id) {
+            console.error('req.user exists but has no id:', req.user);
+            return res.status(401).json({
+                message: "User not authenticated - no user ID found"
+            });
+        }
+        
+        // Handle both _id and id properties
+        const userId = req.user.id || req.user._id;
+        console.log('GetUserProfile - using userId:', userId);
         
         let profile = await profileModel.findOne({ userId }).populate('userId', 'email fullName');
         
@@ -32,7 +54,7 @@ async function getUserProfile(req, res) {
 // Update welcome step (Step 1)
 async function updateWelcomeStep(req, res) {
     try {
-        const userId = req.user.id;
+        const userId = req.user.id || req.user._id;
         
         let profile = await profileModel.findOne({ userId });
         if (!profile) {
@@ -60,7 +82,7 @@ async function updateWelcomeStep(req, res) {
 // Update phone number (Step 2)
 async function updatePhoneNumber(req, res) {
     try {
-        const userId = req.user.id;
+        const userId = req.user.id || req.user._id;
         const { phoneNumber } = req.body;
 
         // Validate phone number
@@ -97,7 +119,7 @@ async function updatePhoneNumber(req, res) {
 // Update state (Step 3)
 async function updateState(req, res) {
     try {
-        const userId = req.user.id;
+        const userId = req.user.id || req.user._id;
         const { state } = req.body;
 
         if (!state) {
@@ -133,7 +155,7 @@ async function updateState(req, res) {
 // Update city (Step 4)
 async function updateCity(req, res) {
     try {
-        const userId = req.user.id;
+        const userId = req.user.id || req.user._id;
         const { city, pincode } = req.body;
 
         if (!city) {
@@ -179,7 +201,7 @@ async function updateCity(req, res) {
 // Update district (Step 5 - Optional)
 async function updateDistrict(req, res) {
     try {
-        const userId = req.user.id;
+        const userId = req.user.id || req.user._id;
         const { district } = req.body;
 
         let profile = await profileModel.findOne({ userId });
@@ -212,7 +234,7 @@ async function updateDistrict(req, res) {
 // Update land size (Step 6) - Can be skipped
 async function updateLandSize(req, res) {
     try {
-        const userId = req.user.id;
+        const userId = req.user.id || req.user._id;
         const { landSize, unit, landType, soilType } = req.body;
 
         let profile = await profileModel.findOne({ userId });
@@ -262,10 +284,15 @@ async function updateLandSize(req, res) {
 // Update crop selection (Step 7)
 async function updateCropSelection(req, res) {
     try {
-        const userId = req.user.id;
+        console.log('UpdateCropSelection - req.body:', req.body);
+        const userId = req.user.id || req.user._id;
         const { crops } = req.body; // Array of crop objects
 
+        console.log('UpdateCropSelection - userId:', userId);
+        console.log('UpdateCropSelection - crops:', crops);
+
         if (!crops || !Array.isArray(crops) || crops.length === 0) {
+            console.log('UpdateCropSelection - Invalid crops data');
             return res.status(400).json({
                 message: "At least one crop must be selected"
             });
