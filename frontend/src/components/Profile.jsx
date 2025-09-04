@@ -1846,30 +1846,30 @@ const Profile = () => {
       <Navbar />
       
       <div className="profile-container">
-        <div className="profile-header">
-          <div className="header-content">
-            <h1>Farmer Profile</h1>
-            <p>Manage your agricultural profile, farm details, and account settings</p>
-            {profileData?.metadata && (
-              <div className="profile-completion">
-                <div className="completion-bar">
-                  <div 
-                    className="completion-fill" 
-                    style={{ width: `${profileData.metadata.completionPercentage || 0}%` }}
-                  ></div>
-                </div>
-                <span className="completion-text">
-                  {profileData.metadata.completionPercentage || 0}% Complete
-                </span>
+      <div className="profile-header farmer-profile-header">
+        <div className="header-content">
+          <h1>🌾 Farmer Profile</h1>
+          <p>Manage your agricultural profile, farm details, and account settings</p>
+          {profileData?.metadata && (
+            <div className="profile-completion">
+              <div className="completion-bar">
+                <div 
+                  className="completion-fill" 
+                  style={{ width: `${profileData.metadata.completionPercentage || 0}%` }}
+                ></div>
               </div>
-            )}
-          </div>
-          <div className="user-info">
-            <span>
-              Welcome, {personalInfo.firstName || profileData?.userId?.fullName?.firstName || 'Farmer'}!
-            </span>
-          </div>
+              <span className="completion-text">
+                📊 {profileData.metadata.completionPercentage || 0}% Complete
+              </span>
+            </div>
+          )}
         </div>
+        <div className="user-info">
+          <span>
+            👋 Welcome, {personalInfo.firstName || profileData?.userId?.fullName?.firstName || 'Farmer'}!
+          </span>
+        </div>
+      </div>
 
         <div className="profile-tabs">
           {sidebarItems.map(tab => (
