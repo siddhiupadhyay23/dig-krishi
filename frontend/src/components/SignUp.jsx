@@ -184,7 +184,7 @@ const SignUp = ({ onBackToHome, onNavigateToLogin, onSignUpSuccess }) => {
             <div className="form-icon">
               <img src={logo} alt="Digital Krishi Officer Logo" className="logo-image" />
             </div>
-            <p>Create your account to access agricultural tools and insights</p>
+            <p>{t('auth.signUp.welcomeMessage')}</p>
           </div>
           
           <input
@@ -224,7 +224,7 @@ const SignUp = ({ onBackToHome, onNavigateToLogin, onSignUpSuccess }) => {
           />
           
           <button type="submit" className="signup-button" disabled={loading}>
-            {loading ? 'Creating Account...' : 'Create Account'}
+            {loading ? t('auth.signUp.creatingAccount') : t('auth.signUp.createAccount')}
           </button>
         </form>
 

@@ -131,11 +131,11 @@ const Profile = () => {
       // Check if it's an auth error
       if (error.status === 401 || error.message === 'unauthorized') {
         setErrors({ 
-          general: 'You need to log in to access your profile. Please log in again.' 
+          general: t('profile.errors.authRequired') 
         });
       } else {
         setErrors({ 
-          general: error.message || 'Failed to load profile data. Please refresh the page.' 
+          general: error.message || t('profile.errors.loadFailed') 
         });
       }
     } finally {
@@ -300,7 +300,7 @@ const Profile = () => {
       setErrors({});
     } catch (error) {
       console.error('Save personal info error:', error);
-      setErrors({ general: error.message || 'Failed to update personal information. Please try again.' });
+      setErrors({ general: error.message || t('profile.errors.updateFailed') });
     } finally {
       setLoading(false);
     }
@@ -323,7 +323,7 @@ const Profile = () => {
       setErrors({});
     } catch (error) {
       console.error('Save farm info error:', error);
-      setErrors({ general: error.message || 'Failed to update farm details. Please try again.' });
+      setErrors({ general: error.message || t('profile.errors.updateFailed') });
     } finally {
       setLoading(false);
     }
@@ -569,7 +569,7 @@ const Profile = () => {
             
             {errors.general && (
               <div className="error-message">
-{errors.general}
+                {t('profile.errors.serverError')}: {errors.general}
               </div>
             )}
             

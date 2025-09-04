@@ -75,7 +75,7 @@ const HeroSection = () => {
         <div className={`hero-cta-container ${isExpanded ? 'expanded' : ''}`}>
           {!isExpanded ? (
             <button className="hero-cta-button" onClick={handleGetStarted}>
-              Get Started
+              {t('common.getStarted')}
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="button-arrow">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
@@ -124,7 +124,7 @@ const HeroSection = () => {
           <div className="login-popup-overlay">
             <div className="login-popup">
               <div className="login-popup-header">
-                <h3>Login Required</h3>
+                <h3>{t('common.loginRequired')}</h3>
                 <button onClick={handleCloseLoginPopup} className="close-popup">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -132,19 +132,19 @@ const HeroSection = () => {
                   </svg>
                 </button>
               </div>
-              <p>Please login to ask questions to our AI assistant.</p>
+              <p>{t('common.loginRequiredMessage')}</p>
               <div className="login-popup-actions">
                 <button 
                   onClick={() => navigate('/login')}
                   className="login-popup-btn primary"
                 >
-                  Login
+                  {t('common.login')}
                 </button>
                 <button 
                   onClick={() => navigate('/signup')}
                   className="login-popup-btn secondary"
                 >
-                  Sign Up
+                  {t('common.signUp')}
                 </button>
               </div>
             </div>
