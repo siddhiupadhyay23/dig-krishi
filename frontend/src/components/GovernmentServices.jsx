@@ -338,11 +338,11 @@ const GovernmentServices = () => {
   };
 
   const tabs = [
-    { id: 'schemes', label: 'Government Schemes', icon: 'S' },
-    { id: 'subsidies', label: 'Subsidies', icon: '$' },
-    { id: 'policies', label: 'Agricultural Policies', icon: 'P' },
-    { id: 'apply', label: 'Apply Online', icon: 'A' },
-    { id: 'track', label: 'Track Application', icon: 'T' }
+    { id: 'schemes', label: 'Government Schemes' },
+    { id: 'subsidies', label: 'Subsidies' },
+    { id: 'policies', label: 'Agricultural Policies' },
+    { id: 'apply', label: 'Apply Online' },
+    { id: 'track', label: 'Track Application' }
   ];
 
   const renderSchemes = () => (
@@ -719,7 +719,9 @@ const GovernmentServices = () => {
 
       {applications.length === 0 ? (
         <div className="no-applications">
-          <div className="no-app-icon">N</div>
+          <div className="no-app-icon">
+            📋
+          </div>
           <h3>No Applications Found</h3>
           <p>You haven't submitted any applications yet. Visit the Apply Online section to submit your first application.</p>
         </div>
@@ -796,7 +798,6 @@ const GovernmentServices = () => {
               className={`tab-button ${activeTab === tab.id ? 'active' : ''}`}
               onClick={() => setActiveTab(tab.id)}
             >
-              <span className="tab-icon">{tab.icon}</span>
               <span className="tab-label">{tab.label}</span>
             </button>
           ))}

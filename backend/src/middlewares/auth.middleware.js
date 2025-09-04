@@ -25,7 +25,7 @@ async function authMiddleware(req,res,next) {
         
         // Check if user exists
         if (!user) {
-            console.error('User not found for token:', decoded.id);
+            console.error('Auth middleware error: User not found with ID:', decoded.id);
             return res.status(401).json({message: "User not found"});
         }
 

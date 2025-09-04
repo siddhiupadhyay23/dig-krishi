@@ -64,5 +64,9 @@ export {
   LocationIcon,
   LoadingIcon,
   CelebrationIcon,
-  RocketIcon
+  RocketIcon,
+  BellIcon,
+  CreditCardIcon,
+  SchemeIcon,
+  AdvisoryIcon
 } from './UIIcons';

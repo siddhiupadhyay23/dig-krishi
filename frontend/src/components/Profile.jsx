@@ -4,6 +4,24 @@ import { useAuth } from '../context/AuthContext';
 import Navbar from './Navbar';
 import ProfileService from '../services/profileService';
 import AnalyticsService from '../services/analyticsService';
+import {
+  UserIcon,
+  SettingsIcon,
+  HelpIcon,
+  SeedlingIcon,
+  RiceIcon,
+  TomatoIcon,
+  CoconutIcon,
+  PepperIcon,
+  CarrotIcon,
+  FarmerIcon,
+  TractorIcon,
+  AnalyticsIcon,
+  AddIcon,
+  TargetIcon,
+  CelebrationIcon,
+  RocketIcon
+} from './icons';
 import './Profile.scss';
 
 const Profile = () => {
@@ -394,32 +412,32 @@ const Profile = () => {
 
   // Kerala-specific crop options for selection
   const cropOptions = [
-    { value: 'rice', label: 'Rice (Paddy)', icon: '' },
-    { value: 'coconut', label: 'Coconut', icon: '' },
-    { value: 'pepper', label: 'Black Pepper', icon: '' },
-    { value: 'cardamom', label: 'Cardamom', icon: '' },
-    { value: 'rubber', label: 'Rubber', icon: '' },
-    { value: 'banana', label: 'Banana', icon: '' },
-    { value: 'tea', label: 'Tea', icon: '' },
-    { value: 'coffee', label: 'Coffee', icon: '' },
-    { value: 'cashew', label: 'Cashew', icon: '' },
-    { value: 'areca', label: 'Areca Nut (Betel Nut)', icon: '' },
-    { value: 'ginger', label: 'Ginger', icon: '' },
-    { value: 'turmeric', label: 'Turmeric', icon: '' },
-    { value: 'tapioca', label: 'Tapioca (Cassava)', icon: '' },
-    { value: 'jackfruit', label: 'Jackfruit', icon: '' },
-    { value: 'mango', label: 'Mango', icon: '' },
-    { value: 'plantain', label: 'Plantain', icon: '' },
-    { value: 'cocoa', label: 'Cocoa', icon: '' },
-    { value: 'nutmeg', label: 'Nutmeg', icon: '' },
-    { value: 'clove', label: 'Clove', icon: '' },
-    { value: 'cinnamon', label: 'Cinnamon', icon: '' },
-    { value: 'vanilla', label: 'Vanilla', icon: '' },
-    { value: 'pineapple', label: 'Pineapple', icon: '' },
-    { value: 'papaya', label: 'Papaya', icon: '' },
-    { value: 'curry_leaves', label: 'Curry Leaves', icon: '' },
-    { value: 'vegetables', label: 'Mixed Vegetables', icon: '' },
-    { value: 'other', label: 'Other Crops (specify)', icon: '+' }
+    { value: 'rice', label: 'Rice (Paddy)', icon: <RiceIcon size={16} /> },
+    { value: 'coconut', label: 'Coconut', icon: <CoconutIcon size={16} /> },
+    { value: 'pepper', label: 'Black Pepper', icon: <PepperIcon size={16} /> },
+    { value: 'cardamom', label: 'Cardamom', icon: <SeedlingIcon size={16} /> },
+    { value: 'rubber', label: 'Rubber', icon: <SeedlingIcon size={16} /> },
+    { value: 'banana', label: 'Banana', icon: <SeedlingIcon size={16} /> },
+    { value: 'tea', label: 'Tea', icon: <SeedlingIcon size={16} /> },
+    { value: 'coffee', label: 'Coffee', icon: <SeedlingIcon size={16} /> },
+    { value: 'cashew', label: 'Cashew', icon: <SeedlingIcon size={16} /> },
+    { value: 'areca', label: 'Areca Nut (Betel Nut)', icon: <SeedlingIcon size={16} /> },
+    { value: 'ginger', label: 'Ginger', icon: <CarrotIcon size={16} /> },
+    { value: 'turmeric', label: 'Turmeric', icon: <CarrotIcon size={16} /> },
+    { value: 'tapioca', label: 'Tapioca (Cassava)', icon: <CarrotIcon size={16} /> },
+    { value: 'jackfruit', label: 'Jackfruit', icon: <SeedlingIcon size={16} /> },
+    { value: 'mango', label: 'Mango', icon: <SeedlingIcon size={16} /> },
+    { value: 'plantain', label: 'Plantain', icon: <SeedlingIcon size={16} /> },
+    { value: 'cocoa', label: 'Cocoa', icon: <SeedlingIcon size={16} /> },
+    { value: 'nutmeg', label: 'Nutmeg', icon: <SeedlingIcon size={16} /> },
+    { value: 'clove', label: 'Clove', icon: <SeedlingIcon size={16} /> },
+    { value: 'cinnamon', label: 'Cinnamon', icon: <SeedlingIcon size={16} /> },
+    { value: 'vanilla', label: 'Vanilla', icon: <SeedlingIcon size={16} /> },
+    { value: 'pineapple', label: 'Pineapple', icon: <SeedlingIcon size={16} /> },
+    { value: 'papaya', label: 'Papaya', icon: <SeedlingIcon size={16} /> },
+    { value: 'curry_leaves', label: 'Curry Leaves', icon: <SeedlingIcon size={16} /> },
+    { value: 'vegetables', label: 'Mixed Vegetables', icon: <TomatoIcon size={16} /> },
+    { value: 'other', label: 'Other Crops (specify)', icon: <AddIcon size={16} /> }
   ];
 
   // Handle crop selection
@@ -520,12 +538,12 @@ const Profile = () => {
   };
 
   const sidebarItems = [
-    { id: 'personal', label: 'Personal Info', icon: '' },
-    { id: 'farm', label: 'Farm Details', icon: '' },
-    { id: 'crops', label: 'My Crops', icon: '' },
-    { id: 'analytics', label: 'Farm Analytics', icon: '' },
-    { id: 'settings', label: 'Settings', icon: '' },
-    { id: 'support', label: 'Help & Support', icon: '' }
+    { id: 'personal', label: 'Personal Info', icon: <UserIcon size={20} /> },
+    { id: 'farm', label: 'Farm Details', icon: <TractorIcon size={20} /> },
+    { id: 'crops', label: 'My Crops', icon: <SeedlingIcon size={20} /> },
+    { id: 'analytics', label: 'Farm Analytics', icon: <AnalyticsIcon size={20} /> },
+    { id: 'settings', label: 'Settings', icon: <SettingsIcon size={20} /> },
+    { id: 'support', label: 'Help & Support', icon: <HelpIcon size={20} /> }
   ];
 
   const renderContent = () => {
@@ -1848,7 +1866,7 @@ const Profile = () => {
       <div className="profile-container">
       <div className="profile-header farmer-profile-header">
         <div className="header-content">
-          <h1>🌾 Farmer Profile</h1>
+          <h1><FarmerIcon size={24} /> Farmer Profile</h1>
           <p>Manage your agricultural profile, farm details, and account settings</p>
           {profileData?.metadata && (
             <div className="profile-completion">
@@ -1859,14 +1877,14 @@ const Profile = () => {
                 ></div>
               </div>
               <span className="completion-text">
-                📊 {profileData.metadata.completionPercentage || 0}% Complete
+                <TargetIcon size={16} /> {profileData.metadata.completionPercentage || 0}% Complete
               </span>
             </div>
           )}
         </div>
         <div className="user-info">
           <span>
-            👋 Welcome, {personalInfo.firstName || profileData?.userId?.fullName?.firstName || 'Farmer'}!
+            <CelebrationIcon size={18} /> Welcome, {personalInfo.firstName || profileData?.userId?.fullName?.firstName || 'Farmer'}!
           </span>
         </div>
       </div>

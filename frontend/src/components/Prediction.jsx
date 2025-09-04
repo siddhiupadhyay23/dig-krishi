@@ -124,9 +124,9 @@ const Prediction = () => {
   };
 
   const tabs = [
-    { id: 'crop-prediction', label: 'Crop Prediction', icon: 'C' },
-    { id: 'weather-forecast', label: 'Weather Forecast', icon: 'W' },
-    { id: 'market-trends', label: 'Market Trends', icon: 'M' }
+    { id: 'crop-prediction', label: 'Crop Prediction' },
+    { id: 'weather-forecast', label: 'Weather Forecast' },
+    { id: 'market-trends', label: 'Market Trends' }
   ];
 
   const renderCropPrediction = () => (
@@ -252,7 +252,9 @@ const Prediction = () => {
 
             <div className="results-grid">
               <div className="result-card primary">
-                <div className="result-icon">Y</div>
+                <div className="result-icon">
+                  🌾
+                </div>
                 <div className="result-content">
                   <h4>Expected Yield</h4>
                   <p className="result-value">{predictionResult.expectedYield}</p>
@@ -261,7 +263,9 @@ const Prediction = () => {
               </div>
 
               <div className="result-card">
-                <div className="result-icon">R</div>
+                <div className="result-icon">
+                  📊
+                </div>
                 <div className="result-content">
                   <h4>Yield Range</h4>
                   <p className="result-value">{predictionResult.yieldRange}</p>
@@ -317,7 +321,9 @@ const Prediction = () => {
         <h3>Current Weather</h3>
         <div className="current-weather-card">
           <div className="weather-main">
-            <div className="weather-icon">W</div>
+            <div className="weather-icon">
+              ☁️
+            </div>
             <div className="weather-info">
               <h4>{weatherData.current.location}</h4>
               <p className="temperature">{weatherData.current.temperature}</p>
@@ -457,7 +463,6 @@ const Prediction = () => {
               className={`tab-button ${activeTab === tab.id ? 'active' : ''}`}
               onClick={() => setActiveTab(tab.id)}
             >
-              <span className="tab-icon">{tab.icon}</span>
               <span className="tab-label">{tab.label}</span>
             </button>
           ))}
