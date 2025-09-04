@@ -1,5 +1,6 @@
 const profileModel = require("../models/profile.model");
 const userModel = require("../models/user.model");
+const AnalyticsService = require("../services/analytics.service");
 
 // Get user profile data
 async function getUserProfile(req, res) {
@@ -75,7 +76,12 @@ async function updatePhoneNumber(req, res) {
             profile = await profileModel.createInitialProfile(userId);
         }
 
-        profile.phoneNumber = phoneNumber || null;
+        // Support both old and new phone number structure
+        if (profile.personalInfo) {
+            profile.personalInfo.phoneNumber = phoneNumber || null;
+        } else {
+            profile.phoneNumber = phoneNumber || null;
+        }
         profile.profileCompletion.phoneCompleted = true;
         profile.currentProfileStep = 3;
         await profile.save();
@@ -404,9 +410,13 @@ async function updatePersonalInfo(req, res) {
             profile = await profileModel.createInitialProfile(userId);
         }
 
-        // Update personal information
+        // Update personal information (support both old and new structure)
         if (phoneNumber !== undefined) {
+            // Update both old and new structure for backwards compatibility
             profile.phoneNumber = phoneNumber;
+            if (profile.personalInfo) {
+                profile.personalInfo.phoneNumber = phoneNumber;
+            }
             profile.profileCompletion.phoneCompleted = true;
         }
 
@@ -787,6 +797,813 @@ async function updateCrop(req, res) {
     }
 }
 
+// Enhanced Personal Information Management
+async function updateCompletePersonalInfo(req, res) {
+    try {
+        const userId = req.user.id;
+        const { 
+            phoneNumber, 
+            dateOfBirth, 
+            gender, 
+            education, 
+            primaryOccupation,
+            secondaryOccupation,
+            totalFamilyMembers,
+            dependents,
+            profilePhoto,
+            bio
+        } = req.body;
+
+        let profile = await profileModel.findOne({ userId });
+        if (!profile) {
+            profile = await profileModel.createInitialProfile(userId);
+        }
+
+        // Validate phone number if provided
+        if (phoneNumber && !/^\d{10}$/.test(phoneNumber)) {
+            return res.status(400).json({
+                message: "Phone number must be 10 digits"
+            });
+        }
+
+        // Update personal information
+        if (phoneNumber !== undefined) profile.personalInfo.phoneNumber = phoneNumber;
+        if (dateOfBirth !== undefined) profile.personalInfo.dateOfBirth = dateOfBirth ? new Date(dateOfBirth) : null;
+        if (gender !== undefined) profile.personalInfo.gender = gender;
+        if (education !== undefined) profile.personalInfo.education = education;
+        if (primaryOccupation !== undefined) profile.personalInfo.occupation.primary = primaryOccupation;
+        if (secondaryOccupation !== undefined) profile.personalInfo.occupation.secondary = secondaryOccupation;
+        if (totalFamilyMembers !== undefined) profile.personalInfo.familyMembers.total = totalFamilyMembers;
+        if (dependents !== undefined) profile.personalInfo.familyMembers.dependents = dependents;
+        if (profilePhoto !== undefined) profile.personalInfo.profilePhoto = profilePhoto;
+        if (bio !== undefined) profile.personalInfo.bio = bio;
+
+        // Update completion status
+        if (phoneNumber) profile.profileCompletion.phoneCompleted = true;
+
+        await profile.save();
+        await profile.populate('userId', 'fullName email');
+
+        res.status(200).json({
+            message: "Personal information updated successfully",
+            profile: profile,
+            completionPercentage: profile.getCompletionPercentage()
+        });
+    } catch (error) {
+        console.error('Update complete personal info error:', error);
+        res.status(500).json({
+            message: "Internal server error",
+            error: error.message
+        });
+    }
+}
+
+// Enhanced Farm Details Management
+async function updateCompleteFarmDetails(req, res) {
+    try {
+        const userId = req.user.id;
+        const {
+            farmName,
+            totalLandSize,
+            landUnit,
+            landType,
+            soilType,
+            irrigationMethods,
+            landOwnership,
+            hasTitle,
+            titleNumber,
+            registrationNumber,
+            hasWarehouses,
+            warehouseCapacity,
+            hasProcessingUnits,
+            machinery
+        } = req.body;
+
+        let profile = await profileModel.findOne({ userId });
+        if (!profile) {
+            return res.status(404).json({
+                message: "Profile not found"
+            });
+        }
+
+        // Update land details
+        if (farmName !== undefined) profile.landDetails.farmName = farmName;
+        if (totalLandSize !== undefined) {
+            profile.landDetails.totalLandSize.value = totalLandSize;
+            profile.landDetails.totalLandSize.unit = landUnit || 'acres';
+            if (totalLandSize) profile.profileCompletion.landSizeCompleted = true;
+        }
+        if (landType !== undefined) profile.landDetails.landType = landType;
+        if (soilType !== undefined) profile.landDetails.soilType = soilType;
+        if (irrigationMethods !== undefined) profile.landDetails.irrigationMethods = irrigationMethods;
+        if (landOwnership !== undefined) profile.landDetails.landOwnership = landOwnership;
+        
+        // Update land certificates
+        if (hasTitle !== undefined) profile.landDetails.landCertificates.hasTitle = hasTitle;
+        if (titleNumber !== undefined) profile.landDetails.landCertificates.titleNumber = titleNumber;
+        if (registrationNumber !== undefined) profile.landDetails.landCertificates.registrationNumber = registrationNumber;
+        
+        // Update farming infrastructure
+        if (hasWarehouses !== undefined) profile.landDetails.farmingInfrastructure.hasWarehouses = hasWarehouses;
+        if (warehouseCapacity !== undefined) profile.landDetails.farmingInfrastructure.warehouseCapacity = warehouseCapacity;
+        if (hasProcessingUnits !== undefined) profile.landDetails.farmingInfrastructure.hasProcessingUnits = hasProcessingUnits;
+        if (machinery !== undefined) profile.landDetails.farmingInfrastructure.machinery = machinery;
+
+        await profile.save();
+        await profile.populate('userId', 'fullName email');
+
+        res.status(200).json({
+            message: "Farm details updated successfully",
+            profile: profile,
+            completionPercentage: profile.getCompletionPercentage()
+        });
+    } catch (error) {
+        console.error('Update complete farm details error:', error);
+        res.status(500).json({
+            message: "Internal server error",
+            error: error.message
+        });
+    }
+}
+
+// Enhanced Crop Management
+async function addDetailedCrop(req, res) {
+    try {
+        const userId = req.user.id;
+        const {
+            cropName,
+            cropType,
+            varietyName,
+            season,
+            areaAllocated,
+            areaUnit,
+            plantingDate,
+            expectedHarvestDate,
+            irrigationFrequency,
+            waterSource,
+            expectedYield,
+            yieldUnit,
+            expenses
+        } = req.body;
+
+        if (!cropName) {
+            return res.status(400).json({
+                message: "Crop name is required"
+            });
+        }
+
+        let profile = await profileModel.findOne({ userId });
+        if (!profile) {
+            return res.status(404).json({
+                message: "Profile not found"
+            });
+        }
+
+        // Check if crop already exists
+        const existingCrop = profile.cropsGrown.find(crop => 
+            crop.cropName.toLowerCase() === cropName.toLowerCase() && 
+            crop.isActive &&
+            crop.season === (season || 'kharif')
+        );
+        
+        if (existingCrop) {
+            return res.status(400).json({
+                message: "This crop for this season is already added to your profile"
+            });
+        }
+
+        // Create detailed crop object
+        const newCrop = {
+            cropName,
+            cropType: cropType || 'other',
+            varietyName: varietyName || null,
+            season: season || 'kharif',
+            areaAllocated: {
+                value: areaAllocated || null,
+                unit: areaUnit || 'acres'
+            },
+            plantingDate: plantingDate ? new Date(plantingDate) : null,
+            expectedHarvestDate: expectedHarvestDate ? new Date(expectedHarvestDate) : null,
+            irrigationSchedule: {
+                frequency: irrigationFrequency || 'as_needed',
+                waterSource: waterSource || 'borewell'
+            },
+            expectedYield: {
+                quantity: expectedYield || null,
+                unit: yieldUnit || 'kg'
+            },
+            expenses: {
+                seeds: expenses?.seeds || 0,
+                fertilizers: expenses?.fertilizers || 0,
+                pesticides: expenses?.pesticides || 0,
+                irrigation: expenses?.irrigation || 0,
+                labor: expenses?.labor || 0,
+                machinery: expenses?.machinery || 0,
+                other: expenses?.other || 0,
+                total: expenses?.total || 0
+            },
+            cropStatus: 'planned',
+            isActive: true
+        };
+
+        profile.cropsGrown.push(newCrop);
+        
+        // Mark crop selection as completed
+        if (profile.cropsGrown.filter(crop => crop.isActive).length > 0) {
+            profile.profileCompletion.cropSelectionCompleted = true;
+        }
+
+        await profile.save();
+        await profile.populate('userId', 'fullName email');
+
+        res.status(200).json({
+            message: "Detailed crop added successfully",
+            profile: profile,
+            addedCrop: newCrop
+        });
+    } catch (error) {
+        console.error('Add detailed crop error:', error);
+        res.status(500).json({
+            message: "Internal server error",
+            error: error.message
+        });
+    }
+}
+
+// Update detailed crop information
+async function updateDetailedCrop(req, res) {
+    try {
+        const userId = req.user.id;
+        const { cropId } = req.params;
+        const updateData = req.body;
+
+        let profile = await profileModel.findOne({ userId });
+        if (!profile) {
+            return res.status(404).json({
+                message: "Profile not found"
+            });
+        }
+
+        // Find the crop to update
+        const crop = profile.cropsGrown.id(cropId);
+        if (!crop) {
+            return res.status(404).json({
+                message: "Crop not found"
+            });
+        }
+
+        // Update crop fields
+        Object.keys(updateData).forEach(key => {
+            if (key === 'plantingDate' || key === 'expectedHarvestDate') {
+                crop[key] = updateData[key] ? new Date(updateData[key]) : null;
+            } else if (key === 'areaAllocated') {
+                crop.areaAllocated = { ...crop.areaAllocated, ...updateData[key] };
+            } else if (key === 'expectedYield' || key === 'actualYield') {
+                crop[key] = { ...crop[key], ...updateData[key] };
+            } else if (key === 'expenses') {
+                crop.expenses = { ...crop.expenses, ...updateData[key] };
+            } else if (key === 'irrigationSchedule') {
+                crop.irrigationSchedule = { ...crop.irrigationSchedule, ...updateData[key] };
+            } else {
+                crop[key] = updateData[key];
+            }
+        });
+
+        // Calculate profit if both revenue and expenses are available
+        if (crop.revenue && crop.expenses.total) {
+            crop.profit = crop.revenue - crop.expenses.total;
+        }
+        
+        await profile.save();
+        await profile.populate('userId', 'fullName email');
+
+        res.status(200).json({
+            message: "Crop updated successfully",
+            profile: profile,
+            updatedCrop: crop
+        });
+    } catch (error) {
+        console.error('Update detailed crop error:', error);
+        res.status(500).json({
+            message: "Internal server error",
+            error: error.message
+        });
+    }
+}
+
+// Add growth stage to crop
+async function addGrowthStage(req, res) {
+    try {
+        const userId = req.user.id;
+        const { cropId } = req.params;
+        const { stage, date, notes, photos } = req.body;
+
+        if (!stage) {
+            return res.status(400).json({
+                message: "Growth stage is required"
+            });
+        }
+
+        let profile = await profileModel.findOne({ userId });
+        if (!profile) {
+            return res.status(404).json({
+                message: "Profile not found"
+            });
+        }
+
+        const crop = profile.cropsGrown.id(cropId);
+        if (!crop) {
+            return res.status(404).json({
+                message: "Crop not found"
+            });
+        }
+
+        crop.growthStages.push({
+            stage,
+            date: date ? new Date(date) : new Date(),
+            notes: notes || '',
+            photos: photos || []
+        });
+
+        await profile.save();
+
+        res.status(200).json({
+            message: "Growth stage added successfully",
+            crop: crop
+        });
+    } catch (error) {
+        console.error('Add growth stage error:', error);
+        res.status(500).json({
+            message: "Internal server error",
+            error: error.message
+        });
+    }
+}
+
+// Get farm analytics
+async function getFarmAnalytics(req, res) {
+    try {
+        const userId = req.user.id;
+        
+        const analytics = await AnalyticsService.calculateFarmAnalytics(userId);
+        
+        res.status(200).json({
+            message: "Farm analytics retrieved successfully",
+            analytics: analytics
+        });
+    } catch (error) {
+        console.error('Get farm analytics error:', error);
+        res.status(500).json({
+            message: "Internal server error",
+            error: error.message
+        });
+    }
+}
+
+// Get crop analytics for specific crop
+async function getCropAnalytics(req, res) {
+    try {
+        const userId = req.user.id;
+        const { cropId } = req.params;
+        
+        const profile = await profileModel.findOne({ userId });
+        if (!profile) {
+            return res.status(404).json({
+                message: "Profile not found"
+            });
+        }
+
+        const crop = profile.cropsGrown.id(cropId);
+        if (!crop) {
+            return res.status(404).json({
+                message: "Crop not found"
+            });
+        }
+
+        // Calculate crop-specific analytics
+        const analytics = {
+            cropInfo: {
+                name: crop.cropName,
+                type: crop.cropType,
+                season: crop.season,
+                status: crop.cropStatus
+            },
+            areaInfo: crop.areaAllocated,
+            timeline: {
+                plantingDate: crop.plantingDate,
+                expectedHarvestDate: crop.expectedHarvestDate,
+                daysToHarvest: crop.expectedHarvestDate ? 
+                    Math.ceil((new Date(crop.expectedHarvestDate) - new Date()) / (1000 * 60 * 60 * 24)) : null
+            },
+            yieldInfo: {
+                expected: crop.expectedYield,
+                actual: crop.actualYield,
+                efficiency: crop.expectedYield.quantity > 0 ? 
+                    Math.round(((crop.actualYield.quantity || 0) / crop.expectedYield.quantity) * 100) : 0
+            },
+            financial: {
+                expenses: crop.expenses,
+                revenue: crop.revenue || 0,
+                profit: crop.profit || 0,
+                profitMargin: crop.revenue > 0 ? Math.round((crop.profit / crop.revenue) * 100) : 0
+            },
+            growthProgress: {
+                totalStages: crop.growthStages.length,
+                currentStage: crop.growthStages.length > 0 ? 
+                    crop.growthStages[crop.growthStages.length - 1].stage : 'not_started',
+                stages: crop.growthStages.sort((a, b) => new Date(b.date) - new Date(a.date))
+            }
+        };
+
+        res.status(200).json({
+            message: "Crop analytics retrieved successfully",
+            analytics: analytics
+        });
+    } catch (error) {
+        console.error('Get crop analytics error:', error);
+        res.status(500).json({
+            message: "Internal server error",
+            error: error.message
+        });
+    }
+}
+
+// COMPREHENSIVE FARM DETAILS SAVE FUNCTION
+async function saveFarmDetails(req, res) {
+    try {
+        const userId = req.user.id;
+        const farmDetailsData = req.body;
+        
+        console.log('Received farm details data:', JSON.stringify(farmDetailsData, null, 2));
+
+        let profile = await profileModel.findOne({ userId });
+        if (!profile) {
+            profile = await profileModel.createInitialProfile(userId);
+        }
+
+        // Initialize nested objects if they don't exist
+        if (!profile.landDetails) profile.landDetails = {};
+        if (!profile.landDetails.farmingInfrastructure) profile.landDetails.farmingInfrastructure = {};
+        if (!profile.landDetails.landCertificates) profile.landDetails.landCertificates = {};
+        if (!profile.landDetails.soilDetails) profile.landDetails.soilDetails = {};
+        if (!profile.landDetails.waterIrrigation) profile.landDetails.waterIrrigation = {};
+        if (!profile.landDetails.equipmentInputs) profile.landDetails.equipmentInputs = {};
+        if (!profile.landDetails.economicInfo) profile.landDetails.economicInfo = {};
+        if (!profile.location) profile.location = {};
+        if (!profile.farmingExperience) profile.farmingExperience = {};
+
+        // === BASIC FARM INFORMATION ===
+        if (farmDetailsData.farmName !== undefined) {
+            profile.landDetails.farmName = farmDetailsData.farmName || null;
+        }
+
+        // === LOCATION DETAILS ===
+        if (farmDetailsData.address !== undefined) profile.location.address = farmDetailsData.address;
+        if (farmDetailsData.state !== undefined) {
+            profile.location.state = farmDetailsData.state;
+            if (farmDetailsData.state) profile.profileCompletion.stateCompleted = true;
+        }
+        if (farmDetailsData.city !== undefined) {
+            profile.location.city = farmDetailsData.city;
+            if (farmDetailsData.city) profile.profileCompletion.cityCompleted = true;
+        }
+        if (farmDetailsData.district !== undefined) {
+            profile.location.district = farmDetailsData.district;
+            if (farmDetailsData.district) profile.profileCompletion.districtCompleted = true;
+        }
+        if (farmDetailsData.pincode !== undefined) {
+            // Validate pincode if provided
+            if (farmDetailsData.pincode && !/^\d{6}$/.test(farmDetailsData.pincode)) {
+                return res.status(400).json({
+                    message: "Pincode must be 6 digits"
+                });
+            }
+            profile.location.pincode = farmDetailsData.pincode || null;
+        }
+
+        // === LAND SIZE AND DETAILS ===
+        if (farmDetailsData.totalLandSize !== undefined) {
+            profile.landDetails.totalLandSize = {
+                value: farmDetailsData.totalLandSize || null,
+                unit: farmDetailsData.landUnit || 'acres'
+            };
+            if (farmDetailsData.totalLandSize) {
+                profile.profileCompletion.landSizeCompleted = true;
+            }
+        }
+        
+        if (farmDetailsData.landUnit !== undefined && profile.landDetails.totalLandSize) {
+            profile.landDetails.totalLandSize.unit = farmDetailsData.landUnit || 'acres';
+        }
+
+        // === LAND CHARACTERISTICS ===
+        if (farmDetailsData.landType !== undefined) {
+            profile.landDetails.landType = farmDetailsData.landType;
+        }
+        if (farmDetailsData.soilType !== undefined) {
+            profile.landDetails.soilType = farmDetailsData.soilType;
+        }
+        if (farmDetailsData.landOwnership !== undefined) {
+            profile.landDetails.landOwnership = farmDetailsData.landOwnership;
+        }
+
+        // === IRRIGATION DETAILS ===
+        if (farmDetailsData.irrigationMethods !== undefined) {
+            profile.landDetails.irrigationMethods = Array.isArray(farmDetailsData.irrigationMethods) 
+                ? farmDetailsData.irrigationMethods 
+                : [farmDetailsData.irrigationMethods].filter(Boolean);
+        }
+        if (farmDetailsData.waterSource !== undefined) {
+            profile.landDetails.waterSource = farmDetailsData.waterSource;
+        }
+        if (farmDetailsData.irrigationSystem !== undefined) {
+            profile.landDetails.irrigationSystem = farmDetailsData.irrigationSystem;
+        }
+
+        // === LAND CERTIFICATES ===
+        if (farmDetailsData.hasTitle !== undefined) {
+            profile.landDetails.landCertificates.hasTitle = farmDetailsData.hasTitle;
+        }
+        if (farmDetailsData.titleNumber !== undefined) {
+            profile.landDetails.landCertificates.titleNumber = farmDetailsData.titleNumber || null;
+        }
+        if (farmDetailsData.registrationNumber !== undefined) {
+            profile.landDetails.landCertificates.registrationNumber = farmDetailsData.registrationNumber || null;
+        }
+        if (farmDetailsData.surveyNumber !== undefined) {
+            profile.landDetails.landCertificates.surveyNumber = farmDetailsData.surveyNumber || null;
+        }
+        if (farmDetailsData.khataNumber !== undefined) {
+            profile.landDetails.landCertificates.khataNumber = farmDetailsData.khataNumber || null;
+        }
+
+        // === FARMING INFRASTRUCTURE ===
+        if (farmDetailsData.hasWarehouses !== undefined) {
+            profile.landDetails.farmingInfrastructure.hasWarehouses = farmDetailsData.hasWarehouses;
+        }
+        if (farmDetailsData.warehouseCapacity !== undefined) {
+            profile.landDetails.farmingInfrastructure.warehouseCapacity = farmDetailsData.warehouseCapacity || null;
+        }
+        if (farmDetailsData.hasProcessingUnits !== undefined) {
+            profile.landDetails.farmingInfrastructure.hasProcessingUnits = farmDetailsData.hasProcessingUnits;
+        }
+        if (farmDetailsData.processingCapacity !== undefined) {
+            profile.landDetails.farmingInfrastructure.processingCapacity = farmDetailsData.processingCapacity || null;
+        }
+        if (farmDetailsData.hasGreenhouse !== undefined) {
+            profile.landDetails.farmingInfrastructure.hasGreenhouse = farmDetailsData.hasGreenhouse;
+        }
+        if (farmDetailsData.greenhouseArea !== undefined) {
+            profile.landDetails.farmingInfrastructure.greenhouseArea = farmDetailsData.greenhouseArea || null;
+        }
+        if (farmDetailsData.hasColdStorage !== undefined) {
+            profile.landDetails.farmingInfrastructure.hasColdStorage = farmDetailsData.hasColdStorage;
+        }
+        if (farmDetailsData.coldStorageCapacity !== undefined) {
+            profile.landDetails.farmingInfrastructure.coldStorageCapacity = farmDetailsData.coldStorageCapacity || null;
+        }
+
+        // === MACHINERY AND EQUIPMENT ===
+        if (farmDetailsData.machinery !== undefined) {
+            if (Array.isArray(farmDetailsData.machinery)) {
+                profile.landDetails.farmingInfrastructure.machinery = farmDetailsData.machinery.map(machine => ({
+                    name: machine.name || '',
+                    type: machine.type || '',
+                    condition: machine.condition || 'good',
+                    purchaseYear: machine.purchaseYear || null,
+                    brand: machine.brand || '',
+                    model: machine.model || ''
+                }));
+            } else {
+                profile.landDetails.farmingInfrastructure.machinery = [];
+            }
+        }
+
+        // === FARMING EXPERIENCE AND METHODS ===
+        if (farmDetailsData.yearsOfExperience !== undefined) {
+            profile.farmingExperience.yearsOfExperience = farmDetailsData.yearsOfExperience || null;
+        }
+        if (farmDetailsData.farmingType !== undefined) {
+            profile.farmingExperience.farmingType = farmDetailsData.farmingType;
+        }
+        if (farmDetailsData.farmingMethod !== undefined) {
+            // Map common farming method names
+            const farmingMethodMap = {
+                'organic': 'organic',
+                'conventional': 'traditional', 
+                'traditional': 'traditional',
+                'modern': 'modern',
+                'mixed': 'mixed',
+                'sustainable': 'modern'
+            };
+            profile.farmingExperience.farmingType = farmingMethodMap[farmDetailsData.farmingMethod] || farmDetailsData.farmingMethod;
+        }
+
+        // === CERTIFICATIONS ===
+        if (farmDetailsData.certifications !== undefined) {
+            profile.landDetails.certifications = Array.isArray(farmDetailsData.certifications) 
+                ? farmDetailsData.certifications 
+                : [];
+        }
+        if (farmDetailsData.isOrganicCertified !== undefined) {
+            profile.landDetails.isOrganicCertified = farmDetailsData.isOrganicCertified;
+        }
+        if (farmDetailsData.organicCertificationBody !== undefined) {
+            profile.landDetails.organicCertificationBody = farmDetailsData.organicCertificationBody || null;
+        }
+
+        // === FINANCIAL INFORMATION ===
+        if (farmDetailsData.annualIncome !== undefined) {
+            profile.landDetails.annualIncome = farmDetailsData.annualIncome || null;
+        }
+        if (farmDetailsData.investmentCapacity !== undefined) {
+            profile.landDetails.investmentCapacity = farmDetailsData.investmentCapacity || null;
+        }
+
+        // === SOIL DETAILS (OPTIONAL BUT RECOMMENDED) ===
+        if (farmDetailsData.phLevel !== undefined) {
+            profile.landDetails.soilDetails.phLevel = parseFloat(farmDetailsData.phLevel) || null;
+        }
+        if (farmDetailsData.organicCarbon !== undefined) {
+            profile.landDetails.soilDetails.organicCarbon = parseFloat(farmDetailsData.organicCarbon) || null;
+        }
+        if (farmDetailsData.nitrogenLevel !== undefined) {
+            profile.landDetails.soilDetails.nitrogenLevel = farmDetailsData.nitrogenLevel;
+        }
+        if (farmDetailsData.phosphorusLevel !== undefined) {
+            profile.landDetails.soilDetails.phosphorusLevel = farmDetailsData.phosphorusLevel;
+        }
+        if (farmDetailsData.potassiumLevel !== undefined) {
+            profile.landDetails.soilDetails.potassiumLevel = farmDetailsData.potassiumLevel;
+        }
+
+        // === WATER & IRRIGATION ===
+        if (farmDetailsData.irrigationSource !== undefined) {
+            profile.landDetails.waterIrrigation.irrigationSource = farmDetailsData.irrigationSource;
+        }
+        if (farmDetailsData.irrigationMethod !== undefined) {
+            profile.landDetails.waterIrrigation.irrigationMethod = farmDetailsData.irrigationMethod;
+        }
+        if (farmDetailsData.waterAvailability !== undefined) {
+            profile.landDetails.waterIrrigation.waterAvailability = farmDetailsData.waterAvailability;
+        }
+
+        // === FARM INFRASTRUCTURE ===
+        if (farmDetailsData.farmRoads !== undefined) {
+            profile.landDetails.farmingInfrastructure.farmRoads = farmDetailsData.farmRoads;
+        }
+        if (farmDetailsData.storageFacility !== undefined) {
+            profile.landDetails.farmingInfrastructure.storageFacility = farmDetailsData.storageFacility;
+        }
+        if (farmDetailsData.electricity !== undefined) {
+            profile.landDetails.farmingInfrastructure.electricity = farmDetailsData.electricity;
+        }
+        if (farmDetailsData.nearestMarketDistance !== undefined) {
+            profile.landDetails.farmingInfrastructure.nearestMarketDistance = parseFloat(farmDetailsData.nearestMarketDistance) || null;
+        }
+
+        // === EQUIPMENT & INPUTS ===
+        if (farmDetailsData.tractorAccess !== undefined) {
+            profile.landDetails.equipmentInputs.tractorAccess = farmDetailsData.tractorAccess;
+        }
+        if (farmDetailsData.pumpSetAccess !== undefined) {
+            profile.landDetails.equipmentInputs.pumpSetAccess = farmDetailsData.pumpSetAccess;
+        }
+        if (farmDetailsData.fertilizerUsage !== undefined) {
+            profile.landDetails.equipmentInputs.fertilizerUsage = farmDetailsData.fertilizerUsage;
+        }
+        if (farmDetailsData.pesticideUsage !== undefined) {
+            profile.landDetails.equipmentInputs.pesticideUsage = farmDetailsData.pesticideUsage;
+        }
+
+        // === ECONOMIC INFORMATION ===
+        if (farmDetailsData.monthlyInputCosts !== undefined) {
+            profile.landDetails.economicInfo.monthlyInputCosts = farmDetailsData.monthlyInputCosts;
+        }
+        if (farmDetailsData.marketingMethod !== undefined) {
+            profile.landDetails.economicInfo.marketingMethod = farmDetailsData.marketingMethod;
+        }
+        if (farmDetailsData.annualIncome !== undefined) {
+            profile.landDetails.economicInfo.annualIncome = parseFloat(farmDetailsData.annualIncome) || null;
+        }
+        if (farmDetailsData.investmentCapacity !== undefined) {
+            profile.landDetails.economicInfo.investmentCapacity = parseFloat(farmDetailsData.investmentCapacity) || null;
+        }
+
+        // === ADDITIONAL FARM DETAILS ===
+        if (farmDetailsData.nearbyMarkets !== undefined) {
+            profile.landDetails.nearbyMarkets = Array.isArray(farmDetailsData.nearbyMarkets) 
+                ? farmDetailsData.nearbyMarkets 
+                : [];
+        }
+        if (farmDetailsData.transportationAccess !== undefined) {
+            profile.landDetails.transportationAccess = farmDetailsData.transportationAccess;
+        }
+        if (farmDetailsData.electricityAccess !== undefined) {
+            profile.landDetails.electricityAccess = farmDetailsData.electricityAccess;
+        }
+        if (farmDetailsData.internetAccess !== undefined) {
+            profile.landDetails.internetAccess = farmDetailsData.internetAccess;
+        }
+
+        // === CROPS INFORMATION ===
+        if (farmDetailsData.primaryCrops !== undefined || farmDetailsData.secondaryCrops !== undefined) {
+            const allCrops = [];
+            
+            // Handle primary crops
+            if (Array.isArray(farmDetailsData.primaryCrops) && farmDetailsData.primaryCrops.length > 0) {
+                const predefinedPrimary = farmDetailsData.primaryCrops.filter(crop => crop !== 'other');
+                allCrops.push(...predefinedPrimary.map(crop => ({ 
+                    name: crop, 
+                    type: 'primary',
+                    category: 'predefined' 
+                })));
+                
+                // Add custom primary crops
+                if (farmDetailsData.primaryCrops.includes('other') && farmDetailsData.customPrimaryCrops) {
+                    const customPrimary = farmDetailsData.customPrimaryCrops
+                        .split(',')
+                        .map(crop => crop.trim())
+                        .filter(crop => crop);
+                    allCrops.push(...customPrimary.map(crop => ({ 
+                        name: crop, 
+                        type: 'primary',
+                        category: 'custom' 
+                    })));
+                }
+            }
+            
+            // Handle secondary crops
+            if (Array.isArray(farmDetailsData.secondaryCrops) && farmDetailsData.secondaryCrops.length > 0) {
+                const predefinedSecondary = farmDetailsData.secondaryCrops.filter(crop => crop !== 'other');
+                allCrops.push(...predefinedSecondary.map(crop => ({ 
+                    name: crop, 
+                    type: 'secondary',
+                    category: 'predefined' 
+                })));
+                
+                // Add custom secondary crops
+                if (farmDetailsData.secondaryCrops.includes('other') && farmDetailsData.customSecondaryCrops) {
+                    const customSecondary = farmDetailsData.customSecondaryCrops
+                        .split(',')
+                        .map(crop => crop.trim())
+                        .filter(crop => crop);
+                    allCrops.push(...customSecondary.map(crop => ({ 
+                        name: crop, 
+                        type: 'secondary',
+                        category: 'custom' 
+                    })));
+                }
+            }
+            
+            // Convert to cropsGrown format
+            if (allCrops.length > 0) {
+                profile.cropsGrown = allCrops.map(crop => ({
+                    cropName: crop.name,
+                    cropType: crop.type === 'primary' ? 'cash_crop' : 'other',
+                    season: 'kharif',
+                    areaAllocated: {
+                        value: null,
+                        unit: farmDetailsData.landUnit || 'acres'
+                    },
+                    isActive: true,
+                    isPrimary: crop.type === 'primary',
+                    category: crop.category
+                }));
+                
+                profile.profileCompletion.cropSelectionCompleted = true;
+            }
+        }
+
+        // Save the profile
+        await profile.save();
+        await profile.populate('userId', 'fullName email');
+
+        console.log('Farm details saved successfully for user:', userId);
+        console.log('Updated profile landDetails:', JSON.stringify(profile.landDetails, null, 2));
+
+        res.status(200).json({
+            message: "Farm details saved successfully",
+            profile: profile,
+            completionPercentage: profile.getCompletionPercentage(),
+            savedFields: Object.keys(farmDetailsData),
+            debug: {
+                landDetails: profile.landDetails,
+                location: profile.location,
+                farmingExperience: profile.farmingExperience,
+                cropsCount: profile.cropsGrown.length
+            }
+        });
+    } catch (error) {
+        console.error('Save farm details error:', error);
+        res.status(500).json({
+            message: "Internal server error",
+            error: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        });
+    }
+}
+
 module.exports = {
     getUserProfile,
     updateWelcomeStep,
@@ -802,5 +1619,15 @@ module.exports = {
     updateFarmingExperience,
     addCrop,
     removeCrop,
-    updateCrop
+    updateCrop,
+    // Enhanced profile management functions
+    updateCompletePersonalInfo,
+    updateCompleteFarmDetails,
+    addDetailedCrop,
+    updateDetailedCrop,
+    addGrowthStage,
+    getFarmAnalytics,
+    getCropAnalytics,
+    // Comprehensive farm details save
+    saveFarmDetails
 };

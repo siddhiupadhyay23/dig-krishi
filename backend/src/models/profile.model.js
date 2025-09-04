@@ -46,15 +46,62 @@ const profileSchema = new mongoose.Schema({
   },
 
   // Personal Information
-  phoneNumber: {
-    type: String,
-    default: null,
-    validate: {
-      validator: function(v) {
-        // Allow null or valid phone number (10 digits)
-        return v === null || /^\d{10}$/.test(v);
+  personalInfo: {
+    phoneNumber: {
+      type: String,
+      default: null,
+      validate: {
+        validator: function(v) {
+          // Allow null or valid phone number (10 digits)
+          return v === null || /^\d{10}$/.test(v);
+        },
+        message: 'Phone number must be 10 digits'
+      }
+    },
+    dateOfBirth: {
+      type: Date,
+      default: null
+    },
+    gender: {
+      type: String,
+      enum: ['male', 'female', 'other', 'prefer_not_to_say'],
+      default: null
+    },
+    education: {
+      type: String,
+      enum: ['primary', 'secondary', 'higher_secondary', 'graduate', 'post_graduate', 'other'],
+      default: null
+    },
+    occupation: {
+      primary: {
+        type: String,
+        default: 'farming'
       },
-      message: 'Phone number must be 10 digits'
+      secondary: {
+        type: String,
+        default: null
+      }
+    },
+    familyMembers: {
+      total: {
+        type: Number,
+        min: 1,
+        default: null
+      },
+      dependents: {
+        type: Number,
+        min: 0,
+        default: null
+      }
+    },
+    profilePhoto: {
+      type: String,
+      default: null
+    },
+    bio: {
+      type: String,
+      maxlength: 500,
+      default: null
     }
   },
 
@@ -116,6 +163,181 @@ const profileSchema = new mongoose.Schema({
       type: String,
       enum: ['clay', 'sandy', 'loamy', 'black_soil', 'red_soil', 'alluvial', 'other'],
       default: null
+    },
+    irrigationMethods: [{
+      type: String,
+      enum: ['drip', 'sprinkler', 'flood', 'furrow', 'center_pivot', 'manual', 'rain_fed']
+    }],
+    waterSource: {
+      type: String,
+      enum: ['borewell', 'canal', 'river', 'pond', 'rainwater', 'other'],
+      default: null
+    },
+    irrigationSystem: {
+      type: String,
+      default: null
+    },
+    landOwnership: {
+      type: String,
+      enum: ['owned', 'leased', 'shared', 'contract_farming'],
+      default: 'owned'
+    },
+    landCertificates: {
+      hasTitle: {
+        type: Boolean,
+        default: false
+      },
+      titleNumber: {
+        type: String,
+        default: null
+      },
+      registrationNumber: {
+        type: String,
+        default: null
+      }
+    },
+    // Soil Details (Optional but Recommended)
+    soilDetails: {
+      phLevel: {
+        type: Number,
+        min: 0,
+        max: 14,
+        default: null
+      },
+      organicCarbon: {
+        type: Number,
+        min: 0,
+        max: 100,
+        default: null
+      },
+      nitrogenLevel: {
+        type: String,
+        enum: ['low', 'medium', 'high'],
+        default: null
+      },
+      phosphorusLevel: {
+        type: String,
+        enum: ['low', 'medium', 'high'],
+        default: null
+      },
+      potassiumLevel: {
+        type: String,
+        enum: ['low', 'medium', 'high'],
+        default: null
+      }
+    },
+    
+    // Water & Irrigation Details
+    waterIrrigation: {
+      irrigationSource: {
+        type: String,
+        enum: ['borewell', 'canal', 'river', 'pond', 'rainwater', 'other'],
+        default: null
+      },
+      irrigationMethod: {
+        type: String,
+        enum: ['drip', 'sprinkler', 'flood', 'furrow', 'other'],
+        default: null
+      },
+      waterAvailability: {
+        type: String,
+        enum: ['abundant', 'adequate', 'limited', 'scarce'],
+        default: null
+      }
+    },
+    
+    // Farm Infrastructure
+    farmingInfrastructure: {
+      hasWarehouses: {
+        type: Boolean,
+        default: false
+      },
+      warehouseCapacity: {
+        type: Number,
+        default: null
+      },
+      hasProcessingUnits: {
+        type: Boolean,
+        default: false
+      },
+      farmRoads: {
+        type: String,
+        enum: ['excellent', 'good', 'fair', 'poor', 'none'],
+        default: null
+      },
+      storageFacility: {
+        type: String,
+        enum: ['modern_warehouse', 'traditional_storage', 'cold_storage', 'none'],
+        default: null
+      },
+      electricity: {
+        type: String,
+        enum: ['24_hours', '12_hours', '6_hours', 'irregular', 'none'],
+        default: null
+      },
+      nearestMarketDistance: {
+        type: Number,
+        min: 0,
+        default: null
+      },
+      machinery: [{
+        name: String,
+        type: String,
+        condition: {
+          type: String,
+          enum: ['excellent', 'good', 'fair', 'poor'],
+          default: 'good'
+        },
+        purchaseYear: Number
+      }]
+    },
+    
+    // Equipment & Inputs
+    equipmentInputs: {
+      tractorAccess: {
+        type: String,
+        enum: ['owned', 'rented', 'shared', 'none'],
+        default: null
+      },
+      pumpSetAccess: {
+        type: String,
+        enum: ['owned', 'rented', 'shared', 'none'],
+        default: null
+      },
+      fertilizerUsage: {
+        type: String,
+        enum: ['organic_only', 'chemical_only', 'mixed', 'minimal', 'none'],
+        default: null
+      },
+      pesticideUsage: {
+        type: String,
+        enum: ['organic_only', 'chemical_only', 'mixed', 'minimal', 'none'],
+        default: null
+      }
+    },
+    
+    // Economic Information
+    economicInfo: {
+      monthlyInputCosts: {
+        type: String,
+        enum: ['below_10k', '10k_25k', '25k_50k', '50k_1lakh', 'above_1lakh'],
+        default: null
+      },
+      marketingMethod: {
+        type: String,
+        enum: ['direct_market', 'middleman', 'cooperative', 'online', 'contract_farming'],
+        default: null
+      },
+      annualIncome: {
+        type: Number,
+        min: 0,
+        default: null
+      },
+      investmentCapacity: {
+        type: Number,
+        min: 0,
+        default: null
+      }
     }
   },
 
@@ -149,9 +371,125 @@ const profileSchema = new mongoose.Schema({
           default: 'acres'
         }
       },
+      varietyName: {
+        type: String,
+        default: null
+      },
+      plantingDate: {
+        type: Date,
+        default: null
+      },
+      expectedHarvestDate: {
+        type: Date,
+        default: null
+      },
+      irrigationSchedule: {
+        frequency: {
+          type: String,
+          enum: ['daily', 'weekly', 'bi-weekly', 'monthly', 'seasonal', 'as_needed'],
+          default: 'as_needed'
+        },
+        waterSource: {
+          type: String,
+          enum: ['borewell', 'canal', 'river', 'rainwater', 'pond', 'other'],
+          default: 'borewell'
+        }
+      },
+      fertilizers: [{
+        name: String,
+        type: {
+          type: String,
+          enum: ['organic', 'chemical', 'bio_fertilizer']
+        },
+        applicationDate: Date,
+        quantity: {
+          value: Number,
+          unit: String
+        }
+      }],
+      pesticides: [{
+        name: String,
+        type: {
+          type: String,
+          enum: ['insecticide', 'fungicide', 'herbicide', 'organic']
+        },
+        applicationDate: Date,
+        targetPest: String
+      }],
+      growthStages: [{
+        stage: {
+          type: String,
+          enum: ['seeding', 'germination', 'vegetative', 'flowering', 'fruiting', 'maturity', 'harvest']
+        },
+        date: Date,
+        notes: String,
+        photos: [String]
+      }],
+      expenses: {
+        seeds: { type: Number, default: 0 },
+        fertilizers: { type: Number, default: 0 },
+        pesticides: { type: Number, default: 0 },
+        irrigation: { type: Number, default: 0 },
+        labor: { type: Number, default: 0 },
+        machinery: { type: Number, default: 0 },
+        other: { type: Number, default: 0 },
+        total: { type: Number, default: 0 }
+      },
+      expectedYield: {
+        quantity: {
+          type: Number,
+          default: null
+        },
+        unit: {
+          type: String,
+          enum: ['kg', 'quintal', 'ton', 'bags'],
+          default: 'kg'
+        }
+      },
+      actualYield: {
+        quantity: {
+          type: Number,
+          default: null
+        },
+        unit: {
+          type: String,
+          enum: ['kg', 'quintal', 'ton', 'bags'],
+          default: 'kg'
+        }
+      },
+      marketPrice: {
+        pricePerUnit: {
+          type: Number,
+          default: null
+        },
+        unit: {
+          type: String,
+          enum: ['kg', 'quintal', 'ton'],
+          default: 'kg'
+        },
+        marketLocation: String,
+        saleDate: Date
+      },
+      revenue: {
+        type: Number,
+        default: 0
+      },
+      profit: {
+        type: Number,
+        default: 0
+      },
       isActive: {
         type: Boolean,
         default: true
+      },
+      cropStatus: {
+        type: String,
+        enum: ['planned', 'planted', 'growing', 'harvested', 'sold', 'completed'],
+        default: 'planned'
+      },
+      addedDate: {
+        type: Date,
+        default: Date.now
       }
     }
   ],

@@ -982,9 +982,11 @@ $gradient-success: linear-gradient(135deg, #22c55e, #16a34a);
   }
 }
 
-// Form Actions
+// Form Actions - Clean Simple Button Styling (matching login page)
 .form-actions {
   display: flex;
+  align-items: center;
+  justify-content: flex-start;
   gap: 1rem;
   margin-top: 2rem;
   padding-top: 1.5rem;
@@ -993,66 +995,104 @@ $gradient-success: linear-gradient(135deg, #22c55e, #16a34a);
   @media (max-width: 768px) {
     flex-direction: column;
     gap: 0.75rem;
+    align-items: stretch;
   }
 
   .save-btn {
-    padding: 12px 24px;
-    background: linear-gradient(135deg, #10b981, #059669);
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #4caf50, #66bb6a);
     color: white;
     border: none;
     border-radius: 12px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 0.95rem;
-    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    min-width: 140px;
-
-    &:hover:not(:disabled) {
-      background: linear-gradient(135deg, #059669, #047857);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+    letter-spacing: 0.5px;
+    font-family: inherit;
+    min-width: 160px;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.6s;
     }
-
+    
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+      
+      &::before {
+        left: 100%;
+      }
+    }
+    
     &:active:not(:disabled) {
       transform: translateY(0);
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.35);
     }
 
     &:disabled {
       opacity: 0.6;
       cursor: not-allowed;
       transform: none;
-      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.1);
+      box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      width: 100%;
     }
   }
 
   .cancel-btn {
-    padding: 12px 24px;
-    background: transparent;
-    color: #6b7280;
-    border: 2px solid #e5e7eb;
-    border-radius: 12px;
-    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    border: 2px solid #e8f5e9;
+    color: #2e7d32;
     cursor: pointer;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
     transition: all 0.3s ease;
-    font-size: 0.95rem;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.1);
+    font-family: inherit;
+    letter-spacing: 0.5px;
     min-width: 100px;
+    justify-content: center;
 
     &:hover:not(:disabled) {
-      background: #f9fafb;
-      border-color: #d1d5db;
-      color: #374151;
+      background-color: #f1f8e9;
+      border-color: #4caf50;
+      color: #2e7d32;
       transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: 0 2px 6px rgba(76, 175, 80, 0.3);
     }
 
     &:disabled {
       opacity: 0.5;
       cursor: not-allowed;
       transform: none;
+    }
+
+    @media (max-width: 768px) {
+      width: 100%;
+      justify-content: center;
     }
   }
 }
