@@ -20,10 +20,10 @@
 
   .hero-title {
     position: absolute;
-    top: 50vh;
+    top: calc(50vh - 6rem);
     font-family: 'Playfair Display', 'Libre Baskerville', Georgia, 'Times New Roman', serif;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     font-size: 5rem;
     font-weight: 400;
     color: var(--color-black);
@@ -46,22 +46,25 @@
     // Responsive typography
     @media (max-width: 1024px) {
       font-size: 4rem;
+      top: calc(50vh - 5rem);
     }
     
     @media (max-width: 768px) {
       font-size: 3.2rem;
       line-height: 1.1;
+      top: calc(50vh - 4rem);
     }
     
     @media (max-width: 480px) {
       font-size: 2.5rem;
       letter-spacing: -0.015em;
+      top: calc(50vh - 3rem);
     }
   }
 
   .hero-slogan {
     position: absolute;
-    top: calc(50vh - 6rem);
+    top: calc(50vh + 2rem);
     left: 50%;
     transform: translateX(-50%);
     font-family: 'Playfair Display', 'Libre Baskerville', Georgia, 'Times New Roman', serif;
@@ -73,32 +76,34 @@
     margin: 0;
     padding: 0 3rem;
     letter-spacing: -0.02em;
-    line-height: 1.2;
+    line-height: 1.1;
     max-width: 100%;
-    width: auto;
+    width: max-content;
+    white-space: nowrap;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     
     // Responsive typography
     @media (max-width: 1024px) {
       font-size: 1.6rem;
-      top: calc(50vh - 5rem);
+      top: calc(50vh + 1.5rem);
       padding: 0 2.5rem;
     }
     
     @media (max-width: 768px) {
       font-size: 1.3rem;
-      top: calc(50vh - 4rem);
+      top: calc(50vh + 1.2rem);
       padding: 0 2rem;
-      line-height: 1.3;
+      line-height: 1.1;
     }
     
     @media (max-width: 480px) {
       font-size: 1rem;
-      top: calc(50vh - 3rem);
+      top: calc(50vh + 1rem);
       padding: 0 1.5rem;
       letter-spacing: -0.015em;
-      line-height: 1.4;
+      line-height: 1.1;
+      white-space: normal;
     }
   }
 
@@ -180,7 +185,7 @@
 
   .hero-cta-container {
     position: absolute;
-    top: calc(50vh + 4rem);
+    top: calc(50vh + 6rem);
     left: 50%;
     transform: translateX(-50%);
     z-index: 6;

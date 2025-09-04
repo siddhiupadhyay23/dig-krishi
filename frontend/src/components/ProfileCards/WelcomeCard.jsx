@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 
-const WelcomeCard = ({ user, phoneNumber, onUpdate, onNext, loading }) => {
+const WelcomeCard = ({ user, phoneNumber, onUpdate, onNext, onSkip, loading }) => {
   const [phone, setPhone] = useState(phoneNumber || '');
 
   const handleNext = () => {
     const data = { phoneNumber: phone };
     onUpdate(data);
     onNext(data); // Pass data to the API handler
+  };
+
+  const handleSkip = () => {
+    const data = { phoneNumber: '' }; // Empty phone number when skipping
+    onUpdate(data);
+    onSkip(data); // Call skip handler
   };
 
   const handlePhoneChange = (e) => {
@@ -80,7 +86,18 @@ const WelcomeCard = ({ user, phoneNumber, onUpdate, onNext, loading }) => {
       </div>
 
       <div className="card-actions">
-        <div></div> {/* Empty div for spacing */}
+        <button 
+          className="btn btn-secondary"
+          onClick={handleSkip}
+          disabled={loading}
+          style={{
+            backgroundColor: 'transparent',
+            color: 'var(--color-primary)',
+            border: '1px solid var(--color-primary)'
+          }}
+        >
+          Skip
+        </button>
         <button 
           className="btn btn-primary"
           onClick={handleNext}
