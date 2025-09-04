@@ -29,7 +29,13 @@ const Profile = () => {
     state: '',
     district: '', // Optional
     pincode: '',
-    location: '' // Combined for display
+    location: '', // Combined for display
+    // Additional personal fields for analytics
+    age: '',
+    gender: '',
+    education: '',
+    primaryOccupation: 'farming', // farming/mixed/other
+    annualIncome: '' // income range for economic analytics
   });
 
   const [farmInfo, setFarmInfo] = useState({
@@ -48,7 +54,31 @@ const Profile = () => {
     pincode: '', // Now optional
     farmLocation: '',
     landType: '',
-    soilType: ''
+    soilType: '',
+    // Additional farm fields for analytics
+    // Soil details
+    soilPh: '',
+    soilOrganicCarbon: '',
+    soilNitrogen: '',
+    soilPhosphorus: '',
+    soilPotassium: '',
+    // Water & Irrigation
+    irrigationSource: '',
+    irrigationMethod: '',
+    waterAvailability: '',
+    // Farm Infrastructure
+    farmRoads: '',
+    storage: '',
+    electricity: '',
+    nearestMarket: '',
+    // Equipment & Inputs
+    tractorAccess: '',
+    pumpSetAccess: '',
+    fertilizerUsage: '',
+    pesticideUsage: '',
+    // Economic data
+    inputCosts: '',
+    marketingMethod: ''
   });
 
   const [profilePhoto, setProfilePhoto] = useState(null);
@@ -684,6 +714,88 @@ const Profile = () => {
                 )}
               </div>
               
+              {/* Additional Personal Info Fields for Analytics */}
+              <div className="detail-group">
+                <div className="detail-item">
+                  <label>Age</label>
+                  <input 
+                    type="number" 
+                    value={personalInfo.age}
+                    onChange={(e) => handlePersonalInfoChange('age', e.target.value)}
+                    readOnly={!isEditing.personal}
+                    className="profile-input"
+                    placeholder="Enter your age"
+                    min="18"
+                    max="100"
+                  />
+                </div>
+                
+                <div className="detail-item">
+                  <label>Gender</label>
+                  <select 
+                    value={personalInfo.gender}
+                    onChange={(e) => handlePersonalInfoChange('gender', e.target.value)}
+                    disabled={!isEditing.personal}
+                    className="profile-input"
+                  >
+                    <option value="">Select gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div className="detail-item">
+                <label>Education Level</label>
+                <select 
+                  value={personalInfo.education}
+                  onChange={(e) => handlePersonalInfoChange('education', e.target.value)}
+                  disabled={!isEditing.personal}
+                  className="profile-input"
+                >
+                  <option value="">Select education level</option>
+                  <option value="primary">Primary School</option>
+                  <option value="secondary">Secondary School</option>
+                  <option value="higher_secondary">Higher Secondary</option>
+                  <option value="diploma">Diploma</option>
+                  <option value="graduation">Graduation</option>
+                  <option value="post_graduation">Post Graduation</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              
+              <div className="detail-item">
+                <label>Primary Occupation</label>
+                <select 
+                  value={personalInfo.primaryOccupation}
+                  onChange={(e) => handlePersonalInfoChange('primaryOccupation', e.target.value)}
+                  disabled={!isEditing.personal}
+                  className="profile-input"
+                >
+                  <option value="farming">Farming (Primary)</option>
+                  <option value="mixed">Mixed (Farming + Other)</option>
+                  <option value="other">Other (Farming as Secondary)</option>
+                </select>
+              </div>
+              
+              <div className="detail-item">
+                <label>Annual Income Range</label>
+                <select 
+                  value={personalInfo.annualIncome}
+                  onChange={(e) => handlePersonalInfoChange('annualIncome', e.target.value)}
+                  disabled={!isEditing.personal}
+                  className="profile-input"
+                >
+                  <option value="">Select income range</option>
+                  <option value="under_1l">Under ₹1 Lakh</option>
+                  <option value="1_3l">₹1 - 3 Lakhs</option>
+                  <option value="3_5l">₹3 - 5 Lakhs</option>
+                  <option value="5_10l">₹5 - 10 Lakhs</option>
+                  <option value="above_10l">Above ₹10 Lakhs</option>
+                </select>
+              </div>
+              
               {isEditing.personal && (
                 <div className="form-actions">
                   <button 
@@ -731,20 +843,21 @@ const Profile = () => {
             )}
             
             <div className="farm-info">
-              <div className="detail-item">
-                <label>Farm Name *</label>
-                <input 
-                  type="text" 
-                  value={farmInfo.farmName}
-                  onChange={(e) => handleFarmInfoChange('farmName', e.target.value)}
-                  readOnly={!isEditing.farm}
-                  className={`profile-input ${errors.farmName ? 'error' : ''}`}
-                  placeholder="Enter your farm name"
-                />
-                {errors.farmName && (
-                  <span className="field-error">{errors.farmName}</span>
-                )}
-              </div>
+              <div className="basic-farm-fields">
+                <div className="detail-item">
+                  <label>Farm Name *</label>
+                  <input 
+                    type="text" 
+                    value={farmInfo.farmName}
+                    onChange={(e) => handleFarmInfoChange('farmName', e.target.value)}
+                    readOnly={!isEditing.farm}
+                    className={`profile-input ${errors.farmName ? 'error' : ''}`}
+                    placeholder="Enter your farm name"
+                  />
+                  {errors.farmName && (
+                    <span className="field-error">{errors.farmName}</span>
+                  )}
+                </div>
               
               <div className="detail-item">
                 <label>Farm Size *</label>
@@ -1043,6 +1156,369 @@ const Profile = () => {
                 {errors.farmPincode && (
                   <span className="field-error">{errors.farmPincode}</span>
                 )}
+              </div>
+              </div>
+              
+              {/* Advanced Farm Details for Analytics */}
+              <div className="detail-group">
+                <div className="detail-item">
+                  <label>Land Type</label>
+                  <select 
+                    value={farmInfo.landType}
+                    onChange={(e) => handleFarmInfoChange('landType', e.target.value)}
+                    disabled={!isEditing.farm}
+                    className="profile-input"
+                  >
+                    <option value="">Select land type</option>
+                    <option value="irrigated">Irrigated</option>
+                    <option value="rain_fed">Rain-fed</option>
+                    <option value="mixed">Mixed (Irrigated + Rain-fed)</option>
+                  </select>
+                </div>
+                
+                <div className="detail-item">
+                  <label>Soil Type</label>
+                  <select 
+                    value={farmInfo.soilType}
+                    onChange={(e) => handleFarmInfoChange('soilType', e.target.value)}
+                    disabled={!isEditing.farm}
+                    className="profile-input"
+                  >
+                    <option value="">Select soil type</option>
+                    <option value="loamy">Loamy</option>
+                    <option value="clay">Clay</option>
+                    <option value="sandy">Sandy</option>
+                    <option value="silt">Silt</option>
+                    <option value="laterite">Laterite</option>
+                    <option value="black">Black Soil</option>
+                    <option value="red">Red Soil</option>
+                    <option value="alluvial">Alluvial</option>
+                  </select>
+                </div>
+              </div>
+              
+              {/* Soil Details Section */}
+              <div className="section-divider">
+                <h3>Soil Details (Optional but Recommended)</h3>
+              </div>
+              
+              <div className="detail-group">
+                <div className="detail-item">
+                  <label>Soil pH Level</label>
+                  <input 
+                    type="number" 
+                    value={farmInfo.soilPh}
+                    onChange={(e) => handleFarmInfoChange('soilPh', e.target.value)}
+                    readOnly={!isEditing.farm}
+                    className="profile-input"
+                    placeholder="e.g., 6.5"
+                    min="4"
+                    max="9"
+                    step="0.1"
+                  />
+                </div>
+                
+                <div className="detail-item">
+                  <label>Organic Carbon (%)</label>
+                  <input 
+                    type="number" 
+                    value={farmInfo.soilOrganicCarbon}
+                    onChange={(e) => handleFarmInfoChange('soilOrganicCarbon', e.target.value)}
+                    readOnly={!isEditing.farm}
+                    className="profile-input"
+                    placeholder="e.g., 1.2"
+                    min="0"
+                    max="5"
+                    step="0.1"
+                  />
+                </div>
+              </div>
+              
+              <div className="detail-group">
+                <div className="detail-item">
+                  <label>Nitrogen Level</label>
+                  <select 
+                    value={farmInfo.soilNitrogen}
+                    onChange={(e) => handleFarmInfoChange('soilNitrogen', e.target.value)}
+                    disabled={!isEditing.farm}
+                    className="profile-input"
+                  >
+                    <option value="">Select nitrogen level</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                  </select>
+                </div>
+                
+                <div className="detail-item">
+                  <label>Phosphorus Level</label>
+                  <select 
+                    value={farmInfo.soilPhosphorus}
+                    onChange={(e) => handleFarmInfoChange('soilPhosphorus', e.target.value)}
+                    disabled={!isEditing.farm}
+                    className="profile-input"
+                  >
+                    <option value="">Select phosphorus level</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div className="detail-item">
+                <label>Potassium Level</label>
+                <select 
+                  value={farmInfo.soilPotassium}
+                  onChange={(e) => handleFarmInfoChange('soilPotassium', e.target.value)}
+                  disabled={!isEditing.farm}
+                  className="profile-input"
+                >
+                  <option value="">Select potassium level</option>
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
+              
+              {/* Water & Irrigation Section */}
+              <div className="section-divider">
+                <h3>Water & Irrigation</h3>
+              </div>
+              
+              <div className="detail-group">
+                <div className="detail-item">
+                  <label>Irrigation Source</label>
+                  <select 
+                    value={farmInfo.irrigationSource}
+                    onChange={(e) => handleFarmInfoChange('irrigationSource', e.target.value)}
+                    disabled={!isEditing.farm}
+                    className="profile-input"
+                  >
+                    <option value="">Select irrigation source</option>
+                    <option value="borewell">Borewell</option>
+                    <option value="canal">Canal</option>
+                    <option value="river">River/Stream</option>
+                    <option value="rainwater">Rainwater Harvesting</option>
+                    <option value="tank">Tank/Pond</option>
+                    <option value="none">No Irrigation (Rain-fed only)</option>
+                  </select>
+                </div>
+                
+                <div className="detail-item">
+                  <label>Irrigation Method</label>
+                  <select 
+                    value={farmInfo.irrigationMethod}
+                    onChange={(e) => handleFarmInfoChange('irrigationMethod', e.target.value)}
+                    disabled={!isEditing.farm}
+                    className="profile-input"
+                  >
+                    <option value="">Select irrigation method</option>
+                    <option value="flood">Flood Irrigation</option>
+                    <option value="drip">Drip Irrigation</option>
+                    <option value="sprinkler">Sprinkler</option>
+                    <option value="furrow">Furrow Irrigation</option>
+                    <option value="rainfed">Rain-fed Only</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div className="detail-item">
+                <label>Water Availability</label>
+                <select 
+                  value={farmInfo.waterAvailability}
+                  onChange={(e) => handleFarmInfoChange('waterAvailability', e.target.value)}
+                  disabled={!isEditing.farm}
+                  className="profile-input"
+                >
+                  <option value="">Select water availability</option>
+                  <option value="abundant">Abundant (Year-round)</option>
+                  <option value="adequate">Adequate (Most seasons)</option>
+                  <option value="limited">Limited (Seasonal)</option>
+                  <option value="scarce">Scarce (Drought-prone)</option>
+                </select>
+              </div>
+              
+              {/* Farm Infrastructure Section */}
+              <div className="section-divider">
+                <h3>Farm Infrastructure</h3>
+              </div>
+              
+              <div className="detail-group">
+                <div className="detail-item">
+                  <label>Farm Roads</label>
+                  <select 
+                    value={farmInfo.farmRoads}
+                    onChange={(e) => handleFarmInfoChange('farmRoads', e.target.value)}
+                    disabled={!isEditing.farm}
+                    className="profile-input"
+                  >
+                    <option value="">Select road access</option>
+                    <option value="good">Good (All-weather road)</option>
+                    <option value="fair">Fair (Seasonal access)</option>
+                    <option value="poor">Poor (Limited access)</option>
+                  </select>
+                </div>
+                
+                <div className="detail-item">
+                  <label>Storage Facility</label>
+                  <select 
+                    value={farmInfo.storage}
+                    onChange={(e) => handleFarmInfoChange('storage', e.target.value)}
+                    disabled={!isEditing.farm}
+                    className="profile-input"
+                  >
+                    <option value="">Select storage availability</option>
+                    <option value="yes">Yes (On-farm storage)</option>
+                    <option value="shared">Shared (Community storage)</option>
+                    <option value="no">No storage facility</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div className="detail-group">
+                <div className="detail-item">
+                  <label>Electricity</label>
+                  <select 
+                    value={farmInfo.electricity}
+                    onChange={(e) => handleFarmInfoChange('electricity', e.target.value)}
+                    disabled={!isEditing.farm}
+                    className="profile-input"
+                  >
+                    <option value="">Select electricity status</option>
+                    <option value="24x7">24x7 Supply</option>
+                    <option value="regular">Regular (8-12 hours)</option>
+                    <option value="limited">Limited (4-8 hours)</option>
+                    <option value="none">No electricity</option>
+                  </select>
+                </div>
+                
+                <div className="detail-item">
+                  <label>Nearest Market (km)</label>
+                  <input 
+                    type="number" 
+                    value={farmInfo.nearestMarket}
+                    onChange={(e) => handleFarmInfoChange('nearestMarket', e.target.value)}
+                    readOnly={!isEditing.farm}
+                    className="profile-input"
+                    placeholder="Distance in km"
+                    min="0"
+                    max="200"
+                  />
+                </div>
+              </div>
+              
+              {/* Equipment & Inputs Section */}
+              <div className="section-divider">
+                <h3>Equipment & Inputs</h3>
+              </div>
+              
+              <div className="detail-group">
+                <div className="detail-item">
+                  <label>Tractor Access</label>
+                  <select 
+                    value={farmInfo.tractorAccess}
+                    onChange={(e) => handleFarmInfoChange('tractorAccess', e.target.value)}
+                    disabled={!isEditing.farm}
+                    className="profile-input"
+                  >
+                    <option value="">Select tractor access</option>
+                    <option value="own">Own Tractor</option>
+                    <option value="rent">Rent/Hire</option>
+                    <option value="none">No Tractor (Manual/Animal)</option>
+                  </select>
+                </div>
+                
+                <div className="detail-item">
+                  <label>Pump Set Access</label>
+                  <select 
+                    value={farmInfo.pumpSetAccess}
+                    onChange={(e) => handleFarmInfoChange('pumpSetAccess', e.target.value)}
+                    disabled={!isEditing.farm}
+                    className="profile-input"
+                  >
+                    <option value="">Select pump set access</option>
+                    <option value="own">Own Pump Set</option>
+                    <option value="rent">Rent/Hire</option>
+                    <option value="none">No Pump Set</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div className="detail-group">
+                <div className="detail-item">
+                  <label>Fertilizer Usage</label>
+                  <select 
+                    value={farmInfo.fertilizerUsage}
+                    onChange={(e) => handleFarmInfoChange('fertilizerUsage', e.target.value)}
+                    disabled={!isEditing.farm}
+                    className="profile-input"
+                  >
+                    <option value="">Select fertilizer usage</option>
+                    <option value="high">High (Chemical + Organic)</option>
+                    <option value="medium">Medium (Balanced)</option>
+                    <option value="low">Low (Minimal inputs)</option>
+                    <option value="organic">Organic Only</option>
+                  </select>
+                </div>
+                
+                <div className="detail-item">
+                  <label>Pesticide Usage</label>
+                  <select 
+                    value={farmInfo.pesticideUsage}
+                    onChange={(e) => handleFarmInfoChange('pesticideUsage', e.target.value)}
+                    disabled={!isEditing.farm}
+                    className="profile-input"
+                  >
+                    <option value="">Select pesticide usage</option>
+                    <option value="high">High (Regular spray)</option>
+                    <option value="medium">Medium (Need-based)</option>
+                    <option value="low">Low (Minimal use)</option>
+                    <option value="none">No Pesticides</option>
+                  </select>
+                </div>
+              </div>
+              
+              {/* Economic Data Section */}
+              <div className="section-divider">
+                <h3>Economic Information</h3>
+              </div>
+              
+              <div className="detail-group">
+                <div className="detail-item">
+                  <label>Monthly Input Costs</label>
+                  <select 
+                    value={farmInfo.inputCosts}
+                    onChange={(e) => handleFarmInfoChange('inputCosts', e.target.value)}
+                    disabled={!isEditing.farm}
+                    className="profile-input"
+                  >
+                    <option value="">Select input cost range</option>
+                    <option value="under_5k">Under ₹5,000</option>
+                    <option value="5k_15k">₹5,000 - 15,000</option>
+                    <option value="15k_30k">₹15,000 - 30,000</option>
+                    <option value="30k_50k">₹30,000 - 50,000</option>
+                    <option value="above_50k">Above ₹50,000</option>
+                  </select>
+                </div>
+                
+                <div className="detail-item">
+                  <label>Marketing Method</label>
+                  <select 
+                    value={farmInfo.marketingMethod}
+                    onChange={(e) => handleFarmInfoChange('marketingMethod', e.target.value)}
+                    disabled={!isEditing.farm}
+                    className="profile-input"
+                  >
+                    <option value="">Select marketing method</option>
+                    <option value="local">Local Market/Traders</option>
+                    <option value="mandi">Mandi/APMC</option>
+                    <option value="direct">Direct to Consumer</option>
+                    <option value="contract">Contract Farming</option>
+                    <option value="cooperative">Cooperative Society</option>
+                    <option value="online">Online Platforms</option>
+                  </select>
+                </div>
               </div>
               
               {isEditing.farm && (
