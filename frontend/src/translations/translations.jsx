@@ -174,6 +174,103 @@ export const translations = {
       }
     },
     
+    // Dashboard page translations
+    dashboard: {
+      notifications: "Notifications",
+      viewAllNotifications: "View All Notifications",
+      plantedArea: "Planted area",
+      viewAll: "View all",
+      cropsThrivingToday: "Your crops are thriving today!",
+      cropHealthIndex: "Crop Health Index",
+      soilMoisture: "Soil Moisture",
+      ideal: "Ideal",
+      temperature: "Temperature",
+      sunlightExposure: "Sunlight Exposure",
+      hrsPerDay: "hrs/day",
+      aiCropHealthAnalysis: "AI Crop Health Analysis",
+      uploadImageForAnalysis: "Upload a high-quality image of your crop for AI analysis.",
+      aiQuote: "AI revolutionizes agriculture with precision farming and smart crop monitoring.",
+      askAI: "Ask AI"
+    },
+    
+    // Chatbot page translations
+    chatbot: {
+      title: "Digital Krishi",
+      subtitle: "Your AI-powered farming assistant",
+      welcomeText: "Hello! I'm here to help you with farming insights, crop recommendations, and agricultural guidance. What would you like to know?",
+      inputPlaceholder: "Ask me anything about farming, crops, diseases, or upload an image...",
+      popularQuestions: "Popular questions",
+      tryAskingTopics: "Try asking about these topics",
+      categories: {
+        cropManagement: "Crop Management",
+        plantHealth: "Plant Health",
+        soilNutrition: "Soil & Nutrition",
+        governmentSupport: "Government Support"
+      },
+      prompts: {
+        monsoonCrops: "What crops grow best in monsoon season?",
+        cropRotation: "Best crop rotation practices",
+        diseaseIdentification: "How do I identify plant diseases?",
+        pestControl: "Natural pest control methods",
+        organicFertilizers: "Best organic fertilizers for vegetables",
+        soilTesting: "How to test soil pH levels",
+        farmerSchemes: "Government schemes for farmers",
+        loanOptions: "Agricultural loan options"
+      },
+      promptLabels: {
+        monsoonCrops: "Monsoon crops",
+        cropRotation: "Crop rotation",
+        diseaseIdentification: "Disease identification",
+        pestControl: "Pest control",
+        organicFertilizers: "Organic fertilizers",
+        soilTesting: "Soil testing",
+        farmerSchemes: "Farmer schemes",
+        loanOptions: "Loan options"
+      }
+    },
+    
+    // Government Services page translations
+    government: {
+      title: "Government Services",
+      description: "Access government schemes, subsidies, and policies for agricultural development",
+      welcome: "Welcome",
+      farmer: "Farmer",
+      tabs: {
+        schemes: "Government Schemes",
+        subsidies: "Subsidies",
+        policies: "Agricultural Policies",
+        apply: "Apply Online",
+        track: "Track Application"
+      },
+      schemesTitle: "Government Schemes for Farmers",
+      schemesDescription: "Comprehensive list of central and state government schemes available for farmers"
+    },
+    
+    // Prediction page translations
+    prediction: {
+      title: "AI Prediction & Analytics",
+      description: "Advanced AI-powered predictions for crop yields, weather forecasting, and market trends",
+      welcome: "Welcome",
+      farmer: "Farmer",
+      tabs: {
+        cropPrediction: "Crop Prediction",
+        weatherForecast: "Weather Forecast",
+        marketTrends: "Market Trends"
+      },
+      cropPrediction: {
+        title: "AI Crop Yield Prediction",
+        description: "Get accurate crop yield predictions based on advanced AI models and real-time data"
+      },
+      form: {
+        selectCrop: "Select Crop",
+        cultivationArea: "Cultivation Area (hectares)",
+        season: "Season",
+        soilType: "Soil Type",
+        analyzing: "Analyzing Data...",
+        generate: "Generate Prediction"
+      }
+    },
+    
     // Auth pages translations
     auth: {
       signUp: {
@@ -379,6 +476,103 @@ export const translations = {
         loadFailed: "പ്രൊഫൈൽ ഡാറ്റ ലോഡ് ചെയ്യാൻ കഴിഞ്ഞില്ല. ദയവായി പേജ് റിഫ്രഷ് ചെയ്യുക.",
         updateFailed: "വിവരങ്ങൾ അപ്ഡേറ്റ് ചെയ്യാൻ കഴിഞ്ഞില്ല. ദയവായി വീണ്ടും ശ്രമിക്കുക.",
         authRequired: "നിങ്ങളുടെ പ്രൊഫൈൽ ആക്സസ് ചെയ്യാൻ ലോഗിൻ ചെയ്യേണ്ടതുണ്ട്. ദയവായി വീണ്ടും ലോഗിൻ ചെയ്യുക."
+      }
+    },
+    
+    // Dashboard page translations
+    dashboard: {
+      notifications: "അറിയിപ്പുകൾ",
+      viewAllNotifications: "എല്ലാ അറിയിപ്പുകളും കാണുക",
+      plantedArea: "നട്ടുപിടിപ്പിച്ച പ്രദേശം",
+      viewAll: "എല്ലാം കാണുക",
+      cropsThrivingToday: "നിങ്ങളുടെ വിളകൾ ഇന്ന് തഴച്ചുവളരുകയാണ്!",
+      cropHealthIndex: "വിള ആരോഗ്യ സൂചിക",
+      soilMoisture: "മണ്ണിന്റെ ഈർപ്പം",
+      ideal: "അനുയോജ്യം",
+      temperature: "താപനില",
+      sunlightExposure: "സൂര്യപ്രകാശം",
+      hrsPerDay: "മണിക്കൂർ/ദിനം",
+      aiCropHealthAnalysis: "AI വിള ആരോഗ്യ വിശകലനം",
+      uploadImageForAnalysis: "AI വിശകലനത്തിനായി നിങ്ങളുടെ വിളയുടെ ഉയർന്ന നിലവാരത്തിലുള്ള ചിത്രം അപ്‌ലോഡ് ചെയ്യുക.",
+      aiQuote: "AI കൃത്യമായ കൃഷിയും സ്മാർട്ട് വിള നിരീക്ഷണവും ഉപയോഗിച്ച് കൃഷിയെ വിപ്ലവകാരിയാക്കുന്നു.",
+      askAI: "AI യോട് ചോദിക്കുക"
+    },
+    
+    // Chatbot page translations
+    chatbot: {
+      title: "ഡിജിറ്റൽ കൃഷി",
+      subtitle: "നിങ്ങളുടെ AI അധിഷ്ഠിത കൃഷി സഹായി",
+      welcomeText: "ഹലോ! കൃഷി ഉൾക്കാഴ്ചകൾ, വിള ശുപാർശകൾ, കാർഷിക മാർഗ്ഗനിർദ്ദേശങ്ങൾ എന്നിവയിൽ നിങ്ങളെ സഹായിക്കാൻ ഞാൻ ഇവിടെയുണ്ട്. നിങ്ങൾക്ക് എന്തറിയാൻ താൽപ്പര്യമുണ്ട്?",
+      inputPlaceholder: "കൃഷി, വിളകൾ, രോഗങ്ങൾ എന്നിവയെക്കുറിച്ച് എന്തും ചോദിക്കുക അല്ലെങ്കിൽ ഒരു ചിത്രം അപ്‌ലോഡ് ചെയ്യുക...",
+      popularQuestions: "ജനപ്രിയ ചോദ്യങ്ങൾ",
+      tryAskingTopics: "ഈ വിഷയങ്ങളെക്കുറിച്ച് ചോദിക്കാൻ ശ്രമിക്കുക",
+      categories: {
+        cropManagement: "വിള നിർവ്വഹണം",
+        plantHealth: "സസ്യ ആരോഗ്യം",
+        soilNutrition: "മണ്ണും പോഷകാഹാരവും",
+        governmentSupport: "സർക്കാർ പിന്തുണ"
+      },
+      prompts: {
+        monsoonCrops: "മൺസൂൺ കാലത്ത് ഏതു വിളകളാണ് നന്നായി വളരുന്നത്?",
+        cropRotation: "മികച്ച വിള പര്യായക്രമ രീതികൾ",
+        diseaseIdentification: "സസ്യ രോഗങ്ങൾ എങ്ങനെ തിരിച്ചറിയാം?",
+        pestControl: "പ്രകൃതിദത്ത കീടനിയന്ത്രണ രീതികൾ",
+        organicFertilizers: "പച്ചക്കറികൾക്കുള്ള മികച്ച ജൈവ വളങ്ങൾ",
+        soilTesting: "മണ്ണിന്റെ pH നില എങ്ങനെ പരിശോധിക്കാം",
+        farmerSchemes: "കർഷകർക്കുള്ള സർക്കാർ പദ്ധതികൾ",
+        loanOptions: "കാർഷിക വായ്പാ ഓപ്ഷനുകൾ"
+      },
+      promptLabels: {
+        monsoonCrops: "മൺസൂൺ വിളകൾ",
+        cropRotation: "വിള പര്യായക്രമം",
+        diseaseIdentification: "രോഗ തിരിച്ചറിയൽ",
+        pestControl: "കീട നിയന്ത്രണം",
+        organicFertilizers: "ജൈവ വളങ്ങൾ",
+        soilTesting: "മണ്ണ് പരിശോധന",
+        farmerSchemes: "കർഷക പദ്ധതികൾ",
+        loanOptions: "വായ്പാ ഓപ്ഷനുകൾ"
+      }
+    },
+    
+    // Government Services page translations
+    government: {
+      title: "സർക്കാർ സേവനങ്ങൾ",
+      description: "കാർഷിക വികസനത്തിനായി സർക്കാർ പദ്ധതികൾ, സബ്സിഡികൾ, നയങ്ങൾ എന്നിവ ആക്സസ് ചെയ്യുക",
+      welcome: "സ്വാഗതം",
+      farmer: "കർഷകൻ",
+      tabs: {
+        schemes: "സർക്കാർ പദ്ധതികൾ",
+        subsidies: "സബ്സിഡികൾ",
+        policies: "കാർഷിക നയങ്ങൾ",
+        apply: "ഓൺലൈൻ അപ്ലൈ ചെയ്യുക",
+        track: "അപേക്ഷ ട്രാക്ക് ചെയ്യുക"
+      },
+      schemesTitle: "കർഷകർക്കുള്ള സർക്കാർ പദ്ധതികൾ",
+      schemesDescription: "കർഷകർക്ക് ലഭ്യമായ കേന്ദ്ര, സംസ്ഥാന സർക്കാർ പദ്ധതികളുടെ സമഗ്ര പട്ടിക"
+    },
+    
+    // Prediction page translations
+    prediction: {
+      title: "AI പ്രവചനം & അനലിറ്റിക്സ്",
+      description: "വിള വിളവ്, കാലാവസ്ഥാ പ്രവചനം, മാർക്കറ്റ് ട്രെൻഡുകൾ എന്നിവയ്ക്കായുള്ള വികസിത AI അധിഷ്ഠിത പ്രവചനങ്ങൾ",
+      welcome: "സ്വാഗതം",
+      farmer: "കർഷകൻ",
+      tabs: {
+        cropPrediction: "വിള പ്രവചനം",
+        weatherForecast: "കാലാവസ്ഥാ പ്രവചനം",
+        marketTrends: "മാർക്കറ്റ് ട്രെൻഡുകൾ"
+      },
+      cropPrediction: {
+        title: "AI വിള വിളവ് പ്രവചനം",
+        description: "വികസിത AI മോഡലുകളും തത്സമയ ഡാറ്റയും അടിസ്ഥാനമാക്കി കൃത്യമായ വിള വിളവ് പ്രവചനങ്ങൾ നേടുക"
+      },
+      form: {
+        selectCrop: "വിള തിരഞ്ഞെടുക്കുക",
+        cultivationArea: "കൃഷി പ്രദേശം (ഹെക്ടർ)",
+        season: "സീസൺ",
+        soilType: "മണ്ണിന്റെ തരം",
+        analyzing: "ഡാറ്റ വിശകലനം ചെയ്യുന്നു...",
+        generate: "പ്രവചനം സൃഷ്ടിക്കുക"
       }
     },
     
