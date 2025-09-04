@@ -118,7 +118,23 @@ const Dashboard = () => {
         setNotifications(updatedNotifications);
       } catch (error) {
         console.error('Failed to fetch weather data:', error);
-        setWeatherError(error.message);
+        setWeatherError('API key not configured or network error');
+        // Set fallback weather data
+        const fallbackWeather = {
+          location: { name: "Bangalore" },
+          current: {
+            temperature: 24,
+            main: "Clouds",
+            icon: "02d",
+            humidity: 65,
+            windSpeed: 2.1
+          },
+          daily: {
+            tempMax: 28,
+            tempMin: 22
+          }
+        };
+        setWeatherData(fallbackWeather);
       } finally {
         setWeatherLoading(false);
       }
