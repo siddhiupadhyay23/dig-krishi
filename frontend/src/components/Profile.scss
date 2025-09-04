@@ -1,3 +1,7 @@
+// External fonts and icon set inspired by reference UI
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
 // Modern Farmer Profile Theme Variables
 $primary-color: #10b981; // Emerald green
 $primary-light: #34d399;
@@ -24,7 +28,8 @@ $gradient-success: linear-gradient(135deg, #22c55e, #16a34a);
 .profile {
   min-height: 100vh;
   background: #f5f7fa;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  // Use Inter as primary font like the reference page
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
 }
 
 .profile-container {
@@ -1182,6 +1187,48 @@ $gradient-success: linear-gradient(135deg, #22c55e, #16a34a);
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+// Reference-style section title with leading icon support via data-icon attr
+.content-section h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  // Optional: allow injecting an icon from CSS without JSX change
+  &[data-icon]:before {
+    content: attr(data-icon);
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+// Soft card wrapper utility (can be applied via existing container classes)
+.card-like {
+  background: $bg-white;
+  border-radius: 16px;
+  border: 1px solid $border-light;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.08);
+}
+
+// Tool badges and grids (in case similar structures exist in current markup)
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.75rem;
+}
+.tool-badge {
+  @extend .card-like;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  color: $text-dark;
+
+  i {
+    color: $primary-dark;
   }
 }
 

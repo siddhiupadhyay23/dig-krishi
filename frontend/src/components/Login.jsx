@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import axios from 'axios';
 import './Login.scss';
+import logo from '../assets/logo1.png';
 
 const Login = ({ onBackToHome, onNavigateToSignUp, onLoginSuccess }) => {
   const { t } = useLanguage();
@@ -134,8 +135,9 @@ const Login = ({ onBackToHome, onNavigateToSignUp, onLoginSuccess }) => {
         {/* Login Form */}
         <form className="login-form" onSubmit={handleSubmit}>
           <div className="form-header">
-            <div className="form-icon">F</div>
-            <h2>Welcome Back, Farmer!</h2>
+            <div className="form-icon">
+              <img src={logo} alt="Digital Krishi Officer Logo" className="logo-image" />
+            </div>
             <p>Sign in to access your agricultural dashboard</p>
           </div>
           

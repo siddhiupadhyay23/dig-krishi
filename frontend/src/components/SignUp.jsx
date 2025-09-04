@@ -184,7 +184,6 @@ const SignUp = ({ onBackToHome, onNavigateToLogin, onSignUpSuccess }) => {
             <div className="form-icon">
               <img src={logo} alt="Digital Krishi Officer Logo" className="logo-image" />
             </div>
-            <h2>Join the Farming Community!</h2>
             <p>Create your account to access agricultural tools and insights</p>
           </div>
           
