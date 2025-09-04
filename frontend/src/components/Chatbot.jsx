@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { useSocket } from '../context/SocketContext';
+import { useLanguage } from '../context/LanguageContext';
 import './Chatbot.scss';
 
 const Chatbot = ({ socket }) => {
+  const { t } = useLanguage();
   const [query, setQuery] = useState('');
   const [messages, setMessages] = useState([]);
   const [showInitialScreen, setShowInitialScreen] = useState(true);
@@ -176,12 +178,12 @@ const Chatbot = ({ socket }) => {
                   </svg>
                 </div>
                 <div className="chatbot__title-section">
-                  <h1 className="chatbot__title">Digital Krishi</h1>
-                  <p className="chatbot__subtitle">Your AI-powered farming assistant</p>
+                  <h1 className="chatbot__title">{t('chatbot.title')}</h1>
+                  <p className="chatbot__subtitle">{t('chatbot.subtitle')}</p>
                 </div>
               </div>
               <div className="chatbot__welcome">
-                <p className="chatbot__welcome-text">Hello! I'm here to help you with farming insights, crop recommendations, and agricultural guidance. What would you like to know?</p>
+                <p className="chatbot__welcome-text">{t('chatbot.welcomeText')}</p>
               </div>
             </div>
 
@@ -231,7 +233,7 @@ const Chatbot = ({ socket }) => {
                       type="text"
                       value={query}
                       onChange={handleInputChange}
-                      placeholder="Ask me anything about farming, crops, diseases, or upload an image..."
+                      placeholder={t('chatbot.inputPlaceholder')}
                       className="chatbot__input chatbot__input--enhanced"
                       autoFocus
                     />
@@ -281,29 +283,29 @@ const Chatbot = ({ socket }) => {
               {/* Enhanced Sample Prompts with Categories */}
               <div className="chatbot__sample-prompts">
                 <div className="chatbot__prompts-header">
-                  <h3>Popular questions</h3>
-                  <p>Try asking about these topics</p>
+                  <h3>{t('chatbot.popularQuestions')}</h3>
+                  <p>{t('chatbot.tryAskingTopics')}</p>
                 </div>
                 <div className="chatbot__prompt-categories">
                   <div className="chatbot__prompt-category">
                     <div className="chatbot__category-header">
                       <div className="chatbot__category-icon">🌾</div>
-                      <span>Crop Management</span>
+                      <span>{t('chatbot.categories.cropManagement')}</span>
                     </div>
                     <div className="chatbot__category-prompts">
                       <button 
                         type="button" 
                         className="chatbot__sample-prompt chatbot__sample-prompt--small"
-                        onClick={() => handleSamplePromptClick("What crops grow best in monsoon season?")}
+                        onClick={() => handleSamplePromptClick(t('chatbot.prompts.monsoonCrops'))}
                       >
-                        <span>Monsoon crops</span>
+                        <span>{t('chatbot.promptLabels.monsoonCrops')}</span>
                       </button>
                       <button 
                         type="button" 
                         className="chatbot__sample-prompt chatbot__sample-prompt--small"
-                        onClick={() => handleSamplePromptClick("Best crop rotation practices")}
+                        onClick={() => handleSamplePromptClick(t('chatbot.prompts.cropRotation'))}
                       >
-                        <span>Crop rotation</span>
+                        <span>{t('chatbot.promptLabels.cropRotation')}</span>
                       </button>
                     </div>
                   </div>
@@ -311,22 +313,22 @@ const Chatbot = ({ socket }) => {
                   <div className="chatbot__prompt-category">
                     <div className="chatbot__category-header">
                       <div className="chatbot__category-icon">🔬</div>
-                      <span>Plant Health</span>
+                      <span>{t('chatbot.categories.plantHealth')}</span>
                     </div>
                     <div className="chatbot__category-prompts">
                       <button 
                         type="button" 
                         className="chatbot__sample-prompt chatbot__sample-prompt--small"
-                        onClick={() => handleSamplePromptClick("How do I identify plant diseases?")}
+                        onClick={() => handleSamplePromptClick(t('chatbot.prompts.diseaseIdentification'))}
                       >
-                        <span>Disease identification</span>
+                        <span>{t('chatbot.promptLabels.diseaseIdentification')}</span>
                       </button>
                       <button 
                         type="button" 
                         className="chatbot__sample-prompt chatbot__sample-prompt--small"
-                        onClick={() => handleSamplePromptClick("Natural pest control methods")}
+                        onClick={() => handleSamplePromptClick(t('chatbot.prompts.pestControl'))}
                       >
-                        <span>Pest control</span>
+                        <span>{t('chatbot.promptLabels.pestControl')}</span>
                       </button>
                     </div>
                   </div>
@@ -334,22 +336,22 @@ const Chatbot = ({ socket }) => {
                   <div className="chatbot__prompt-category">
                     <div className="chatbot__category-header">
                       <div className="chatbot__category-icon">🌱</div>
-                      <span>Soil & Nutrition</span>
+                      <span>{t('chatbot.categories.soilNutrition')}</span>
                     </div>
                     <div className="chatbot__category-prompts">
                       <button 
                         type="button" 
                         className="chatbot__sample-prompt chatbot__sample-prompt--small"
-                        onClick={() => handleSamplePromptClick("Best organic fertilizers for vegetables")}
+                        onClick={() => handleSamplePromptClick(t('chatbot.prompts.organicFertilizers'))}
                       >
-                        <span>Organic fertilizers</span>
+                        <span>{t('chatbot.promptLabels.organicFertilizers')}</span>
                       </button>
                       <button 
                         type="button" 
                         className="chatbot__sample-prompt chatbot__sample-prompt--small"
-                        onClick={() => handleSamplePromptClick("How to test soil pH levels")}
+                        onClick={() => handleSamplePromptClick(t('chatbot.prompts.soilTesting'))}
                       >
-                        <span>Soil testing</span>
+                        <span>{t('chatbot.promptLabels.soilTesting')}</span>
                       </button>
                     </div>
                   </div>
@@ -357,22 +359,22 @@ const Chatbot = ({ socket }) => {
                   <div className="chatbot__prompt-category">
                     <div className="chatbot__category-header">
                       <div className="chatbot__category-icon">🏛️</div>
-                      <span>Government Support</span>
+                      <span>{t('chatbot.categories.governmentSupport')}</span>
                     </div>
                     <div className="chatbot__category-prompts">
                       <button 
                         type="button" 
                         className="chatbot__sample-prompt chatbot__sample-prompt--small"
-                        onClick={() => handleSamplePromptClick("Government schemes for farmers")}
+                        onClick={() => handleSamplePromptClick(t('chatbot.prompts.farmerSchemes'))}
                       >
-                        <span>Farmer schemes</span>
+                        <span>{t('chatbot.promptLabels.farmerSchemes')}</span>
                       </button>
                       <button 
                         type="button" 
                         className="chatbot__sample-prompt chatbot__sample-prompt--small"
-                        onClick={() => handleSamplePromptClick("Agricultural loan options")}
+                        onClick={() => handleSamplePromptClick(t('chatbot.prompts.loanOptions'))}
                       >
-                        <span>Loan options</span>
+                        <span>{t('chatbot.promptLabels.loanOptions')}</span>
                       </button>
                     </div>
                   </div>

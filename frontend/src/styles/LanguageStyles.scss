@@ -1,0 +1,205 @@
+// Language-specific global styles for better Malayalam text display
+// Import Malayalam-friendly fonts
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&display=swap');
+
+// Malayalam language specific styles
+.malayalam {
+  // Set Malayalam font for all text elements
+  font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+  
+  // Better line height for Malayalam text
+  line-height: 1.6;
+  
+  // Better letter spacing for readability
+  letter-spacing: 0.02em;
+  
+  // Specific improvements for different text sizes
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+  }
+  
+  p, span, div {
+    font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+    line-height: 1.6;
+  }
+  
+  // Button styles for Malayalam
+  button {
+    font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+    font-weight: 500;
+  }
+  
+  // Form input styles for Malayalam
+  input, textarea {
+    font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+    
+    &::placeholder {
+      font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+      opacity: 0.7;
+    }
+  }
+  
+  // Navbar specific improvements
+  .navbar {
+    .language-text, .nav-item-label {
+      font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+      font-weight: 500;
+    }
+  }
+  
+  // Footer specific improvements
+  .footer {
+    .footer-title, .footer-subtitle, .nav-title {
+      font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+      line-height: 1.4;
+    }
+    
+    .nav-link {
+      font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+    }
+  }
+  
+  // Hero section specific improvements
+  .hero-section {
+    .hero-title, .hero-slogan {
+      font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+    }
+    
+    .hero-cta-button {
+      font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+      font-weight: 600;
+    }
+    
+    .question-input-inline {
+      font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+      
+      &::placeholder {
+        font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+      }
+    }
+  }
+  
+  // Features section improvements
+  .features-section {
+    .features-subtitle, .features-title, .feature-title {
+      font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+    }
+    
+    .feature-description {
+      font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+      line-height: 1.7;
+    }
+  }
+  
+  // Services section improvements
+  .more-section {
+    .more-subtitle, .more-title, .service-title {
+      font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+    }
+    
+    .service-description {
+      font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+      line-height: 1.7;
+    }
+    
+    .service-button {
+      font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+      font-weight: 600;
+    }
+  }
+  
+  // Auth forms improvements
+  .login-container, .signup-container {
+    .login-title, .signup-title, .login-subtitle, .signup-subtitle {
+      font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+      line-height: 1.4;
+    }
+    
+    .login-input, .signup-input {
+      font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+      
+      &::placeholder {
+        font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+      }
+    }
+    
+    .login-button, .signup-button {
+      font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+      font-weight: 600;
+    }
+    
+    .login-toggle, .signup-toggle {
+      font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif;
+    }
+  }
+}
+
+// English language specific styles (fallback and improvements)
+.english {
+  font-family: 'Playfair Display', 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+  
+  // Keep existing English styling
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+  }
+  
+  .hero-section {
+    .hero-title, .hero-slogan {
+      font-family: 'Playfair Display', 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+    }
+  }
+}
+
+// Responsive improvements for both languages
+@media (max-width: 768px) {
+  .malayalam {
+    // Slightly smaller font sizes for mobile
+    font-size: 0.95em;
+    
+    .hero-section {
+      .hero-title {
+        letter-spacing: -0.01em;
+      }
+      
+      .hero-slogan {
+        line-height: 1.5;
+      }
+    }
+    
+    .features-section, .more-section {
+      .feature-description, .service-description {
+        line-height: 1.6;
+        font-size: 0.9em;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .malayalam {
+    font-size: 0.9em;
+    
+    .hero-section {
+      .hero-title {
+        letter-spacing: 0;
+      }
+    }
+    
+    .navbar {
+      .language-text {
+        font-size: 0.85em;
+      }
+    }
+  }
+}
+
+// Dark mode adjustments (if needed in the future)
+@media (prefers-color-scheme: dark) {
+  .malayalam {
+    // Ensure text remains readable in dark mode
+    color: #f5f5f5;
+  }
+}

@@ -138,8 +138,8 @@ const Login = ({ onBackToHome, onNavigateToSignUp, onLoginSuccess }) => {
             <div className="form-icon">
               <img src={logo} alt="Digital Krishi Officer Logo" className="logo-image" />
             </div>
-            <h2>Welcome Back, Farmer!</h2>
-            <p>Sign in to access your agricultural dashboard</p>
+            <h2>{t('auth.login.welcomeMessage')}</h2>
+            <p>{t('auth.login.dashboardMessage')}</p>
           </div>
           
           <input
@@ -163,7 +163,7 @@ const Login = ({ onBackToHome, onNavigateToSignUp, onLoginSuccess }) => {
           />
           
           <button type="submit" className="login-button" disabled={loading}>
-            {loading ? 'Signing In...' : 'Sign In'}
+            {loading ? t('auth.login.signingIn') : t('auth.login.signIn')}
           </button>
         </form>
 

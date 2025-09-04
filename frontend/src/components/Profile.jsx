@@ -131,11 +131,11 @@ const Profile = () => {
       // Check if it's an auth error
       if (error.status === 401 || error.message === 'unauthorized') {
         setErrors({ 
-          general: 'You need to log in to access your profile. Please log in again.' 
+          general: t('profile.errors.authRequired') 
         });
       } else {
         setErrors({ 
-          general: error.message || 'Failed to load profile data. Please refresh the page.' 
+          general: error.message || t('profile.errors.loadFailed') 
         });
       }
     } finally {
@@ -300,7 +300,7 @@ const Profile = () => {
       setErrors({});
     } catch (error) {
       console.error('Save personal info error:', error);
-      setErrors({ general: error.message || 'Failed to update personal information. Please try again.' });
+      setErrors({ general: error.message || t('profile.errors.updateFailed') });
     } finally {
       setLoading(false);
     }
@@ -323,7 +323,7 @@ const Profile = () => {
       setErrors({});
     } catch (error) {
       console.error('Save farm info error:', error);
-      setErrors({ general: error.message || 'Failed to update farm details. Please try again.' });
+      setErrors({ general: error.message || t('profile.errors.updateFailed') });
     } finally {
       setLoading(false);
     }
@@ -538,12 +538,12 @@ const Profile = () => {
   };
 
   const sidebarItems = [
-    { id: 'personal', label: 'Personal Info', icon: <UserIcon size={20} /> },
-    { id: 'farm', label: 'Farm Details', icon: <TractorIcon size={20} /> },
-    { id: 'crops', label: 'My Crops', icon: <SeedlingIcon size={20} /> },
-    { id: 'analytics', label: 'Farm Analytics', icon: <AnalyticsIcon size={20} /> },
-    { id: 'settings', label: 'Settings', icon: <SettingsIcon size={20} /> },
-    { id: 'support', label: 'Help & Support', icon: <HelpIcon size={20} /> }
+    { id: 'personal', label: t('profile.sections.personal'), icon: <UserIcon size={20} /> },
+    { id: 'farm', label: t('profile.sections.farm'), icon: <TractorIcon size={20} /> },
+    { id: 'crops', label: t('profile.sections.crops'), icon: <SeedlingIcon size={20} /> },
+    { id: 'analytics', label: t('profile.sections.analytics'), icon: <AnalyticsIcon size={20} /> },
+    { id: 'settings', label: t('profile.sections.settings'), icon: <SettingsIcon size={20} /> },
+    { id: 'support', label: t('profile.sections.support'), icon: <HelpIcon size={20} /> }
   ];
 
   const renderContent = () => {
@@ -552,12 +552,12 @@ const Profile = () => {
         return (
           <div className="content-section">
             <div className="section-header">
-              <h2>Personal Information</h2>
+              <h2>{t('profile.personalInfo.title')}</h2>
               <button 
                 className={`edit-toggle-btn ${isEditing.personal ? 'editing' : ''}`}
                 onClick={() => toggleEdit('personal')}
               >
-{isEditing.personal ? 'Cancel' : 'Edit'}
+{isEditing.personal ? t('profile.personalInfo.cancel') : t('profile.personalInfo.edit')}
               </button>
             </div>
             
@@ -569,7 +569,7 @@ const Profile = () => {
             
             {errors.general && (
               <div className="error-message">
-{errors.general}
+                {t('profile.errors.serverError')}: {errors.general}
               </div>
             )}
             
@@ -595,14 +595,14 @@ const Profile = () => {
                     className="change-avatar-btn"
                     onClick={() => document.getElementById('photo-upload').click()}
                   >
-                    Change Photo
+                    {t('profile.personalInfo.changePhoto')}
                   </button>
                   {profilePhoto && (
                     <button 
                       className="remove-avatar-btn"
                       onClick={handleRemovePhoto}
                     >
-                      Remove
+                      {t('profile.personalInfo.removePhoto')}
                     </button>
                   )}
                 </div>
@@ -614,14 +614,14 @@ const Profile = () => {
               
               <div className="detail-group">
                 <div className="detail-item">
-                  <label>First Name *</label>
+                  <label>{t('profile.personalInfo.firstName')} *</label>
                   <input 
                     type="text" 
                     value={personalInfo.firstName}
                     onChange={(e) => handlePersonalInfoChange('firstName', e.target.value)}
                     readOnly={!isEditing.personal}
                     className={`profile-input ${errors.firstName ? 'error' : ''}`}
-                    placeholder="Enter your first name"
+                    placeholder={t('profile.personalInfo.firstName')}
                   />
                   {errors.firstName && (
                     <span className="field-error">{errors.firstName}</span>
@@ -629,14 +629,14 @@ const Profile = () => {
                 </div>
                 
                 <div className="detail-item">
-                  <label>Last Name *</label>
+                  <label>{t('profile.personalInfo.lastName')} *</label>
                   <input 
                     type="text" 
                     value={personalInfo.lastName}
                     onChange={(e) => handlePersonalInfoChange('lastName', e.target.value)}
                     readOnly={!isEditing.personal}
                     className={`profile-input ${errors.lastName ? 'error' : ''}`}
-                    placeholder="Enter your last name"
+                    placeholder={t('profile.personalInfo.lastName')}
                   />
                   {errors.lastName && (
                     <span className="field-error">{errors.lastName}</span>
@@ -645,14 +645,14 @@ const Profile = () => {
               </div>
               
               <div className="detail-item">
-                <label>Email Address *</label>
+                <label>{t('profile.personalInfo.email')} *</label>
                 <input 
                   type="email" 
                   value={personalInfo.email}
                   onChange={(e) => handlePersonalInfoChange('email', e.target.value)}
                   readOnly={!isEditing.personal}
                   className={`profile-input ${errors.email ? 'error' : ''}`}
-                  placeholder="Enter your email address"
+                  placeholder={t('profile.personalInfo.email')}
                 />
                 {errors.email && (
                   <span className="field-error">{errors.email}</span>
@@ -660,14 +660,14 @@ const Profile = () => {
               </div>
               
               <div className="detail-item">
-                <label>Phone Number</label>
+                <label>{t('profile.personalInfo.phone')}</label>
                 <input 
                   type="tel" 
                   value={personalInfo.phone}
                   onChange={(e) => handlePersonalInfoChange('phone', e.target.value)}
                   readOnly={!isEditing.personal}
                   className={`profile-input ${errors.phone ? 'error' : ''}`}
-                  placeholder="Enter your phone number"
+                  placeholder={t('profile.personalInfo.phone')}
                 />
                 {errors.phone && (
                   <span className="field-error">{errors.phone}</span>
@@ -675,14 +675,14 @@ const Profile = () => {
               </div>
               
               <div className="detail-item">
-                <label>State *</label>
+                <label>{t('profile.personalInfo.state')} *</label>
                 <input 
                   type="text" 
                   value={personalInfo.state}
                   onChange={(e) => handlePersonalInfoChange('state', e.target.value)}
                   readOnly={!isEditing.personal}
                   className={`profile-input ${errors.state ? 'error' : ''}`}
-                  placeholder="Enter your state"
+                  placeholder={t('profile.personalInfo.state')}
                 />
                 {errors.state && (
                   <span className="field-error">{errors.state}</span>
@@ -690,14 +690,14 @@ const Profile = () => {
               </div>
               
               <div className="detail-item">
-                <label>City *</label>
+                <label>{t('profile.personalInfo.city')} *</label>
                 <input 
                   type="text" 
                   value={personalInfo.city}
                   onChange={(e) => handlePersonalInfoChange('city', e.target.value)}
                   readOnly={!isEditing.personal}
                   className={`profile-input ${errors.city ? 'error' : ''}`}
-                  placeholder="Enter your city"
+                  placeholder={t('profile.personalInfo.city')}
                 />
                 {errors.city && (
                   <span className="field-error">{errors.city}</span>
@@ -705,26 +705,26 @@ const Profile = () => {
               </div>
               
               <div className="detail-item">
-                <label>District (Optional)</label>
+                <label>{t('profile.personalInfo.district')}</label>
                 <input 
                   type="text" 
                   value={personalInfo.district}
                   onChange={(e) => handlePersonalInfoChange('district', e.target.value)}
                   readOnly={!isEditing.personal}
                   className="profile-input"
-                  placeholder="Enter your district (optional)"
+                  placeholder={t('profile.personalInfo.district')}
                 />
               </div>
               
               <div className="detail-item">
-                <label>Pincode</label>
+                <label>{t('profile.personalInfo.pincode')}</label>
                 <input 
                   type="text" 
                   value={personalInfo.pincode}
                   onChange={(e) => handlePersonalInfoChange('pincode', e.target.value)}
                   readOnly={!isEditing.personal}
                   className={`profile-input ${errors.pincode ? 'error' : ''}`}
-                  placeholder="Enter your pincode"
+                  placeholder={t('profile.personalInfo.pincode')}
                   maxLength="6"
                 />
                 {errors.pincode && (
@@ -735,21 +735,21 @@ const Profile = () => {
               {/* Additional Personal Info Fields for Analytics */}
               <div className="detail-group">
                 <div className="detail-item">
-                  <label>Age</label>
+                  <label>{t('profile.personalInfo.age')}</label>
                   <input 
                     type="number" 
                     value={personalInfo.age}
                     onChange={(e) => handlePersonalInfoChange('age', e.target.value)}
                     readOnly={!isEditing.personal}
                     className="profile-input"
-                    placeholder="Enter your age"
+                    placeholder={t('profile.personalInfo.age')}
                     min="18"
                     max="100"
                   />
                 </div>
                 
                 <div className="detail-item">
-                  <label>Gender</label>
+                  <label>{t('profile.personalInfo.gender')}</label>
                   <select 
                     value={personalInfo.gender}
                     onChange={(e) => handlePersonalInfoChange('gender', e.target.value)}
@@ -765,7 +765,7 @@ const Profile = () => {
               </div>
               
               <div className="detail-item">
-                <label>Education Level</label>
+                <label>{t('profile.personalInfo.education')}</label>
                 <select 
                   value={personalInfo.education}
                   onChange={(e) => handlePersonalInfoChange('education', e.target.value)}
@@ -784,7 +784,7 @@ const Profile = () => {
               </div>
               
               <div className="detail-item">
-                <label>Primary Occupation</label>
+                <label>{t('profile.personalInfo.occupation')}</label>
                 <select 
                   value={personalInfo.primaryOccupation}
                   onChange={(e) => handlePersonalInfoChange('primaryOccupation', e.target.value)}
@@ -798,7 +798,7 @@ const Profile = () => {
               </div>
               
               <div className="detail-item">
-                <label>Annual Income Range</label>
+                <label>{t('profile.personalInfo.income')}</label>
                 <select 
                   value={personalInfo.annualIncome}
                   onChange={(e) => handlePersonalInfoChange('annualIncome', e.target.value)}
@@ -821,14 +821,14 @@ const Profile = () => {
                     onClick={handleSavePersonalInfo}
                     disabled={loading}
                   >
-                    {loading ? 'Saving...' : 'Save Changes'}
+                    {loading ? t('profile.personalInfo.saving') : t('profile.personalInfo.save')}
                   </button>
                   <button 
                     className="cancel-btn"
                     onClick={() => toggleEdit('personal')}
                     disabled={loading}
                   >
-                    Cancel
+                    {t('profile.personalInfo.cancel')}
                   </button>
                 </div>
               )}
@@ -839,12 +839,12 @@ const Profile = () => {
         return (
           <div className="content-section">
             <div className="section-header">
-              <h2>Farm Details</h2>
+            <h2>{t('profile.farmDetails.title')}</h2>
               <button 
                 className={`edit-toggle-btn ${isEditing.farm ? 'editing' : ''}`}
                 onClick={() => toggleEdit('farm')}
               >
-                {isEditing.farm ? 'X Cancel' : 'Edit'}
+                {isEditing.farm ? `✕ ${t('profile.personalInfo.cancel')}` : t('profile.personalInfo.edit')}
               </button>
             </div>
             
@@ -863,7 +863,7 @@ const Profile = () => {
             <div className="farm-info">
               <div className="basic-farm-fields">
                 <div className="detail-item">
-                  <label>Farm Name *</label>
+                  <label>{t('profile.farmDetails.farmName')} *</label>
                   <input 
                     type="text" 
                     value={farmInfo.farmName}
@@ -878,7 +878,7 @@ const Profile = () => {
                 </div>
               
               <div className="detail-item">
-                <label>Farm Size *</label>
+                <label>{t('profile.farmDetails.farmSize')} *</label>
                 <div className="farm-size-container">
                   <input 
                     type="number" 
@@ -909,7 +909,7 @@ const Profile = () => {
               
               {/* Primary Crops Section */}
               <div className="detail-item">
-                <label>Primary Crops *</label>
+                <label>{t('profile.farmDetails.primaryCrops')} *</label>
                 <select 
                   value={farmInfo.primaryCrops.length > 0 ? farmInfo.primaryCrops[0] : ''}
                   onChange={(e) => {
@@ -955,7 +955,7 @@ const Profile = () => {
               
               {/* Secondary Crops Section - Optional */}
               <div className="detail-item">
-                <label>Secondary Crops (Optional)</label>
+                <label>{t('profile.farmDetails.secondaryCrops')}</label>
                 
                 {/* Display selected crops in read-only mode */}
                 {!isEditing.farm && (
@@ -1082,7 +1082,7 @@ const Profile = () => {
               </div>
               
               <div className="detail-item">
-                <label>Farming Experience *</label>
+                <label>{t('profile.farmDetails.experience')} *</label>
                 <select 
                   value={farmInfo.experience}
                   onChange={(e) => handleFarmInfoChange('experience', e.target.value)}
@@ -1100,7 +1100,7 @@ const Profile = () => {
               </div>
               
               <div className="detail-item">
-                <label>Farming Method *</label>
+                <label>{t('profile.farmDetails.method')} *</label>
                 <select 
                   value={farmInfo.farmingMethod}
                   onChange={(e) => handleFarmInfoChange('farmingMethod', e.target.value)}
@@ -1119,7 +1119,7 @@ const Profile = () => {
               </div>
               
               <div className="detail-item">
-                <label>Farm State *</label>
+                <label>{t('profile.farmDetails.farmState')} *</label>
                 <input 
                   type="text" 
                   value={farmInfo.state}
@@ -1134,7 +1134,7 @@ const Profile = () => {
               </div>
               
               <div className="detail-item">
-                <label>Farm City *</label>
+                <label>{t('profile.farmDetails.farmCity')} *</label>
                 <input 
                   type="text" 
                   value={farmInfo.city}
@@ -1149,7 +1149,7 @@ const Profile = () => {
               </div>
               
               <div className="detail-item">
-                <label>Farm District (Optional)</label>
+                <label>{t('profile.farmDetails.farmDistrict')}</label>
                 <input 
                   type="text" 
                   value={farmInfo.district}
@@ -1161,7 +1161,7 @@ const Profile = () => {
               </div>
               
               <div className="detail-item">
-                <label>Farm Pincode (Optional)</label>
+                <label>{t('profile.farmDetails.farmPincode')}</label>
                 <input 
                   type="text" 
                   value={farmInfo.pincode}
@@ -1180,7 +1180,7 @@ const Profile = () => {
               {/* Advanced Farm Details for Analytics */}
               <div className="detail-group">
                 <div className="detail-item">
-                  <label>Land Type</label>
+                  <label>{t('profile.farmDetails.landType')}</label>
                   <select 
                     value={farmInfo.landType}
                     onChange={(e) => handleFarmInfoChange('landType', e.target.value)}
@@ -1195,7 +1195,7 @@ const Profile = () => {
                 </div>
                 
                 <div className="detail-item">
-                  <label>Soil Type</label>
+                  <label>{t('profile.farmDetails.soilType')}</label>
                   <select 
                     value={farmInfo.soilType}
                     onChange={(e) => handleFarmInfoChange('soilType', e.target.value)}
@@ -1217,7 +1217,7 @@ const Profile = () => {
               
               {/* Soil Details Section */}
               <div className="section-divider">
-                <h3>Soil Details (Optional but Recommended)</h3>
+                <h3>{t('profile.farmDetails.soilDetails')}</h3>
               </div>
               
               <div className="detail-group">
@@ -1301,7 +1301,7 @@ const Profile = () => {
               
               {/* Water & Irrigation Section */}
               <div className="section-divider">
-                <h3>Water & Irrigation</h3>
+                <h3>{t('profile.farmDetails.waterIrrigation')}</h3>
               </div>
               
               <div className="detail-group">
@@ -1359,7 +1359,7 @@ const Profile = () => {
               
               {/* Farm Infrastructure Section */}
               <div className="section-divider">
-                <h3>Farm Infrastructure</h3>
+                <h3>{t('profile.farmDetails.infrastructure')}</h3>
               </div>
               
               <div className="detail-group">
@@ -1428,7 +1428,7 @@ const Profile = () => {
               
               {/* Equipment & Inputs Section */}
               <div className="section-divider">
-                <h3>Equipment & Inputs</h3>
+                <h3>{t('profile.farmDetails.equipment')}</h3>
               </div>
               
               <div className="detail-group">
@@ -1499,7 +1499,7 @@ const Profile = () => {
               
               {/* Economic Data Section */}
               <div className="section-divider">
-                <h3>Economic Information</h3>
+                <h3>{t('profile.farmDetails.economic')}</h3>
               </div>
               
               <div className="detail-group">
@@ -1546,14 +1546,14 @@ const Profile = () => {
                     onClick={handleSaveFarmInfo}
                     disabled={loading}
                   >
-                    {loading ? 'Saving...' : 'Save Farm Details'}
+                    {loading ? t('profile.personalInfo.saving') : t('profile.farmDetails.saveFarm')}
                   </button>
                   <button 
                     className="cancel-btn"
                     onClick={() => toggleEdit('farm')}
                     disabled={loading}
                   >
-                    Cancel
+                    {t('profile.personalInfo.cancel')}
                   </button>
                 </div>
               )}
@@ -1851,8 +1851,8 @@ const Profile = () => {
         <div className="profile-container">
           <div className="loading-container">
             <div className="loading-spinner"></div>
-            <h2>Loading your profile...</h2>
-            <p>Please wait while we fetch your information.</p>
+            <h2>{t('profile.loading')}</h2>
+            <p>{t('profile.loadingMessage')}</p>
           </div>
         </div>
       </div>
@@ -1866,8 +1866,8 @@ const Profile = () => {
       <div className="profile-container">
       <div className="profile-header farmer-profile-header">
         <div className="header-content">
-          <h1><FarmerIcon size={24} /> Farmer Profile</h1>
-          <p>Manage your agricultural profile, farm details, and account settings</p>
+          <h1><FarmerIcon size={24} /> {t('profile.title')}</h1>
+          <p>{t('profile.subtitle')}</p>
           {profileData?.metadata && (
             <div className="profile-completion">
               <div className="completion-bar">
@@ -1877,14 +1877,14 @@ const Profile = () => {
                 ></div>
               </div>
               <span className="completion-text">
-                <TargetIcon size={16} /> {profileData.metadata.completionPercentage || 0}% Complete
+                <TargetIcon size={16} /> {profileData.metadata.completionPercentage || 0}% {t('profile.complete')}
               </span>
             </div>
           )}
         </div>
         <div className="user-info">
           <span>
-            <CelebrationIcon size={18} /> Welcome, {personalInfo.firstName || profileData?.userId?.fullName?.firstName || 'Farmer'}!
+            <CelebrationIcon size={18} /> {t('profile.welcome')}, {personalInfo.firstName || profileData?.userId?.fullName?.firstName || 'Farmer'}!
           </span>
         </div>
       </div>

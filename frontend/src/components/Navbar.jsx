@@ -8,7 +8,7 @@ import logo from '../assets/logo1.png';
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { t, toggleLanguage, currentLanguage } = useLanguage();
+  const { t, toggleLanguage, getNextLanguageName } = useLanguage();
   const { isAuthenticated, logout } = useAuth();
 
   const handleLogout = () => {
@@ -118,7 +118,7 @@ const Navbar = () => {
                     d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" 
                   />
                 </svg>
-                <span className="language-text">{t('navbar.language')}</span>
+                <span className="language-text">{getNextLanguageName()}</span>
               </button>
               
               <button className="auth-btn logout-btn" onClick={handleLogout}>
@@ -154,7 +154,7 @@ const Navbar = () => {
                   d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 919-9" 
                 />
               </svg>
-              <span className="language-text">{t('navbar.language')}</span>
+              <span className="language-text">{getNextLanguageName()}</span>
             </button>
 
             <button className="auth-btn sign-up-btn" onClick={() => navigate('/signup')}>

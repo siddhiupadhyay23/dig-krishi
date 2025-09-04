@@ -118,7 +118,23 @@ const Dashboard = () => {
         setNotifications(updatedNotifications);
       } catch (error) {
         console.error('Failed to fetch weather data:', error);
-        setWeatherError(error.message);
+        setWeatherError('API key not configured or network error');
+        // Set fallback weather data
+        const fallbackWeather = {
+          location: { name: "Bangalore" },
+          current: {
+            temperature: 24,
+            main: "Clouds",
+            icon: "02d",
+            humidity: 65,
+            windSpeed: 2.1
+          },
+          daily: {
+            tempMax: 28,
+            tempMin: 22
+          }
+        };
+        setWeatherData(fallbackWeather);
       } finally {
         setWeatherLoading(false);
       }
@@ -236,7 +252,7 @@ const Dashboard = () => {
             {/* Notifications Card */}
             <div className="notifications-card">
               <div className="notifications-header">
-                <h3>Notifications</h3>
+                <h3>{t('dashboard.notifications')}</h3>
                 <span className="notification-count">{notifications.filter(n => n.isNew).length}</span>
               </div>
               <div className="notifications-list">
@@ -255,7 +271,7 @@ const Dashboard = () => {
                   </div>
                 ))}
               </div>
-              <button className="view-all-notifications">View All Notifications</button>
+              <button className="view-all-notifications">{t('dashboard.viewAllNotifications')}</button>
             </div>
           </div>
 
@@ -438,17 +454,17 @@ const Dashboard = () => {
         <div className="right-section">
           {/* Planted Area Header */}
           <div className="planted-area-header">
-            <h2>Planted area</h2>
-            <button className="view-all-btn">View all</button>
+            <h2>{t('dashboard.plantedArea')}</h2>
+            <button className="view-all-btn">{t('dashboard.viewAll')}</button>
           </div>
-          <div className="area-subtitle">Your crops are thriving today!</div>
+          <div className="area-subtitle">{t('dashboard.cropsThrivingToday')}</div>
 
           {/* Crop Metrics */}
           <div className="crop-metrics-card">
             <div className="metric-row">
               <RiceIcon className="metric-icon" size={18} />
               <div className="metric-info">
-                <div className="metric-label">Crop Health Index</div>
+                <div className="metric-label">{t('dashboard.cropHealthIndex')}</div>
                 <div className="metric-value">85/100 (AI)</div>
               </div>
               <div className="metric-arrow">›</div>
@@ -457,8 +473,8 @@ const Dashboard = () => {
             <div className="metric-row">
               <WaterIcon className="metric-icon" size={18} />
               <div className="metric-info">
-                <div className="metric-label">Soil Moisture</div>
-                <div className="metric-value">65% (Ideal)</div>
+                <div className="metric-label">{t('dashboard.soilMoisture')}</div>
+                <div className="metric-value">65% ({t('dashboard.ideal')})</div>
               </div>
               <div className="metric-arrow">›</div>
             </div>
@@ -466,7 +482,7 @@ const Dashboard = () => {
             <div className="metric-row">
               <ThermometerIcon className="metric-icon" size={18} />
               <div className="metric-info">
-                <div className="metric-label">Temperature</div>
+                <div className="metric-label">{t('dashboard.temperature')}</div>
                 <div className="metric-value">24°C</div>
               </div>
               <div className="metric-arrow">›</div>
@@ -475,8 +491,8 @@ const Dashboard = () => {
             <div className="metric-row">
               <SunIcon className="metric-icon" size={18} />
               <div className="metric-info">
-                <div className="metric-label">Sunlight Exposure</div>
-                <div className="metric-value">7 hrs/day</div>
+                <div className="metric-label">{t('dashboard.sunlightExposure')}</div>
+                <div className="metric-value">7 {t('dashboard.hrsPerDay')}</div>
               </div>
               <div className="metric-arrow">›</div>
             </div>
@@ -485,25 +501,25 @@ const Dashboard = () => {
           {/* AI Crop Health Analysis */}
           <div className="ai-analysis-card">
             <div className="ai-header">
-              <h3>AI Crop Health Analysis</h3>
+              <h3>{t('dashboard.aiCropHealthAnalysis')}</h3>
             </div>
             <div className="ai-content">
               <div className="ai-description">
-                Upload a high-quality image of your crop for AI analysis.
+                {t('dashboard.uploadImageForAnalysis')}
               </div>
               <div className="wheat-image">
                 <div className="wheat-background">
                   <RiceIcon className="wheat-pattern" size={32} />
                   <div className="quotes-overlay">
                     <div className="quote-text">
-                      "AI revolutionizes agriculture with precision farming and smart crop monitoring."
+                      "{t('dashboard.aiQuote')}"
                     </div>
                   </div>
                 </div>
               </div>
               <button className="ask-ai-btn" onClick={() => navigate('/chatbot')}>
                 <AIIcon className="ai-icon" size={18} />
-                <span>Ask AI</span>
+                <span>{t('dashboard.askAI')}</span>
                 <span className="ai-arrow">›</span>
               </button>
             </div>

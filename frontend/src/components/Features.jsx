@@ -44,10 +44,10 @@ const Features = () => {
       <div className="features-container">
         <div className="features-header">
           <h3 className="features-subtitle">
-            Our Features
+            {t('features.subtitle')}
           </h3>
           <h2 className="features-title">
-            {translations.features.title}
+            {t('features.title')}
           </h2>
         </div>
         <div className="features-grid">

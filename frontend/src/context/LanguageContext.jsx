@@ -55,12 +55,41 @@ export const LanguageProvider = ({ children }) => {
     return translations[currentLanguage];
   };
 
+  // Function to get language display name
+  const getLanguageDisplayName = (lang) => {
+    const displayNames = {
+      en: { en: 'English', ml: 'English' },
+      ml: { en: 'മലയാളം', ml: 'മലയാളം' }
+    };
+    return displayNames[lang]?.[currentLanguage] || lang;
+  };
+
+  // Function to get current language name for display
+  const getCurrentLanguageName = () => {
+    return getLanguageDisplayName(currentLanguage);
+  };
+
+  // Function to get next language name for button display
+  const getNextLanguageName = () => {
+    const nextLang = currentLanguage === 'en' ? 'ml' : 'en';
+    return getLanguageDisplayName(nextLang);
+  };
+
+  // Function to get language direction (for future RTL support if needed)
+  const getLanguageDirection = () => {
+    return 'ltr'; // Both English and Malayalam are LTR
+  };
+
   const value = {
     currentLanguage,
     toggleLanguage,
     setLanguage,
     t,
     getCurrentTranslations,
+    getLanguageDisplayName,
+    getCurrentLanguageName,
+    getNextLanguageName,
+    getLanguageDirection,
     isEnglish: currentLanguage === 'en',
     isMalayalam: currentLanguage === 'ml'
   };

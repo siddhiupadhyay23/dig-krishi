@@ -7,9 +7,45 @@ const DEFAULT_COORDS = {
   lon: 77.5946
 };
 
+// Fallback weather data when API is unavailable
+const FALLBACK_WEATHER_DATA = {
+  location: {
+    name: "Bangalore",
+    country: "IN",
+    coords: DEFAULT_COORDS
+  },
+  current: {
+    temperature: 24,
+    feelsLike: 26,
+    humidity: 65,
+    pressure: 1013,
+    visibility: 10,
+    windSpeed: 2.1,
+    windDirection: 180,
+    cloudiness: 20,
+    uvIndex: 6,
+    description: "few clouds",
+    main: "Clouds",
+    icon: "02d"
+  },
+  daily: {
+    tempMax: 28,
+    tempMin: 22,
+    sunrise: new Date(),
+    sunset: new Date()
+  },
+  lastUpdated: new Date()
+};
+
 export const weatherService = {
   // Get current weather data
   async getCurrentWeather(lat = DEFAULT_COORDS.lat, lon = DEFAULT_COORDS.lon) {
+    // Check if API key is configured
+    if (!API_KEY || API_KEY === 'your_openweather_api_key_here') {
+      console.warn('OpenWeather API key not configured. Using fallback weather data.');
+      return FALLBACK_WEATHER_DATA;
+    }
+
     try {
       const response = await fetch(
         `${BASE_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
@@ -22,8 +58,8 @@ export const weatherService = {
       const data = await response.json();
       return this.formatWeatherData(data);
     } catch (error) {
-      console.error('Error fetching weather data:', error);
-      throw error;
+      console.error('Error fetching weather data, using fallback:', error);
+      return FALLBACK_WEATHER_DATA;
     }
   },
 

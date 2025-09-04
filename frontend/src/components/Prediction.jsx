@@ -124,23 +124,23 @@ const Prediction = () => {
   };
 
   const tabs = [
-    { id: 'crop-prediction', label: 'Crop Prediction' },
-    { id: 'weather-forecast', label: 'Weather Forecast' },
-    { id: 'market-trends', label: 'Market Trends' }
+    { id: 'crop-prediction', label: t('prediction.tabs.cropPrediction') },
+    { id: 'weather-forecast', label: t('prediction.tabs.weatherForecast') },
+    { id: 'market-trends', label: t('prediction.tabs.marketTrends') }
   ];
 
   const renderCropPrediction = () => (
     <div className="crop-prediction-section">
       <div className="prediction-form-container">
         <div className="form-header">
-          <h2>AI Crop Yield Prediction</h2>
-          <p>Get accurate crop yield predictions based on advanced AI models and real-time data</p>
+          <h2>{t('prediction.cropPrediction.title')}</h2>
+          <p>{t('prediction.cropPrediction.description')}</p>
         </div>
 
         <form onSubmit={handlePredictionSubmit} className="prediction-form">
           <div className="form-grid">
             <div className="form-group">
-              <label htmlFor="crop">Select Crop</label>
+              <label htmlFor="crop">{t('prediction.form.selectCrop')}</label>
               <select
                 id="crop"
                 name="crop"
@@ -156,7 +156,7 @@ const Prediction = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="area">Cultivation Area (hectares)</label>
+              <label htmlFor="area">{t('prediction.form.cultivationArea')}</label>
               <input
                 type="number"
                 id="area"
@@ -171,7 +171,7 @@ const Prediction = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="season">Season</label>
+              <label htmlFor="season">{t('prediction.form.season')}</label>
               <select
                 id="season"
                 name="season"
@@ -187,7 +187,7 @@ const Prediction = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="soilType">Soil Type</label>
+              <label htmlFor="soilType">{t('prediction.form.soilType')}</label>
               <select
                 id="soilType"
                 name="soilType"
@@ -234,11 +234,11 @@ const Prediction = () => {
             {isLoading ? (
               <>
                 <div className="loading-spinner"></div>
-                Analyzing Data...
+                {t('prediction.form.analyzing')}
               </>
             ) : (
               <>
-                Generate Prediction
+                {t('prediction.form.generate')}
               </>
             )}
           </button>
@@ -448,11 +448,11 @@ const Prediction = () => {
       <div className="prediction-container">
         <div className="prediction-header">
           <div className="header-content">
-            <h1>AI Prediction & Analytics</h1>
-            <p>Advanced AI-powered predictions for crop yields, weather forecasting, and market trends</p>
+            <h1>{t('prediction.title')}</h1>
+            <p>{t('prediction.description')}</p>
           </div>
           <div className="user-info">
-            <span>Welcome, {user?.name || 'Farmer'}</span>
+            <span>{t('prediction.welcome')}, {user?.name || t('prediction.farmer')}</span>
           </div>
         </div>
 

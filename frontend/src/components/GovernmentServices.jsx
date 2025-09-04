@@ -338,18 +338,18 @@ const GovernmentServices = () => {
   };
 
   const tabs = [
-    { id: 'schemes', label: 'Government Schemes' },
-    { id: 'subsidies', label: 'Subsidies' },
-    { id: 'policies', label: 'Agricultural Policies' },
-    { id: 'apply', label: 'Apply Online' },
-    { id: 'track', label: 'Track Application' }
+    { id: 'schemes', label: t('government.tabs.schemes') },
+    { id: 'subsidies', label: t('government.tabs.subsidies') },
+    { id: 'policies', label: t('government.tabs.policies') },
+    { id: 'apply', label: t('government.tabs.apply') },
+    { id: 'track', label: t('government.tabs.track') }
   ];
 
   const renderSchemes = () => (
     <div className="schemes-section">
       <div className="section-header">
-        <h2>Government Schemes for Farmers</h2>
-        <p>Comprehensive list of central and state government schemes available for farmers</p>
+        <h2>{t('government.schemesTitle')}</h2>
+        <p>{t('government.schemesDescription')}</p>
       </div>
 
       <div className="schemes-grid">
@@ -783,11 +783,11 @@ const GovernmentServices = () => {
       <div className="gov-services-container">
         <div className="services-header">
           <div className="header-content">
-            <h1>Government Services</h1>
-            <p>Access government schemes, subsidies, and policies for agricultural development</p>
+            <h1>{t('government.title')}</h1>
+            <p>{t('government.description')}</p>
           </div>
           <div className="user-info">
-            <span>Welcome, {user?.name || 'Farmer'}</span>
+            <span>{t('government.welcome')}, {user?.name || t('government.farmer')}</span>
           </div>
         </div>
 
