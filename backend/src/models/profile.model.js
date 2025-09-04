@@ -288,7 +288,15 @@ const profileSchema = new mongoose.Schema({
           enum: ['excellent', 'good', 'fair', 'poor'],
           default: 'good'
         },
-        purchaseYear: Number
+        purchaseYear: Number,
+        brand: {
+          type: String,
+          default: null
+        },
+        model: {
+          type: String,
+          default: null
+        }
       }]
     },
     
@@ -490,6 +498,15 @@ const profileSchema = new mongoose.Schema({
       addedDate: {
         type: Date,
         default: Date.now
+      },
+      isPrimary: {
+        type: Boolean,
+        default: false
+      },
+      category: {
+        type: String,
+        enum: ['predefined', 'custom'],
+        default: 'predefined'
       }
     }
   ],

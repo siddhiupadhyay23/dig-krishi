@@ -1231,8 +1231,20 @@ async function getCropAnalytics(req, res) {
 // COMPREHENSIVE FARM DETAILS SAVE FUNCTION
 async function saveFarmDetails(req, res) {
     try {
-        const userId = req.user.id;
+        console.log('saveFarmDetails called. req.user:', req.user ? 'exists' : 'null');
+        
+        if (!req.user) {
+            console.error('saveFarmDetails error: req.user is null');
+            return res.status(401).json({
+                message: "Authentication required",
+                error: "req.user is null"
+            });
+        }
+        
+        const userId = req.user.id || req.user._id;
         const farmDetailsData = req.body;
+        
+        console.log('saveFarmDetails - userId:', userId, 'dataKeys:', Object.keys(farmDetailsData));
         
         console.log('Received farm details data:', JSON.stringify(farmDetailsData, null, 2));
 
@@ -1367,12 +1379,12 @@ async function saveFarmDetails(req, res) {
         if (farmDetailsData.machinery !== undefined) {
             if (Array.isArray(farmDetailsData.machinery)) {
                 profile.landDetails.farmingInfrastructure.machinery = farmDetailsData.machinery.map(machine => ({
-                    name: machine.name || '',
-                    type: machine.type || '',
+                    name: machine.name || null,
+                    type: machine.type || null,
                     condition: machine.condition || 'good',
                     purchaseYear: machine.purchaseYear || null,
-                    brand: machine.brand || '',
-                    model: machine.model || ''
+                    brand: machine.brand || null,
+                    model: machine.model || null
                 }));
             } else {
                 profile.landDetails.farmingInfrastructure.machinery = [];
