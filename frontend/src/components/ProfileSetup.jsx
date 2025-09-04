@@ -80,6 +80,17 @@ const ProfileSetup = () => {
     }
   };
 
+  const handleWelcomeSkip = async (data) => {
+    try {
+      updateProfileData(data);
+      await makeAPICall('welcome', {});
+      // Skip phone number API call since it's empty
+      goToNextStep();
+    } catch (error) {
+      setError('Failed to skip welcome step. Please try again.');
+    }
+  };
+
   const handleStateNext = async (data) => {
     try {
       updateProfileData(data);
@@ -172,6 +183,7 @@ const ProfileSetup = () => {
             phoneNumber={profileData.phoneNumber}
             onUpdate={updateProfileData}
             onNext={handleWelcomeNext}
+            onSkip={handleWelcomeSkip}
             loading={loading}
           />
         );
