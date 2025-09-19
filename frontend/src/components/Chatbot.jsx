@@ -210,7 +210,7 @@ const Chatbot = ({ socket }) => {
               <form onSubmit={handleSubmit} className="chatbot__search-form">
                 <div className={`chatbot__input-container chatbot__input-container--enhanced ${isDragOver ? 'drag-over' : ''}`}>
                   <div className="chatbot__input-tools">
-                    <button type="button" onClick={handleImageButtonClick} className="chatbot__tool-btn chatbot__image-btn" aria-label="Upload image" title="Upload an image">
+                    <button type="button" onClick={handleImageButtonClick} className="chatbot__tool-btn chatbot__image-btn" aria-label={t('chatbot.uploadImage')} title={t('chatbot.uploadImage')}>
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" strokeWidth="2"/>
                         <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" strokeWidth="2"/>
@@ -260,7 +260,7 @@ const Chatbot = ({ socket }) => {
                     <button 
                       type="submit" 
                       className="chatbot__send-btn" 
-                      aria-label="Send message"
+                      aria-label={t('chatbot.sendMessage')}
                       disabled={!query.trim() && !selectedImage}
                     >
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -383,10 +383,10 @@ const Chatbot = ({ socket }) => {
               
               {/* Terms and Privacy */}
               <div className="chatbot__footer-text">
-                By messaging Digital Krishi, you agree to our{' '}
-                <a href="#" className="chatbot__link">Terms</a>{' '}
-                and{' '}
-                <a href="#" className="chatbot__link">Privacy Policy</a>
+                {t('chatbot.footerTerms')}{' '}
+                <a href="#" className="chatbot__link">{t('chatbot.terms')}</a>{' '}
+                {t('chatbot.and')}{' '}
+                <a href="#" className="chatbot__link">{t('chatbot.privacyPolicy')}</a>
               </div>
             </div>
           </div>
@@ -398,9 +398,9 @@ const Chatbot = ({ socket }) => {
               <div className="chatbot__connection-status">
                 <div className="chatbot__connection-error">
                   {connectionError ? (
-                    <>❌ Connection failed: {connectionError}</>
+                    <>❌ {t('chatbot.connectionFailed')} {connectionError}</>
                   ) : (
-                    <>🔄 Connecting to server...</>
+                    <>🔄 {t('chatbot.connectingToServer')}</>
                   )}
                 </div>
               </div>
@@ -494,19 +494,19 @@ const Chatbot = ({ socket }) => {
                           )}
                         </div>
                         <div className="chatbot__message-actions">
-                          <button className="chatbot__action-btn" title="Copy">
+                          <button className="chatbot__action-btn" title={t('chatbot.copy')}>
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke="currentColor" strokeWidth="2" fill="none"/>
                               <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" strokeWidth="2" fill="none"/>
                             </svg>
                           </button>
-                          <button className="chatbot__action-btn" title="Like">
+                          <button className="chatbot__action-btn" title={t('chatbot.like')}>
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                               <path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
                           </button>
-                          <button className="chatbot__action-btn" title="Dislike">
+                          <button className="chatbot__action-btn" title={t('chatbot.dislike')}>
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                               <path d="M17 2h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -615,7 +615,7 @@ const Chatbot = ({ socket }) => {
                       type="text"
                       value={query}
                       onChange={handleInputChange}
-                      placeholder={!isConnected ? "Connecting..." : "Ask me anything about farming, crops, diseases, or upload an image..."}
+                      placeholder={!isConnected ? t('chatbot.connecting') : t('chatbot.inputPlaceholder')}
                       className="chatbot__input chatbot__input--enhanced"
                       disabled={!isConnected || isWaitingForResponse}
                       autoFocus

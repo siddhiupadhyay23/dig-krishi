@@ -39,9 +39,11 @@ function calculateFarmAnalytics(profile) {
     const activeCrops = crops.filter(crop => crop.isActive);
     const landSize = profile.landDetails?.totalLandSize?.value || 0;
     const landUnit = profile.landDetails?.totalLandSize?.unit || 'acres';
+    const landDetails = profile.landDetails || {};
+    const location = profile.location || {};
 
     return {
-        // Basic Farm Metrics
+        // Enhanced Farm Metrics with all collected data
         farmMetrics: {
             totalLandSize: {
                 value: landSize,
@@ -52,12 +54,33 @@ function calculateFarmAnalytics(profile) {
             totalCrops: crops.length,
             farmingExperience: profile.farmingExperience?.yearsOfExperience || 0,
             farmingMethod: profile.farmingExperience?.farmingType || 'traditional',
-            landType: profile.landDetails?.landType || 'unknown',
-            soilType: profile.landDetails?.soilType || 'unknown',
-            farmName: profile.landDetails?.farmName || 'Unnamed Farm'
+            landType: landDetails.landType || 'unknown',
+            soilType: landDetails.soilType || 'unknown',
+            farmName: landDetails.farmName || 'Unnamed Farm',
+            // Additional farm infrastructure metrics
+            infrastructure: {
+                hasWarehouses: landDetails.farmingInfrastructure?.hasWarehouses || false,
+                warehouseCapacity: landDetails.farmingInfrastructure?.warehouseCapacity || 0,
+                hasProcessingUnits: landDetails.farmingInfrastructure?.hasProcessingUnits || false,
+                electricity: landDetails.farmingInfrastructure?.electricity || 'unknown',
+                farmRoads: landDetails.farmingInfrastructure?.farmRoads || 'unknown',
+                nearestMarketDistance: landDetails.farmingInfrastructure?.nearestMarketDistance || null
+            },
+            // Water and irrigation details
+            irrigation: {
+                source: landDetails.waterIrrigation?.irrigationSource || landDetails.waterSource || 'unknown',
+                method: landDetails.waterIrrigation?.irrigationMethod || 'unknown',
+                availability: landDetails.waterIrrigation?.waterAvailability || 'unknown'
+            },
+            // Equipment access
+            equipment: {
+                tractorAccess: landDetails.equipmentInputs?.tractorAccess || 'unknown',
+                pumpSetAccess: landDetails.equipmentInputs?.pumpSetAccess || 'unknown',
+                machinery: landDetails.farmingInfrastructure?.machinery || []
+            }
         },
 
-        // Crop Analytics
+        // Enhanced Crop Analytics
         cropAnalytics: {
             cropDiversity: calculateCropDiversity(activeCrops),
             seasonalDistribution: calculateSeasonalDistribution(activeCrops),
@@ -65,20 +88,29 @@ function calculateFarmAnalytics(profile) {
             landUtilization: calculateLandUtilization(activeCrops, landSize, landUnit)
         },
 
-        // Estimated Yields and Revenue (based on Kerala/India averages)
-        yieldEstimates: calculateYieldEstimates(activeCrops, landSize, landUnit),
+        // Enhanced Yield Estimates using farm details
+        yieldEstimates: calculateEnhancedYieldEstimates(activeCrops, landSize, landUnit, profile),
 
-        // Farming Efficiency Metrics
-        efficiencyMetrics: calculateEfficiencyMetrics(profile),
+        // Enhanced Farming Efficiency Metrics
+        efficiencyMetrics: calculateEnhancedEfficiencyMetrics(profile),
+
+        // Soil Health Analysis
+        soilAnalysis: calculateSoilAnalysis(landDetails),
+
+        // Economic Analysis
+        economicAnalysis: calculateEconomicAnalysis(landDetails, activeCrops),
+
+        // Infrastructure Score
+        infrastructureScore: calculateInfrastructureScore(landDetails),
 
         // Recent Activities (generated based on crop data)
         recentActivities: generateActivities(activeCrops),
 
-        // Recommendations based on profile data
-        recommendations: generateRecommendations(profile),
+        // Enhanced Recommendations based on all profile data
+        recommendations: generateEnhancedRecommendations(profile),
 
         // Location-based insights
-        locationInsights: generateLocationInsights(profile.location)
+        locationInsights: generateLocationInsights(location)
     };
 }
 
@@ -631,6 +663,327 @@ async function getAnalyticsSummary(req, res) {
             error: error.message
         });
     }
+}
+
+// Enhanced yield estimates using farm infrastructure and soil data
+function calculateEnhancedYieldEstimates(crops, landSize, landUnit, profile) {
+    const baseEstimates = calculateYieldEstimates(crops, landSize, landUnit);
+    const landDetails = profile.landDetails || {};
+    
+    // Apply multipliers based on farm infrastructure
+    let infrastructureMultiplier = 1.0;
+    
+    // Irrigation bonus
+    const irrigationSource = landDetails.waterIrrigation?.irrigationSource || landDetails.waterSource;
+    if (irrigationSource === 'borewell' || irrigationSource === 'canal') {
+        infrastructureMultiplier += 0.15; // 15% bonus for reliable water
+    }
+    
+    const irrigationMethod = landDetails.waterIrrigation?.irrigationMethod;
+    if (irrigationMethod === 'drip') {
+        infrastructureMultiplier += 0.20; // 20% bonus for drip irrigation
+    } else if (irrigationMethod === 'sprinkler') {
+        infrastructureMultiplier += 0.10; // 10% bonus for sprinkler
+    }
+    
+    // Soil quality bonus
+    const soilType = landDetails.soilType;
+    if (soilType === 'loamy' || soilType === 'alluvial') {
+        infrastructureMultiplier += 0.10; // 10% bonus for good soil
+    }
+    
+    // Equipment bonus
+    const tractorAccess = landDetails.equipmentInputs?.tractorAccess;
+    if (tractorAccess === 'owned') {
+        infrastructureMultiplier += 0.05; // 5% bonus for owned tractor
+    }
+    
+    // Apply multiplier to estimates
+    const enhancedEstimates = {
+        ...baseEstimates,
+        totalEstimatedYield: Number((baseEstimates.totalEstimatedYield * infrastructureMultiplier).toFixed(2)),
+        totalEstimatedRevenue: Math.round(baseEstimates.totalEstimatedRevenue * infrastructureMultiplier),
+        cropWiseEstimates: baseEstimates.cropWiseEstimates.map(crop => ({
+            ...crop,
+            estimatedYield: Number((crop.estimatedYield * infrastructureMultiplier).toFixed(2)),
+            estimatedRevenue: Math.round(crop.estimatedRevenue * infrastructureMultiplier)
+        })),
+        infrastructureBonus: Math.round((infrastructureMultiplier - 1) * 100)
+    };
+    
+    return enhancedEstimates;
+}
+
+// Enhanced efficiency metrics using all farm data
+function calculateEnhancedEfficiencyMetrics(profile) {
+    const baseMetrics = calculateEfficiencyMetrics(profile);
+    const landDetails = profile.landDetails || {};
+    
+    // Infrastructure efficiency score
+    let infrastructureScore = 0;
+    if (landDetails.farmingInfrastructure?.hasWarehouses) infrastructureScore += 15;
+    if (landDetails.farmingInfrastructure?.hasProcessingUnits) infrastructureScore += 10;
+    if (landDetails.farmingInfrastructure?.electricity === '24_hours') infrastructureScore += 20;
+    else if (landDetails.farmingInfrastructure?.electricity === '12_hours') infrastructureScore += 15;
+    if (landDetails.farmingInfrastructure?.farmRoads === 'excellent') infrastructureScore += 10;
+    else if (landDetails.farmingInfrastructure?.farmRoads === 'good') infrastructureScore += 5;
+    
+    // Water management efficiency
+    let waterEfficiency = 50; // Base score
+    const irrigationMethod = landDetails.waterIrrigation?.irrigationMethod;
+    if (irrigationMethod === 'drip') waterEfficiency = 95;
+    else if (irrigationMethod === 'sprinkler') waterEfficiency = 80;
+    else if (irrigationMethod === 'flood') waterEfficiency = 60;
+    
+    const waterAvailability = landDetails.waterIrrigation?.waterAvailability;
+    if (waterAvailability === 'abundant') waterEfficiency += 5;
+    else if (waterAvailability === 'scarce') waterEfficiency -= 15;
+    
+    // Input efficiency based on usage patterns
+    let inputEfficiency = 70; // Base score
+    const fertilizerUsage = landDetails.equipmentInputs?.fertilizerUsage;
+    if (fertilizerUsage === 'organic_only') inputEfficiency = 90;
+    else if (fertilizerUsage === 'mixed') inputEfficiency = 80;
+    else if (fertilizerUsage === 'minimal') inputEfficiency = 85;
+    
+    return {
+        ...baseMetrics,
+        infrastructureScore: Math.min(infrastructureScore, 100),
+        waterUsageEfficiency: Math.min(Math.max(waterEfficiency, 0), 100),
+        inputEfficiency: Math.min(Math.max(inputEfficiency, 0), 100),
+        overallEfficiency: Math.min(Math.round(
+            (baseMetrics.overallEfficiency * 0.6 + infrastructureScore * 0.2 + waterEfficiency * 0.2)
+        ), 100)
+    };
+}
+
+// Soil health analysis based on collected soil data
+function calculateSoilAnalysis(landDetails) {
+    const soilDetails = landDetails.soilDetails || {};
+    const analysis = {
+        healthScore: getSoilHealthScore(landDetails.soilType),
+        phLevel: soilDetails.phLevel || null,
+        organicCarbon: soilDetails.organicCarbon || null,
+        nutrientLevels: {
+            nitrogen: soilDetails.nitrogenLevel || 'unknown',
+            phosphorus: soilDetails.phosphorusLevel || 'unknown',
+            potassium: soilDetails.potassiumLevel || 'unknown'
+        },
+        recommendations: []
+    };
+    
+    // pH recommendations
+    if (analysis.phLevel) {
+        if (analysis.phLevel < 6.0) {
+            analysis.recommendations.push('Soil is acidic. Consider lime application to increase pH.');
+        } else if (analysis.phLevel > 8.0) {
+            analysis.recommendations.push('Soil is alkaline. Consider organic matter addition to balance pH.');
+        }
+    }
+    
+    // Organic carbon recommendations
+    if (analysis.organicCarbon && analysis.organicCarbon < 0.5) {
+        analysis.recommendations.push('Low organic carbon. Increase organic matter through compost or green manure.');
+    }
+    
+    // Nutrient recommendations
+    if (analysis.nutrientLevels.nitrogen === 'low') {
+        analysis.recommendations.push('Apply nitrogen-rich fertilizers or grow leguminous crops.');
+    }
+    if (analysis.nutrientLevels.phosphorus === 'low') {
+        analysis.recommendations.push('Apply phosphorus fertilizers, especially during flowering stage.');
+    }
+    if (analysis.nutrientLevels.potassium === 'low') {
+        analysis.recommendations.push('Apply potassium fertilizers to improve fruit quality and disease resistance.');
+    }
+    
+    return analysis;
+}
+
+// Economic analysis based on farm details
+function calculateEconomicAnalysis(landDetails, crops) {
+    const economicInfo = landDetails.economicInfo || {};
+    const inputCosts = economicInfo.monthlyInputCosts;
+    const marketingMethod = economicInfo.marketingMethod;
+    
+    let monthlyCostEstimate = 0;
+    const costRanges = {
+        'below_10k': 7500,
+        '10k_25k': 17500,
+        '25k_50k': 37500,
+        '50k_1lakh': 75000,
+        'above_1lakh': 125000
+    };
+    
+    if (inputCosts && costRanges[inputCosts]) {
+        monthlyCostEstimate = costRanges[inputCosts];
+    }
+    
+    // Marketing efficiency score
+    let marketingEfficiency = 70; // Base score
+    const marketingScores = {
+        'direct_market': 60,
+        'middleman': 50,
+        'cooperative': 80,
+        'online': 90,
+        'contract_farming': 85
+    };
+    
+    if (marketingMethod && marketingScores[marketingMethod]) {
+        marketingEfficiency = marketingScores[marketingMethod];
+    }
+    
+    return {
+        monthlyCostEstimate,
+        annualCostEstimate: monthlyCostEstimate * 12,
+        marketingMethod: marketingMethod || 'unknown',
+        marketingEfficiency,
+        costOptimizationPotential: monthlyCostEstimate > 50000 ? 'High' : 
+                                  monthlyCostEstimate > 25000 ? 'Medium' : 'Low',
+        recommendations: generateEconomicRecommendations(economicInfo, marketingEfficiency)
+    };
+}
+
+// Infrastructure scoring
+function calculateInfrastructureScore(landDetails) {
+    const infrastructure = landDetails.farmingInfrastructure || {};
+    let score = 0;
+    const maxScore = 100;
+    
+    // Storage facilities (25 points)
+    if (infrastructure.hasWarehouses) score += 15;
+    if (infrastructure.warehouseCapacity > 0) score += 10;
+    
+    // Processing capabilities (20 points)
+    if (infrastructure.hasProcessingUnits) score += 20;
+    
+    // Electricity access (20 points)
+    const electricityScores = {
+        '24_hours': 20,
+        '12_hours': 15,
+        '6_hours': 10,
+        'irregular': 5,
+        'none': 0
+    };
+    score += electricityScores[infrastructure.electricity] || 0;
+    
+    // Road access (15 points)
+    const roadScores = {
+        'excellent': 15,
+        'good': 12,
+        'fair': 8,
+        'poor': 4,
+        'none': 0
+    };
+    score += roadScores[infrastructure.farmRoads] || 0;
+    
+    // Market proximity (10 points)
+    const marketDistance = infrastructure.nearestMarketDistance;
+    if (marketDistance !== null) {
+        if (marketDistance <= 5) score += 10;
+        else if (marketDistance <= 15) score += 7;
+        else if (marketDistance <= 30) score += 4;
+        else score += 1;
+    }
+    
+    // Machinery (10 points)
+    const machinery = infrastructure.machinery || [];
+    score += Math.min(machinery.length * 2, 10);
+    
+    return {
+        score: Math.min(score, maxScore),
+        level: score >= 80 ? 'Excellent' : score >= 60 ? 'Good' : score >= 40 ? 'Fair' : 'Poor',
+        strengths: getInfrastructureStrengths(infrastructure),
+        improvements: getInfrastructureImprovements(infrastructure, score)
+    };
+}
+
+// Generate enhanced recommendations using all profile data
+function generateEnhancedRecommendations(profile) {
+    const baseRecommendations = generateRecommendations(profile);
+    const landDetails = profile.landDetails || {};
+    const enhancedRecommendations = [...baseRecommendations];
+    
+    // Infrastructure-based recommendations
+    if (!landDetails.farmingInfrastructure?.hasWarehouses) {
+        enhancedRecommendations.push({
+            type: 'infrastructure',
+            priority: 'medium',
+            title: 'Consider Storage Infrastructure',
+            description: 'Building storage facilities can reduce post-harvest losses and improve bargaining power.',
+            action: 'Explore warehouse construction or shared storage options',
+            impact: 'Can reduce losses by 15-25%'
+        });
+    }
+    
+    // Irrigation recommendations
+    const irrigationMethod = landDetails.waterIrrigation?.irrigationMethod;
+    if (irrigationMethod === 'flood' || !irrigationMethod) {
+        enhancedRecommendations.push({
+            type: 'water_management',
+            priority: 'high',
+            title: 'Upgrade Irrigation System',
+            description: 'Drip or sprinkler irrigation can save water and increase yields significantly.',
+            action: 'Consider installing drip irrigation system',
+            impact: 'Can increase yields by 20-30% and save 40% water'
+        });
+    }
+    
+    // Soil health recommendations
+    const soilDetails = landDetails.soilDetails || {};
+    if (!soilDetails.phLevel && !soilDetails.organicCarbon) {
+        enhancedRecommendations.push({
+            type: 'soil_health',
+            priority: 'medium',
+            title: 'Conduct Soil Testing',
+            description: 'Regular soil testing helps optimize fertilizer use and improve crop yields.',
+            action: 'Get comprehensive soil analysis done',
+            impact: 'Can optimize fertilizer costs by 20-30%'
+        });
+    }
+    
+    return enhancedRecommendations;
+}
+
+// Helper functions
+function generateEconomicRecommendations(economicInfo, marketingEfficiency) {
+    const recommendations = [];
+    
+    if (marketingEfficiency < 70) {
+        recommendations.push('Consider direct marketing or cooperative selling for better prices');
+    }
+    
+    if (economicInfo.monthlyInputCosts === 'above_1lakh') {
+        recommendations.push('Review input costs - consider bulk purchasing or organic alternatives');
+    }
+    
+    return recommendations;
+}
+
+function getInfrastructureStrengths(infrastructure) {
+    const strengths = [];
+    
+    if (infrastructure.hasWarehouses) strengths.push('Storage facilities available');
+    if (infrastructure.hasProcessingUnits) strengths.push('Processing capabilities');
+    if (infrastructure.electricity === '24_hours') strengths.push('Reliable electricity supply');
+    if (infrastructure.farmRoads === 'excellent' || infrastructure.farmRoads === 'good') {
+        strengths.push('Good road connectivity');
+    }
+    
+    return strengths;
+}
+
+function getInfrastructureImprovements(infrastructure, currentScore) {
+    const improvements = [];
+    
+    if (!infrastructure.hasWarehouses) improvements.push('Add storage facilities');
+    if (!infrastructure.hasProcessingUnits) improvements.push('Consider processing units');
+    if (infrastructure.electricity !== '24_hours') improvements.push('Improve electricity access');
+    if (infrastructure.farmRoads === 'poor' || infrastructure.farmRoads === 'fair') {
+        improvements.push('Improve road connectivity');
+    }
+    
+    return improvements;
 }
 
 module.exports = {

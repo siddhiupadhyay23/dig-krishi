@@ -369,21 +369,21 @@ const GovernmentServices = () => {
             <p className="scheme-description">{scheme.description}</p>
 
             <div className="scheme-benefits">
-              <h4>Benefits</h4>
+              <h4>{t('government.labels.benefits')}</h4>
               <p>{scheme.benefits}</p>
             </div>
 
             <div className="scheme-deadline">
-              <h4>Application Deadline</h4>
+              <h4>{t('government.labels.applicationDeadline')}</h4>
               <p>{scheme.deadline}</p>
             </div>
 
             <div className="scheme-contact">
-              <h4>Contact Information</h4>
+              <h4>{t('government.labels.contactInformation')}</h4>
               <div className="contact-details">
-                <p><strong>Helpline:</strong> {scheme.contactInfo.helpline}</p>
-                <p><strong>Email:</strong> {scheme.contactInfo.email}</p>
-                <p><strong>Website:</strong> {scheme.contactInfo.website}</p>
+                <p><strong>{t('government.labels.helpline')}</strong> {scheme.contactInfo.helpline}</p>
+                <p><strong>{t('government.labels.email')}</strong> {scheme.contactInfo.email}</p>
+                <p><strong>{t('government.labels.website')}</strong> {scheme.contactInfo.website}</p>
               </div>
             </div>
 
@@ -391,7 +391,7 @@ const GovernmentServices = () => {
               className="scheme-details-btn"
               onClick={() => setSelectedScheme(scheme)}
             >
-              View Details
+              {t('government.labels.viewDetails')}
             </button>
           </div>
         ))}
@@ -406,13 +406,13 @@ const GovernmentServices = () => {
                 className="close-btn"
                 onClick={() => setSelectedScheme(null)}
               >
-                ×
+                {t('government.labels.close')}
               </button>
             </div>
 
             <div className="modal-body">
               <div className="detail-section">
-                <h3>Eligibility Criteria</h3>
+                <h3>{t('government.labels.eligibilityCriteria')}</h3>
                 <ul>
                   {selectedScheme.eligibility.map((criteria, index) => (
                     <li key={index}>{criteria}</li>
@@ -421,7 +421,7 @@ const GovernmentServices = () => {
               </div>
 
               <div className="detail-section">
-                <h3>Required Documents</h3>
+                <h3>{t('government.labels.requiredDocuments')}</h3>
                 <ul>
                   {selectedScheme.documents.map((document, index) => (
                     <li key={index}>{document}</li>
@@ -430,7 +430,7 @@ const GovernmentServices = () => {
               </div>
 
               <div className="detail-section">
-                <h3>Application Process</h3>
+                <h3>{t('government.labels.applicationProcess')}</h3>
                 <ol>
                   {selectedScheme.applicationProcess.map((step, index) => (
                     <li key={index}>{step}</li>
@@ -447,8 +447,8 @@ const GovernmentServices = () => {
   const renderSubsidies = () => (
     <div className="subsidies-section">
       <div className="section-header">
-        <h2>Agricultural Subsidies</h2>
-        <p>Financial assistance and subsidies available for farmers</p>
+        <h2>{t('government.labels.agriculturalSubsidies')}</h2>
+        <p>{t('government.labels.financialAssistance')}</p>
       </div>
 
       <div className="subsidies-grid">
@@ -462,12 +462,12 @@ const GovernmentServices = () => {
             <p className="subsidy-description">{subsidy.description}</p>
 
             <div className="subsidy-amount">
-              <span className="amount-label">Maximum Amount:</span>
+              <span className="amount-label">{t('government.labels.maximumAmount')}</span>
               <span className="amount-value">{subsidy.maxAmount}</span>
             </div>
 
             <div className="subsidy-equipment">
-              <h4>Covered Equipment/Items:</h4>
+              <h4>{t('government.labels.coveredEquipment')}</h4>
               <ul>
                 {subsidy.equipmentTypes.map((equipment, index) => (
                   <li key={index}>{equipment}</li>
@@ -477,17 +477,17 @@ const GovernmentServices = () => {
 
             <div className="subsidy-details">
               <div className="detail-item">
-                <strong>Eligibility:</strong>
+                <strong>{t('government.labels.eligibility')}</strong>
                 <span>{subsidy.eligibility}</span>
               </div>
               <div className="detail-item">
-                <strong>Application Period:</strong>
+                <strong>{t('government.labels.applicationPeriod')}</strong>
                 <span>{subsidy.applicationPeriod}</span>
               </div>
             </div>
 
             <button className="apply-subsidy-btn">
-              Apply for Subsidy
+              {t('government.labels.applyForSubsidy')}
             </button>
           </div>
         ))}
@@ -498,8 +498,8 @@ const GovernmentServices = () => {
   const renderPolicies = () => (
     <div className="policies-section">
       <div className="section-header">
-        <h2>Agricultural Policies</h2>
-        <p>National and state agricultural policies affecting farmers</p>
+        <h2>{t('government.labels.agriculturalPolicies')}</h2>
+        <p>{t('government.labels.nationalStatePolicies')}</p>
       </div>
 
       <div className="policies-list">
@@ -513,7 +513,7 @@ const GovernmentServices = () => {
 
             {policy.coverage && (
               <div className="policy-section">
-                <h4>Coverage:</h4>
+                <h4>{t('government.labels.coverage')}</h4>
                 <ul>
                   {policy.coverage.map((item, index) => (
                     <li key={index}>{item}</li>
@@ -524,7 +524,7 @@ const GovernmentServices = () => {
 
             {policy.objectives && (
               <div className="policy-section">
-                <h4>Objectives:</h4>
+                <h4>{t('government.labels.objectives')}</h4>
                 <ul>
                   {policy.objectives.map((objective, index) => (
                     <li key={index}>{objective}</li>
@@ -535,7 +535,7 @@ const GovernmentServices = () => {
 
             {policy.support && (
               <div className="policy-section">
-                <h4>Support Provided:</h4>
+                <h4>{t('government.labels.supportProvided')}</h4>
                 <ul>
                   {policy.support.map((support, index) => (
                     <li key={index}>{support}</li>
@@ -545,27 +545,27 @@ const GovernmentServices = () => {
             )}
 
             <div className="policy-benefits">
-              <h4>Benefits:</h4>
+              <h4>{t('government.labels.benefits')}</h4>
               <p>{policy.benefits}</p>
             </div>
 
             {policy.procurementAgencies && (
               <div className="policy-agencies">
-                <strong>Procurement Agencies:</strong>
+                <strong>{t('government.labels.procurementAgencies')}</strong>
                 <span>{policy.procurementAgencies}</span>
               </div>
             )}
 
             {policy.focus && (
               <div className="policy-focus">
-                <strong>Focus Areas:</strong>
+                <strong>{t('government.labels.focusAreas')}</strong>
                 <span>{policy.focus}</span>
               </div>
             )}
 
             {policy.targetBeneficiaries && (
               <div className="policy-target">
-                <strong>Target Beneficiaries:</strong>
+                <strong>{t('government.labels.targetBeneficiaries')}</strong>
                 <span>{policy.targetBeneficiaries}</span>
               </div>
             )}
@@ -578,14 +578,14 @@ const GovernmentServices = () => {
   const renderApplicationForm = () => (
     <div className="application-section">
       <div className="section-header">
-        <h2>Apply for Government Schemes</h2>
-        <p>Submit your application for various government schemes online</p>
+        <h2>{t('government.labels.applyForSchemes')}</h2>
+        <p>{t('government.labels.submitApplication')}</p>
       </div>
 
       <form onSubmit={handleApplicationSubmit} className="application-form">
         <div className="form-grid">
           <div className="form-group">
-            <label htmlFor="schemeName">Select Scheme</label>
+            <label htmlFor="schemeName">{t('government.labels.selectScheme')}</label>
             <select
               id="schemeName"
               name="schemeName"
@@ -593,7 +593,7 @@ const GovernmentServices = () => {
               onChange={handleInputChange}
               required
             >
-              <option value="">Choose a scheme</option>
+              <option value="">{t('government.labels.chooseScheme')}</option>
               {schemes.map(scheme => (
                 <option key={scheme.id} value={scheme.title}>{scheme.title}</option>
               ))}
@@ -601,54 +601,54 @@ const GovernmentServices = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="farmerName">Farmer Name</label>
+            <label htmlFor="farmerName">{t('government.labels.farmerName')}</label>
             <input
               type="text"
               id="farmerName"
               name="farmerName"
               value={applicationForm.farmerName}
               onChange={handleInputChange}
-              placeholder="Enter your full name"
+              placeholder={t('government.labels.enterFullName')}
               required
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="phoneNumber">Phone Number</label>
+            <label htmlFor="phoneNumber">{t('government.labels.phoneNumber')}</label>
             <input
               type="tel"
               id="phoneNumber"
               name="phoneNumber"
               value={applicationForm.phoneNumber}
               onChange={handleInputChange}
-              placeholder="Enter your phone number"
+              placeholder={t('government.labels.enterPhoneNumber')}
               required
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="aadharNumber">Aadhar Number</label>
+            <label htmlFor="aadharNumber">{t('government.labels.aadharNumber')}</label>
             <input
               type="text"
               id="aadharNumber"
               name="aadharNumber"
               value={applicationForm.aadharNumber}
               onChange={handleInputChange}
-              placeholder="Enter your Aadhar number"
+              placeholder={t('government.labels.enterAadharNumber')}
               maxLength="12"
               required
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="farmSize">Farm Size (in hectares)</label>
+            <label htmlFor="farmSize">{t('government.labels.farmSize')}</label>
             <input
               type="number"
               id="farmSize"
               name="farmSize"
               value={applicationForm.farmSize}
               onChange={handleInputChange}
-              placeholder="Enter farm size"
+              placeholder={t('government.labels.enterFarmSize')}
               min="0.1"
               step="0.1"
               required
@@ -656,7 +656,7 @@ const GovernmentServices = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="cropType">Primary Crop</label>
+            <label htmlFor="cropType">{t('government.labels.primaryCrop')}</label>
             <select
               id="cropType"
               name="cropType"
@@ -664,7 +664,7 @@ const GovernmentServices = () => {
               onChange={handleInputChange}
               required
             >
-              <option value="">Select primary crop</option>
+              <option value="">{t('government.labels.selectPrimaryCrop')}</option>
               <option value="rice">Rice</option>
               <option value="wheat">Wheat</option>
               <option value="coconut">Coconut</option>
@@ -677,26 +677,26 @@ const GovernmentServices = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="bankAccount">Bank Account Number</label>
+            <label htmlFor="bankAccount">{t('government.labels.bankAccountNumber')}</label>
             <input
               type="text"
               id="bankAccount"
               name="bankAccount"
               value={applicationForm.bankAccount}
               onChange={handleInputChange}
-              placeholder="Enter your bank account number"
+              placeholder={t('government.labels.enterBankAccount')}
               required
             />
           </div>
 
           <div className="form-group full-width">
-            <label htmlFor="address">Address</label>
+            <label htmlFor="address">{t('government.labels.address')}</label>
             <textarea
               id="address"
               name="address"
               value={applicationForm.address}
               onChange={handleInputChange}
-              placeholder="Enter your complete address"
+              placeholder={t('government.labels.enterCompleteAddress')}
               rows="3"
               required
             />
@@ -704,7 +704,7 @@ const GovernmentServices = () => {
         </div>
 
         <button type="submit" className="submit-application-btn">
-          Submit Application
+          {t('government.labels.submitApplication')}
         </button>
       </form>
     </div>
@@ -713,8 +713,8 @@ const GovernmentServices = () => {
   const renderTrackApplication = () => (
     <div className="track-section">
       <div className="section-header">
-        <h2>Track Your Applications</h2>
-        <p>Monitor the status of your submitted applications</p>
+        <h2>{t('government.labels.trackApplications')}</h2>
+        <p>{t('government.labels.monitorStatus')}</p>
       </div>
 
       {applications.length === 0 ? (
@@ -722,8 +722,8 @@ const GovernmentServices = () => {
           <div className="no-app-icon">
             📋
           </div>
-          <h3>No Applications Found</h3>
-          <p>You haven't submitted any applications yet. Visit the Apply Online section to submit your first application.</p>
+          <h3>{t('government.labels.noApplicationsFound')}</h3>
+          <p>{t('government.labels.noApplicationsMessage')}</p>
         </div>
       ) : (
         <div className="applications-list">
@@ -738,29 +738,29 @@ const GovernmentServices = () => {
 
               <div className="app-details">
                 <div className="app-info">
-                  <p><strong>Tracking Number:</strong> {app.trackingNumber}</p>
-                  <p><strong>Application Date:</strong> {app.applicationDate}</p>
-                  <p><strong>Farmer Name:</strong> {app.farmerName}</p>
-                  <p><strong>Farm Size:</strong> {app.farmSize} hectares</p>
+                  <p><strong>{t('government.labels.trackingNumber')}</strong> {app.trackingNumber}</p>
+                  <p><strong>{t('government.labels.applicationDate')}</strong> {app.applicationDate}</p>
+                  <p><strong>{t('government.labels.farmerName')}</strong> {app.farmerName}</p>
+                  <p><strong>{t('government.labels.farmSize')}</strong> {app.farmSize} hectares</p>
                 </div>
 
                 <div className="app-progress">
                   <div className="progress-steps">
                     <div className="step completed">
                       <div className="step-icon">1</div>
-                      <span>Submitted</span>
+                      <span>{t('government.labels.submitted')}</span>
                     </div>
                     <div className="step">
                       <div className="step-icon">2</div>
-                      <span>Under Review</span>
+                      <span>{t('government.labels.underReview')}</span>
                     </div>
                     <div className="step">
                       <div className="step-icon">3</div>
-                      <span>Approved</span>
+                      <span>{t('government.labels.approved')}</span>
                     </div>
                     <div className="step">
                       <div className="step-icon">4</div>
-                      <span>Payment</span>
+                      <span>{t('government.labels.payment')}</span>
                     </div>
                   </div>
                 </div>

@@ -1668,6 +1668,9 @@ const Profile = () => {
         const activities = analyticsData.recentActivities || [];
         const recommendations = analyticsData.recommendations || [];
         const dataQuality = analyticsData.dataQuality || {};
+        const soilAnalysis = analyticsData.soilAnalysis || {};
+        const economicAnalysis = analyticsData.economicAnalysis || {};
+        const infrastructureScore = analyticsData.infrastructureScore || {};
 
         return (
           <div className="content-section">
@@ -1727,6 +1730,11 @@ const Profile = () => {
                     {efficiency.overallEfficiency >= 70 ? 'Excellent performance' : 
                      efficiency.overallEfficiency >= 40 ? 'Good performance' : 'Room for improvement'}
                   </p>
+                  {efficiency.infrastructureScore && (
+                    <p className="metric-detail">
+                      Infrastructure: {efficiency.infrastructureScore}% • Water: {efficiency.waterUsageEfficiency}%
+                    </p>
+                  )}
                 </div>
               </div>
               
@@ -1750,17 +1758,24 @@ const Profile = () => {
                 </div>
               )}
               
-              {/* Crop-wise Yield Estimates */}
+              {/* Enhanced Yield Estimates with Infrastructure Bonus */}
               {yieldEstimates.cropWiseEstimates && yieldEstimates.cropWiseEstimates.length > 0 && (
                 <div className="crop-yield-section">
                   <h3>Crop-wise Yield Estimates</h3>
+                  {yieldEstimates.infrastructureBonus > 0 && (
+                    <div className="infrastructure-bonus">
+                      <p className="bonus-indicator">
+                        🚀 Infrastructure Bonus: +{yieldEstimates.infrastructureBonus}% yield improvement
+                      </p>
+                    </div>
+                  )}
                   <div className="yield-estimates-grid">
                     {yieldEstimates.cropWiseEstimates.map((estimate, index) => (
                       <div key={index} className="yield-estimate-card">
                         <h4>{estimate.cropName}</h4>
                         <div className="yield-details">
                           <p><strong>Area:</strong> {estimate.area} hectares</p>
-                          <p><strong>Est. Yield:</strong> {estimate.estimatedYield.toFixed(1)} {estimate.unit}</p>
+                          <p><strong>Est. Yield:</strong> {typeof estimate.estimatedYield === 'number' ? estimate.estimatedYield.toFixed(1) : estimate.estimatedYield} {estimate.unit}</p>
                           <p><strong>Est. Revenue:</strong> ₹{estimate.estimatedRevenue.toLocaleString('en-IN')}</p>
                         </div>
                       </div>
@@ -1788,6 +1803,96 @@ const Profile = () => {
                 </div>
               )}
               
+              {/* Infrastructure Analysis */}
+              {infrastructureScore.score !== undefined && (
+                <div className="infrastructure-analysis-section">
+                  <h3>Farm Infrastructure Analysis</h3>
+                  <div className="infrastructure-score">
+                    <div className="score-circle">
+                      <span className="score-value">{infrastructureScore.score}</span>
+                      <span className="score-label">Infrastructure Score</span>
+                    </div>
+                    <div className="score-details">
+                      <p className={`score-level level-${infrastructureScore.level?.toLowerCase()}`}>
+                        {infrastructureScore.level} Infrastructure
+                      </p>
+                      {metrics.infrastructure && (
+                        <div className="infrastructure-items">
+                          <p>🏪 Storage: {metrics.infrastructure.hasWarehouses ? 'Available' : 'Not Available'}</p>
+                          <p>⚡ Electricity: {metrics.infrastructure.electricity}</p>
+                          <p>🛣️ Roads: {metrics.infrastructure.farmRoads}</p>
+                          <p>💧 Irrigation: {metrics.irrigation?.method || 'Unknown'}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Soil Health Analysis */}
+              {soilAnalysis.healthScore && (
+                <div className="soil-analysis-section">
+                  <h3>Soil Health Analysis</h3>
+                  <div className="soil-health-grid">
+                    <div className="soil-score">
+                      <h4>Soil Health Score</h4>
+                      <div className="score-display">
+                        <span className="score-number">{soilAnalysis.healthScore}</span>
+                        <span className="score-max">/100</span>
+                      </div>
+                    </div>
+                    {soilAnalysis.phLevel && (
+                      <div className="soil-metric">
+                        <h4>pH Level</h4>
+                        <p className={`ph-value ${soilAnalysis.phLevel < 6 ? 'acidic' : soilAnalysis.phLevel > 8 ? 'alkaline' : 'neutral'}`}>
+                          {soilAnalysis.phLevel}
+                        </p>
+                      </div>
+                    )}
+                    {soilAnalysis.organicCarbon && (
+                      <div className="soil-metric">
+                        <h4>Organic Carbon</h4>
+                        <p>{soilAnalysis.organicCarbon}%</p>
+                      </div>
+                    )}
+                  </div>
+                  {soilAnalysis.recommendations && soilAnalysis.recommendations.length > 0 && (
+                    <div className="soil-recommendations">
+                      <h4>Soil Improvement Recommendations:</h4>
+                      <ul>
+                        {soilAnalysis.recommendations.map((rec, index) => (
+                          <li key={index}>{rec}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Economic Analysis */}
+              {economicAnalysis.monthlyCostEstimate > 0 && (
+                <div className="economic-analysis-section">
+                  <h3>Economic Analysis</h3>
+                  <div className="economic-metrics">
+                    <div className="economic-card">
+                      <h4>Monthly Input Costs</h4>
+                      <p className="cost-amount">₹{economicAnalysis.monthlyCostEstimate.toLocaleString('en-IN')}</p>
+                    </div>
+                    <div className="economic-card">
+                      <h4>Marketing Efficiency</h4>
+                      <p className="efficiency-score">{economicAnalysis.marketingEfficiency}%</p>
+                      <p className="method-info">Method: {economicAnalysis.marketingMethod}</p>
+                    </div>
+                    <div className="economic-card">
+                      <h4>Cost Optimization</h4>
+                      <p className={`optimization-level level-${economicAnalysis.costOptimizationPotential?.toLowerCase()}`}>
+                        {economicAnalysis.costOptimizationPotential} Potential
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Data Quality Info */}
               {dataQuality.missingData && dataQuality.missingData.length > 0 && (
                 <div className="data-quality-section">
